@@ -9,10 +9,12 @@ Available actions are:
 ### Description
 Creates a new github release based on git tags and [semantic versioning](https://semver.org/)
 
-###Inputs
+### Inputs
 - major_v -- major version of current release
 - minor_v -- minor version of current release
 
+### Outputs
+- version -- generated new version of the release
 
 ### Usage
 ```yaml

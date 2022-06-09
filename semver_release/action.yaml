@@ -14,10 +14,16 @@ inputs:
     description: 'minor_version'
     required: true
 
+outputs:
+  version:
+    description: "Version"
+    value: ${{ steps.release-generator.outputs.version }}
+
 runs:
   using: "composite"
   steps:
     - run: ./semver_release/semver_release.sh
+      id: release-generator
       env:
         MAJOR_V: ${{ inputs.major_v }}
         MINOR_V: ${{ inputs.minor_v }}
