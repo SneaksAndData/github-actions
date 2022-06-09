@@ -1,0 +1,17 @@
+name: Run shellcheck
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate_commit:
+    name: Validate code by shellcheck
+    runs-on: ubuntu-latest
+    if: ${{ github.ref != 'refs/heads/main' }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: bewuethr/shellcheck-action@v2.1.2
