@@ -17,7 +17,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: semver_release.sh
+    - run: ./semver_release.sh
       env:
         MAJOR_V: ${{ inputs.major_v }}
         MINOR_V: ${{ inputs.minor_v }}
