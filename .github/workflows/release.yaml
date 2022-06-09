@@ -19,4 +19,3 @@ jobs:
       - name: Print version
         run:  "echo \"New version is: ${{ steps.create-release.outputs.version }}\""
         shell: bash
-
