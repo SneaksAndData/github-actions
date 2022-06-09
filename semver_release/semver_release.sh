@@ -16,4 +16,4 @@ fi
 nextVersion="v$providedMajor.$providedMinor.$nextRevision"
 gh release create "$nextVersion" --generate-notes
 
-echo "::set-output name=version::$(echo $nextVersion)"
+echo "::set-output name=version::$nextVersion"
