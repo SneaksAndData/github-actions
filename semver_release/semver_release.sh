@@ -14,6 +14,7 @@ else
   nextRevision='0'
 fi
 nextVersion="v$providedMajor.$providedMinor.$nextRevision"
+echo $nextVersion
 gh release create "$nextVersion" --generate-notes
 
 echo "::set-output name=version::$nextVersion"
