@@ -1,0 +1,12 @@
+name: Release a new version
+
+on: workflow_dispatch
+
+jobs:
+  create_release:
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Create Release
+        uses: ./semver_release/
