@@ -1,3 +1,5 @@
+# We need to always normalize paths to make this bash script work
+
 # Set the default behavior, in case people don't have core.autocrlf set.
 * text=auto
 
