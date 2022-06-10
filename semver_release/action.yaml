@@ -1,0 +1,31 @@
+name: 'Semver Release'
+description: 'Creates a tag in git repo with new semver release'
+
+branding:
+  icon: 'tag'
+  color: 'green'
+
+inputs:
+  major_v:
+    description: 'major_version'
+    required: true
+
+  minor_v:
+    description: 'minor_version'
+    required: true
+
+outputs:
+  version:
+    description: "Version"
+    value: ${{ steps.release-generator.outputs.version }}
+
+runs:
+  using: "composite"
+  steps:
+    - run: ./semver_release/semver_release.sh
+      id: release-generator
+      env:
+        MAJOR_V: ${{ inputs.major_v }}
+        MINOR_V: ${{ inputs.minor_v }}
+        GITHUB_TOKEN: ${{ github.token }}
+      shell: bash
