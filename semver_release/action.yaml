@@ -22,7 +22,7 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - run: ./semver_release/semver_release.sh
+    - run: ${{env.GITHUB_ACTION_PATH}}/semver_release.sh
       id: release-generator
       env:
         MAJOR_V: ${{ inputs.major_v }}
