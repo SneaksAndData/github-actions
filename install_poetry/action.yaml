@@ -30,7 +30,7 @@ runs:
     - name: Install Poetry
       shell: bash
       env:
-        REPO_URL: ${{ secrets.AZOPS_PYPI_REPO_URL }}
+        REPO_URL: ${{ inputs.pypi_repo_url }}
       run: |
           set -Eeuo pipefail
           curl -sSL https://install.python-poetry.org | python3 - --preview
