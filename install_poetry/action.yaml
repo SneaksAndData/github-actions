@@ -1,0 +1,51 @@
+name: 'Install poetry'
+description: 'Installs poetry, restore python packages and optionally export requirements.txt'
+
+inputs:
+  pypi_repo_url:
+    description: 'URL of python package index (for custom packages)'
+    required: true
+
+  pypi_token_username:
+    description: 'Username for authentication at python package index (for custom packages)'
+    required: true
+
+  pypi_token:
+    description: 'Token for authentication at python package index (for custom packages)'
+    required: true
+
+  export_requirements:
+    description: "Set to 'true' if need to generate requirements.txt"
+    required: false
+    default: "false"
+
+outputs:
+  version:
+    description: "Version"
+    value: ${{ steps.release-generator.outputs.version }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Poetry
+      shell: bash
+      env:
+        REPO_URL: ${{ secrets.AZOPS_PYPI_REPO_URL }}
+      run: |
+          set -Eeuo pipefail
+          curl -sSL https://install.python-poetry.org | python3 - --preview
+          poetry config repositories.azops $REPO_URL
+    - name: Install Dependencies
+      shell: bash
+      env:
+        POETRY_HTTP_BASIC_AZOPS_USERNAME: ${{ inputs.pypi_token_username }}
+        POETRY_HTTP_BASIC_AZOPS_PASSWORD: ${{ inputs.pypi_token }}
+      run: |
+        set -Eeuo pipefail
+        poetry install
+    - name: Export requirements
+      if: "${{inputs.export_requirements}}" == "true"
+      shell: bash
+      run: |
+        set -Eeuo pipefail
+        poetry export -f requirements.txt --output .container/requirements.txt --without-hashes --with-credentials
