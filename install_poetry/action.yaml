@@ -45,7 +45,7 @@ runs:
         export PATH="/github/home/.local/bin:$PATH"
         poetry install
     - name: Export requirements
-      if: "${{inputs.export_requirements}}" == "true"
+      if: ${{ inputs.export_requirements == "true" }}
       shell: bash
       run: |
         set -Eeuo pipefail
