@@ -50,4 +50,5 @@ runs:
       run: |
         set -Eeuo pipefail
         export PATH="/github/home/.local/bin:$PATH"
-        poetry export -f requirements.txt --output .container/requirements.txt --without-hashes --with-credentials
+        poetry export -f requirements.txt --output requirements.txt --without-hashes 
+        cat requirements.txt
