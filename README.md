@@ -3,6 +3,8 @@
 Repository for common actions used in Sneaks And Data CI/CD processes
 
 Available actions are:
+1. [semver_release](#semver_release)
+2. [install_poetry](#install_poetry)
 
 ## semver_release
 
