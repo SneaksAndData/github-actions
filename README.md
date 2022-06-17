@@ -20,7 +20,7 @@ Creates a new github release based on git tags and [semantic versioning](https:/
 
 ### Usage
 ```yaml
-name: Example pipeline
+name: Release a new version
 
 on:
   workflow_dispatch:

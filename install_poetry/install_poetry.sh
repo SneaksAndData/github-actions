@@ -15,6 +15,7 @@
 #  limitations under the License.
 
 set -Eeuo pipefail
+
 curl -sSL https://install.python-poetry.org | python3 - --preview
 export PATH=/github/home/.local/bin:$PATH
 poetry config repositories.azops "$REPO_URL"
