@@ -20,7 +20,7 @@ Creates a new github release based on git tags and [semantic versioning](https:/
 
 ### Usage
 ```yaml
-name: Release a new version
+name: Example pipeline
 
 on:
   workflow_dispatch:
@@ -51,13 +51,15 @@ Optionally can export dependency tree to requirements.txt file.
   - pypi_token_username -- Username for authentication at python package index (for custom packages)
   - pypi_token -- Token for authentication at python package index (for custom packages)
   - export_requirements -- Set to `true` if need to generate requirements.txt. **Optional** defaults to **false**.
+  - requirements_path -- Path to requirements.txt to be generated (relative to sources root).
+    **Optional** defaults to **.container/requirements.txt**.
 
 ### Outputs
 No outputs defined
 
 ### Usage
 ```yaml
-name: Release a new version
+name: Install poetry and package dependencies
 
 on:
   workflow_dispatch:
@@ -69,11 +71,12 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-       - name: Install Poetry
+       - name: Install Poetry and dependencies
          uses: SneaksAndData/github-actions/install_poetry@v0.0.3
          with:
            pypi_repo_url: ${{ secrets.AZOPS_PYPI_REPO_URL }}
            pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
            pypi_token: ${{ secrets.AZOPS_PAT }}
            export_requirements: True # if you want to generate requirements.txt
+           requirements_path: ".container/requirements.txt" 
 ```

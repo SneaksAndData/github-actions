@@ -19,6 +19,11 @@ inputs:
     required: false
     default: "false"
 
+  requirements_path:
+    description: "Destination path for requirements.txt file"
+    required: false
+    default: ".container/requirements.txt"
+
 outputs:
   version:
     description: "Version"
@@ -27,12 +32,13 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Install Dependencies
+    - name: Install poetry and package dependencies
       shell: bash
       env:
         POETRY_HTTP_BASIC_AZOPS_USERNAME: ${{ inputs.pypi_token_username }}
         POETRY_HTTP_BASIC_AZOPS_PASSWORD: ${{ inputs.pypi_token }}
         EXPORT_REQUIREMENTS: ${{ inputs.export_requirements }}
+        REQUIREMENTS_PATH: ${{ inputs.requirements_path }}
         REPO_URL: ${{ inputs.pypi_repo_url }}
       run: $GITHUB_ACTION_PATH/install_poetry.sh
 
