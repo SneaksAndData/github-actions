@@ -27,28 +27,12 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Install Poetry
-      shell: bash
-      env:
-        REPO_URL: ${{ inputs.pypi_repo_url }}
-      run: |
-          set -Eeuo pipefail
-          curl -sSL https://install.python-poetry.org | python3 - --preview
-          poetry config repositories.azops $REPO_URL
     - name: Install Dependencies
       shell: bash
       env:
         POETRY_HTTP_BASIC_AZOPS_USERNAME: ${{ inputs.pypi_token_username }}
         POETRY_HTTP_BASIC_AZOPS_PASSWORD: ${{ inputs.pypi_token }}
-        PATH: "/github/home/.local/bin:$PATH"
-      run: |
-        set -Eeuo pipefail
-        poetry install
-    - name: Export requirements
-      if: inputs.export_requirements == 'true'
-      shell: bash
-      env:
-        PATH: "/github/home/.local/bin:$PATH"
-      run: |
-        set -Eeuo pipefail
-        poetry export -f requirements.txt --output .container/requirements.txt --without-hashes --with-credentials
+        EXPORT_REQUIREMENTS: ${{ inputs.export_requirements }}
+        REPO_URL: ${{ inputs.pypi_repo_url }}
+      run: $GITHUB_ACTION_PATH/install_poetry.sh
+

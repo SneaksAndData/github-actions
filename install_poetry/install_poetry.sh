@@ -205,20 +205,11 @@
 #   limitations under the License.
 
 set -Eeuo pipefail
-
-providedMajor=$MAJOR_V
-providedMinor=$MINOR_V
-currentVersion=$(git describe --tags --abbrev=7)
-currentMinor=$(echo "$currentVersion" | cut --delimiter=. --fields=2)
-currentMajor=$(echo "$currentVersion" | cut --delimiter=. --fields=1 | cut --delimiter=v --fields=2)
-
-if [[ $currentMajor -eq $providedMajor ]] && [[ $providedMinor -eq $currentMinor ]];
-then
-  currentRevision=$(echo "$currentVersion" | rev | cut --delimiter=. --fields=1 | rev | cut --delimiter=- --fields=1)
-  nextRevision=$(( currentRevision + 1 ))
-else
-  nextRevision='0'
+curl -sSL https://install.python-poetry.org | python3 - --preview
+export PATH=/github/home/.local/bin:$PATH
+poetry config repositories.azops "$REPO_URL"
+poetry install
+if [[ "$(echo "$EXPORT_REQUIREMENTS" | tr '[:upper:]' '[:lower:]')" == "true" ]]; then
+  poetry export -f requirements.txt --output .container/requirements.txt --without-hashes --with-credentials
 fi
-nextVersion="v$providedMajor.$providedMinor.$nextRevision"
-gh release create "$nextVersion" --generate-notes
-echo "::set-output name=version::$nextVersion"
+
