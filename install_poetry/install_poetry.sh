@@ -211,7 +211,7 @@ poetry config repositories.azops "$REPO_URL"
 poetry install
 REQUIREMENTS_PATH="$PWD/.container/requirements.txt "
 if [[ "$(echo "$EXPORT_REQUIREMENTS" | tr '[:upper:]' '[:lower:]')" == "true" ]]; then
-  poetry export -f requirements.txt --output $REQUIREMENTS_PATH --without-hashes --with-credentials
+  poetry export -f requirements.txt --output "$REQUIREMENTS_PATH" --without-hashes --with-credentials
   echo "requirements exported to $REQUIREMENTS_PATH"
 fi
 
