@@ -75,4 +75,5 @@ jobs:
            pypi_repo_url: ${{ secrets.AZOPS_PYPI_REPO_URL }}
            pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
            pypi_token: ${{ secrets.AZOPS_PAT }}
+           export_requirements: True # if you want to generate requirements.txt
 ```
