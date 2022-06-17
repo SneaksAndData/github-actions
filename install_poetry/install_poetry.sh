@@ -207,7 +207,7 @@
 set -Eeuo pipefail
 curl -sSL https://install.python-poetry.org | python3 - --preview
 export PATH=/github/home/.local/bin:$PATH
-poetry config repositories.azops "$REPO_URL"
+poetry config repositories.azops $REPO_URL
 poetry install
 if [[ "$(echo "$EXPORT_REQUIREMENTS" | tr '[:upper:]' '[:lower:]')" == "true" ]]; then
   poetry export -f requirements.txt --output .container/requirements.txt --without-hashes --with-credentials
