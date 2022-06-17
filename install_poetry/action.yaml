@@ -40,14 +40,15 @@ runs:
       env:
         POETRY_HTTP_BASIC_AZOPS_USERNAME: ${{ inputs.pypi_token_username }}
         POETRY_HTTP_BASIC_AZOPS_PASSWORD: ${{ inputs.pypi_token }}
+        PATH: "/github/home/.local/bin:$PATH"
       run: |
         set -Eeuo pipefail
-        export PATH="/github/home/.local/bin:$PATH"
         poetry install
     - name: Export requirements
       if: inputs.export_requirements == 'true'
       shell: bash
+      env:
+        PATH: "/github/home/.local/bin:$PATH"
       run: |
         set -Eeuo pipefail
-        export PATH="/github/home/.local/bin:$PATH"
         poetry export -f requirements.txt --output .container/requirements.txt --without-hashes --with-credentials
