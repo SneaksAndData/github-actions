@@ -70,7 +70,7 @@ jobs:
         with:
           fetch-depth: 0
        - name: Install Poetry
-         uses: SneaksAndData/github-actions/install_poetry@poetry-github-action
+         uses: SneaksAndData/github-actions/install_poetry@v0.0.3
          with:
            pypi_repo_url: ${{ secrets.AZOPS_PYPI_REPO_URL }}
            pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
