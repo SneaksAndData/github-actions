@@ -7,49 +7,59 @@ branding:
 
 inputs:
   pypi_repo_url:
-    description: 'URL of python package index (for custom packages)'
+    description: URL of python package index (for custom packages)
     required: true
 
   pypi_token_username:
-    description: 'Username for authentication at python package index (for custom packages)'
+    description: Username for authentication at python package index (for custom packages)
     required: true
 
   pypi_token:
-    description: 'Token for authentication at python package index (for custom packages)'
+    description: Token for authentication at python package index (for custom packages)
     required: true
 
   export_requirements:
-    description: "Set to true if need to generate requirements.txt"
+    description: Set to true if need to generate requirements.txt
     required: false
     default: "false"
 
   export_credentials:
-    description: "If export_requirements is set to true, it exports requirements.txt with --with-credentials flag. Otherwise, does nothing. Optional. Default value is 'true'"
+    description: |
+      If export_requirements is set to true, it exports requirements.txt with --with-credentials flag.
+      Otherwise, does nothing. Optional. Default value is 'true'
     required: false
     default: "true"
 
   requirements_path:
-    description: "Path to requirements.txt to be generated (relative to sources root). Optional. Default value is '.container/requirements.txt'"
+    description: |
+      Path to requirements.txt to be generated (relative to sources root).
+      Optional. Default value is '.container/requirements.txt'
     required: false
     default: ".container/requirements.txt"
 
   install_preivew:
-    description: "Install preview version of Poetry. Optional. Default value is 'true'"
+    description: Install preview version of Poetry. Optional. Default value is 'true'
     required: false
     default: "true"
 
   version:
-    description: "Version to install. If value is 'latest', script will install the latest available version of Poetry. Optional. Default value is 'latest'"
+    description: |
+      Version to install. If value is 'latest', script will
+      install the latest available version of Poetry. Optional. Default value is 'latest'
     required: false
     default: "latest"
 
   install_extras:
-    description:  "List of optional dependencies to install, separated by space. Optional. Default is empty. If value is 'all', all extras will be installed"
+    description: | 
+      List of optional dependencies to install, separated by space.
+      Optional. Default is empty. If value is 'all', all extras will be installed
     required: false
     default: ""
 
   install_only_dependencies:
-    description:  "If set to true, installs only dependencies for project, adds parameter '--no-root' to 'poetry install' command. Optional. Default is 'false'"
+    description: |
+      If set to true, installs only dependencies for project, adds parameter '--no-root' to 'poetry install' command.
+      Optional. Default is 'false'
     required: false
     default: "false"
 
@@ -61,10 +71,6 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/setup-python@v2
-      with:
-        python-version: '3.9.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
-        architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
     - name: Install poetry and package dependencies
       shell: bash
       env:
