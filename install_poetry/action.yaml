@@ -40,7 +40,7 @@ inputs:
   install_preivew:
     description: Install preview version of Poetry. Optional. Default value is 'true'
     required: false
-    default: "true"
+    default: "false"
 
   version:
     description: |
