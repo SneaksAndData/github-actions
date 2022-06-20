@@ -31,11 +31,17 @@ poetry config repositories.custom_repo "$REPO_URL"
 POETRY_ADDITIONAL_OPTIONS=""
 if [ -z "$EXTRAS" ]; then
   if [[ "$EXTRAS" == "all" ]]; then
+    echo "Going to install all extras with the project"
     POETRY_ADDITIONAL_OPTIONS="$POETRY_ADDITIONAL_OPTIONS --all-extras"
   else
+    echo "Install with extras: $EXTRAS"
     POETRY_ADDITIONAL_OPTIONS="$POETRY_ADDITIONAL_OPTIONS --extras $EXTRAS"
   fi;
 fi;
+
+if [[ "$(echo "$INSTALL_NO_ROOT" | tr '[:upper:]' '[:lower:]')" == 'true' ]]
+  echo "Install only dependncies"
+  POETRY_ADDITIONAL_OPTIONS="$POETRY_ADDITIONAL_OPTIONS --no-root"
 
 # shellcheck disable=SC2086
 poetry install $POETRY_ADDITIONAL_OPTIONS

@@ -44,6 +44,11 @@ inputs:
     required: false
     default: ""
 
+  install_only_dependencies:
+    description:  "If set to true, installs only dependencies for project, adds parameter '--no-root' to 'poetry install' command. Optional. Default is 'false'"
+    required: false
+    default: "false"
+
 outputs:
   version:
     description: "Version"
@@ -64,5 +69,6 @@ runs:
         VERSION: ${{ inputs.install_preview }}
         EXPORT_CREDENTIALS: ${{ inputs.export_credentials }}
         EXTRAS: ${{ inputs.install_extras }}
+        INSTALL_NO_ROOT: ${{ $inputs.install_only_dependencies }}
       run: $GITHUB_ACTION_PATH/install_poetry.sh
 

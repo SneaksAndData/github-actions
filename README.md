@@ -59,6 +59,8 @@ Optionally can export dependency tree to requirements.txt file.
   - version -- Version to install. If value is 'latest', script will install the latest available version of Poetry.
     **Optional**. Default value is '**latest**'
   - install_extras -- List of optional dependencies to install, separated by space. **Optional**. Default is empty.
+  - install_only_dependencies -- If set to true, installs only dependencies for project, adds the parameter
+    `--no-root` to `poetry install` command. **Optional**. Default is '**false**'"
 
 ### Outputs
 No outputs defined
