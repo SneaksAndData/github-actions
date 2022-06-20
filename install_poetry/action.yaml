@@ -19,10 +19,30 @@ inputs:
     required: false
     default: "false"
 
+  export_credentials:
+    description: "If export_requirements is set to true, it exports requirements.txt with --with-credentials flag. Otherwise, does nothing. Optional. Default value is 'true'"
+    required: false
+    default: "true"
+
   requirements_path:
-    description: "Destination path for requirements.txt file"
+    description: "Path to requirements.txt to be generated (relative to sources root). Optional. Default value is '.container/requirements.txt'"
     required: false
     default: ".container/requirements.txt"
+
+  install_preivew:
+    description: "Install preview version of Poetry. Optional. Default value is 'true'"
+    required: false
+    default: "true"
+
+  version:
+    description: "Version to install. If value is 'latest', script will install the latest available version of Poetry. Optional. Default value is 'latest'"
+    required: false
+    default: "latest"
+
+  install_extras:
+    description:  "List of optional dependencies to install, separated by space. Optional. Default is empty."
+    required: false
+    default: ""
 
 outputs:
   version:
@@ -35,10 +55,14 @@ runs:
     - name: Install poetry and package dependencies
       shell: bash
       env:
-        POETRY_HTTP_BASIC_AZOPS_USERNAME: ${{ inputs.pypi_token_username }}
-        POETRY_HTTP_BASIC_AZOPS_PASSWORD: ${{ inputs.pypi_token }}
+        POETRY_HTTP_BASIC_CUSTOM_REPO_USERNAME: ${{ inputs.pypi_token_username }}
+        POETRY_HTTP_BASIC_CUSTOM_REPO_PASSWORD: ${{ inputs.pypi_token }}
         EXPORT_REQUIREMENTS: ${{ inputs.export_requirements }}
         REQUIREMENTS_PATH: ${{ inputs.requirements_path }}
         REPO_URL: ${{ inputs.pypi_repo_url }}
+        INSTALL_PREVIEW: ${{ inputs.install_preview }}
+        VERSION: ${{ inputs.install_preview }}
+        EXPORT_CREDENTIALS: ${{ inputs.export_credentials }}
+        EXTRAS: ${{ inputs.install_extras }}
       run: $GITHUB_ACTION_PATH/install_poetry.sh
 

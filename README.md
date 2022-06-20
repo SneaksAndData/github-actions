@@ -51,8 +51,14 @@ Optionally can export dependency tree to requirements.txt file.
   - pypi_token_username -- Username for authentication at python package index (for custom packages)
   - pypi_token -- Token for authentication at python package index (for custom packages)
   - export_requirements -- Set to `true` if need to generate requirements.txt. **Optional** defaults to **false**.
+  - export_credentials -- If export_requirements is set to true, it exports requirements.txt with
+    --with-credentials flag. Otherwise, does nothing. **Optional**. Default value is '**true**'"
   - requirements_path -- Path to requirements.txt to be generated (relative to sources root).
-    **Optional** defaults to **.container/requirements.txt**.
+    **Optional**. Default value is '**.container/requirements.txt**'.
+  - install_preview -- Install preview version of Poetry. **Optional**. Default value is '**true**'
+  - version -- Version to install. If value is 'latest', script will install the latest available version of Poetry.
+    **Optional**. Default value is '**latest**'
+  - install_extras -- List of optional dependencies to install, separated by space. **Optional**. Default is empty.
 
 ### Outputs
 No outputs defined
@@ -79,4 +85,5 @@ jobs:
            pypi_token: ${{ secrets.AZOPS_PAT }}
            export_requirements: True # if you want to generate requirements.txt
            requirements_path: ".container/requirements.txt" 
+           install_extras: "azure datadog"
 ```
