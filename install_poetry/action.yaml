@@ -15,7 +15,7 @@ inputs:
     required: true
 
   export_requirements:
-    description: "Set to 'true' if need to generate requirements.txt"
+    description: "Set to true if need to generate requirements.txt"
     required: false
     default: "false"
 
@@ -40,7 +40,7 @@ inputs:
     default: "latest"
 
   install_extras:
-    description:  "List of optional dependencies to install, separated by space. Optional. Default is empty."
+    description:  "List of optional dependencies to install, separated by space. Optional. Default is empty. If value is 'all', all extras will be installed"
     required: false
     default: ""
 
