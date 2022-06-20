@@ -1,6 +1,10 @@
 name: 'Install poetry'
 description: 'Installs poetry, restore python packages and optionally export requirements.txt'
 
+branding:
+  icon: 'battery-charging'
+  color: 'green'
+
 inputs:
   pypi_repo_url:
     description: 'URL of python package index (for custom packages)'
@@ -71,4 +75,3 @@ runs:
         EXTRAS: ${{ inputs.install_extras }}
         INSTALL_NO_ROOT: ${{ $inputs.install_only_dependencies }}
       run: $GITHUB_ACTION_PATH/install_poetry.sh
-
