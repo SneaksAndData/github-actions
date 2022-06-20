@@ -27,9 +27,14 @@ fi
 curl -sSL https://install.python-poetry.org | python3 - --preview
 export PATH=/github/home/.local/bin:$PATH
 poetry config repositories.custom_repo "$REPO_URL"
+
 POETRY_ADDITIONAL_OPTIONS=""
-if [ -z "$INSTALLEXTRAS" ]; then
-  POETRY_ADDITIONAL_OPTIONS="$POETRY_ADDITIONAL_OPTIONS --extras $EXTRAS"
+if [ -z "$EXTRAS" ]; then
+  if [[ "$EXTRAS" == "all" ]]; then
+    POETRY_ADDITIONAL_OPTIONS="$POETRY_ADDITIONAL_OPTIONS --all-extras"
+  else
+    POETRY_ADDITIONAL_OPTIONS="$POETRY_ADDITIONAL_OPTIONS --extras $EXTRAS"
+  fi;
 fi;
 
 # shellcheck disable=SC2086
