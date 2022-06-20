@@ -39,9 +39,10 @@ if [ -z "$EXTRAS" ]; then
   fi;
 fi;
 
-if [[ "$(echo "$INSTALL_NO_ROOT" | tr '[:upper:]' '[:lower:]')" == 'true' ]]
-  echo "Install only dependncies"
+if [[ "$(echo "$INSTALL_NO_ROOT" | tr '[:upper:]' '[:lower:]')" == 'true' ]]; then
+  echo "Install only dependencies"
   POETRY_ADDITIONAL_OPTIONS="$POETRY_ADDITIONAL_OPTIONS --no-root"
+fi;
 
 # shellcheck disable=SC2086
 poetry install $POETRY_ADDITIONAL_OPTIONS
