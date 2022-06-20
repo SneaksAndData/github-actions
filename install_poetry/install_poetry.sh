@@ -29,7 +29,7 @@ export PATH=/github/home/.local/bin:$PATH
 poetry config repositories.custom_repo "$REPO_URL"
 
 POETRY_ADDITIONAL_OPTIONS=""
-if [ -z "$EXTRAS" ]; then
+if [[ -n "$EXTRAS" ]]; then
   if [[ "$EXTRAS" == "all" ]]; then
     echo "Going to install all extras with the project"
     POETRY_ADDITIONAL_OPTIONS="$POETRY_ADDITIONAL_OPTIONS --all-extras"
