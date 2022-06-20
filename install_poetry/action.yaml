@@ -1,0 +1,87 @@
+name: 'Install poetry'
+description: 'Installs poetry, restore python packages and optionally export requirements.txt'
+
+branding:
+  icon: 'battery-charging'
+  color: 'green'
+
+inputs:
+  pypi_repo_url:
+    description: URL of python package index (for custom packages)
+    required: true
+
+  pypi_token_username:
+    description: Username for authentication at python package index (for custom packages)
+    required: true
+
+  pypi_token:
+    description: Token for authentication at python package index (for custom packages)
+    required: true
+
+  export_requirements:
+    description: Set to true if need to generate requirements.txt
+    required: false
+    default: "false"
+
+  export_credentials:
+    description: |
+      If export_requirements is set to true, it exports requirements.txt with --with-credentials flag.
+      Otherwise, does nothing. Optional. Default value is 'true'
+    required: false
+    default: "true"
+
+  requirements_path:
+    description: |
+      Path to requirements.txt to be generated (relative to sources root).
+      Optional. Default value is '.container/requirements.txt'
+    required: false
+    default: ".container/requirements.txt"
+
+  install_preivew:
+    description: Install preview version of Poetry. Optional. Default value is 'true'
+    required: false
+    default: "false"
+
+  version:
+    description: |
+      Version to install. If value is 'latest', script will
+      install the latest available version of Poetry. Optional. Default value is 'latest'
+    required: false
+    default: "latest"
+
+  install_extras:
+    description: | 
+      List of optional dependencies to install, separated by space.
+      Optional. Default is empty. If value is 'all', all extras will be installed
+    required: false
+    default: ""
+
+  install_only_dependencies:
+    description: |
+      If set to true, installs only dependencies for project, adds parameter '--no-root' to 'poetry install' command.
+      Optional. Default is 'false'
+    required: false
+    default: "false"
+
+outputs:
+  version:
+    description: "Version"
+    value: ${{ steps.release-generator.outputs.version }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install poetry and package dependencies
+      shell: bash
+      env:
+        POETRY_HTTP_BASIC_CUSTOM_REPO_USERNAME: ${{ inputs.pypi_token_username }}
+        POETRY_HTTP_BASIC_CUSTOM_REPO_PASSWORD: ${{ inputs.pypi_token }}
+        EXPORT_REQUIREMENTS: ${{ inputs.export_requirements }}
+        REQUIREMENTS_PATH: ${{ inputs.requirements_path }}
+        REPO_URL: ${{ inputs.pypi_repo_url }}
+        INSTALL_PREVIEW: ${{ inputs.install_preview }}
+        VERSION: ${{ inputs.install_preview }}
+        EXPORT_CREDENTIALS: ${{ inputs.export_credentials }}
+        EXTRAS: ${{ inputs.install_extras }}
+        INSTALL_NO_ROOT: ${{ inputs.install_only_dependencies }}
+      run: $GITHUB_ACTION_PATH/install_poetry.sh
