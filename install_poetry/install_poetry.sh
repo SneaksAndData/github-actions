@@ -28,24 +28,24 @@ curl -sSL https://install.python-poetry.org | python3 - --preview
 export PATH=/github/home/.local/bin:$PATH
 poetry config repositories.custom_repo "$REPO_URL"
 
-POETRY_ADDITIONAL_OPTIONS=""
+POETRY_ADDITIONAL_OPTIONS=()
 if [[ -n "$EXTRAS" ]]; then
   if [[ "$EXTRAS" == "all" ]]; then
     echo "Going to install all extras with the project"
-    POETRY_ADDITIONAL_OPTIONS="$POETRY_ADDITIONAL_OPTIONS --all-extras"
+    POETRY_ADDITIONAL_OPTIONS+=("--all-extras")
   else
     echo "Install with extras: $EXTRAS"
-    POETRY_ADDITIONAL_OPTIONS="$POETRY_ADDITIONAL_OPTIONS --extras $EXTRAS"
+    POETRY_ADDITIONAL_OPTIONS+=("--extras" "$EXTRAS")
   fi;
 fi;
 
 if [[ "$(echo "$INSTALL_NO_ROOT" | tr '[:upper:]' '[:lower:]')" == 'true' ]]; then
   echo "Install only dependencies"
-  POETRY_ADDITIONAL_OPTIONS="$POETRY_ADDITIONAL_OPTIONS --no-root"
+  POETRY_ADDITIONAL_OPTIONS+=("--no-root")
 fi;
 
 # shellcheck disable=SC2086
-poetry install $POETRY_ADDITIONAL_OPTIONS
+poetry install "${POETRY_ADDITIONAL_OPTIONS[@]}"
 
 EXPORT_ADDITIONAL_OPTIONS=""
 if [[ "$(echo "$EXPORT_CREDENTIALS" | tr '[:upper:]' '[:lower:]')" == "true" ]];
