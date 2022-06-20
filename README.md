@@ -55,7 +55,8 @@ Optionally can export dependency tree to requirements.txt file.
     --with-credentials flag. Otherwise, does nothing. **Optional**. Default value is '**true**'"
   - requirements_path -- Path to requirements.txt to be generated (relative to sources root).
     **Optional**. Default value is '**.container/requirements.txt**'.
-  - install_preview -- Install preview version of Poetry. **Optional**. Default value is '**true**'
+  - install_preview -- Install preview version of Poetry. **Optional**. Default value is '**false**'.
+    This should be set to **true** in build process until Poetry version 1.2.0 is released.
   - version -- Version to install. If value is 'latest', script will install the latest available version of Poetry.
     **Optional**. Default value is '**latest**'
   - install_extras -- List of optional dependencies to install, separated by space. **Optional**. Default is empty.
