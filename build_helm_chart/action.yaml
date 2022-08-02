@@ -7,11 +7,11 @@ branding:
 
 inputs:
   container_registry_address:
-    description: 'Container registry access token'
+    description: 'Container registry address'
     required: true
 
   application:
-    description: 'Container registry access token'
+    description: 'Application name'
     required: true
 
   container_registry_user:
