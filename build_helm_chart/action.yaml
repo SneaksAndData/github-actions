@@ -40,7 +40,6 @@ runs:
         version:  ${{ inputs.helm_version }}
     - run: $GITHUB_ACTION_PATH/build_chart.sh
       working-directory: ${{ inputs.helm_directory }}
-      id: release-generator
       env:
         REPO_ADDRESS: ${{ inputs.container_registry_address }}
         REPO_LOGIN: ${{ inputs.container_registry_user }}
