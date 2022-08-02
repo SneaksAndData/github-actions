@@ -44,6 +44,6 @@ runs:
       env:
         REPO_ADDRESS: ${{ inputs.container_registry_address }}
         REPO_LOGIN: ${{ inputs.container_registry_user }}
-        REPO_TOKEN: ${{ github.container_registry_token }}
-        APPLICATION: ${{ github.application }}
+        REPO_TOKEN: ${{ inputs.container_registry_token }}
+        APPLICATION: ${{ inputs.application }}
       shell: bash
