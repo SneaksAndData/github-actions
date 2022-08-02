@@ -18,9 +18,9 @@ set -Eeuo pipefail
 
 appVersion=$(git describe --tags --abbrev=7)
 sed -i "s/appVersion: 0.0.0/appVersion: \"${appVersion:1}\"/" Chart.yaml
-sed -i "s/^version: 0.0.0/version: \"${appVersion:1}\"/" Chart.yaml
+sed -i "s/^version: .*/version: \"${appVersion:1}\"/" Chart.yaml
 
 helm package .
 echo "$REPO_TOKEN" | helm registry login "$REPO_ADDRESS" --username "$REPO_LOGIN" --password-stdin
 echo "oci://$REPO_ADDRESS/helm/"
-helm push "${APPLICATION:1}-$appVersion.tgz" "oci://$REPO_ADDRESS/helm/"
+helm push "$APPLICATION-${appVersion:1}.tgz" "oci://$REPO_ADDRESS/helm/"
