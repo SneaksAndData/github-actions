@@ -38,7 +38,7 @@ runs:
     - uses: azure/setup-helm@v3
       with:
         version:  ${{ inputs.helm_version }}
-    - run: $GITHUB_ACTION_PATH/semver_release.sh
+    - run: $GITHUB_ACTION_PATH/build_chart.sh
       working-directory: ${{ inputs.helm_directory }}
       id: release-generator
       env:
