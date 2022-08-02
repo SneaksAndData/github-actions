@@ -21,4 +21,4 @@ sed -i "s/appVersion: 0.0.0/appVersion: \"${version:1}\"/" Chart.yaml
 
 helm package .
 echo "$REPO_TOKEN" | helm registry login "$REPO_ADDRESS" --username "$REPO_LOGIN" --password-stdin
-helm push "$APPLICATION-$version.tgz" "oci://$REPO_ADDRESS/helm/$APPLICATION:$version"
+helm push "$APPLICATION-${version:1}.tgz" "oci://$REPO_ADDRESS/helm/$APPLICATION:$version"
