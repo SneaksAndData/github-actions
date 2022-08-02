@@ -27,6 +27,11 @@ inputs:
     required: false
     default: '3.9.2'
 
+  helm_directory:
+    description: 'Location of helm chart related to project root'
+    required: false
+    default: '.helm'
+
 runs:
   using: "composite"
   steps:
@@ -34,6 +39,7 @@ runs:
       with:
         version:  ${{ inputs.helm_version }}
     - run: $GITHUB_ACTION_PATH/semver_release.sh
+      working-directory: ${{ inputs.helm_directory }}
       id: release-generator
       env:
         REPO_ADDRESS: ${{ inputs.container_registry_address }}
