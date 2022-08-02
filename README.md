@@ -5,6 +5,7 @@ Repository for common actions used in Sneaks And Data CI/CD processes
 Available actions are:
 1. [semver_release](#semver_release)
 2. [install_poetry](#install_poetry)
+3. [build_helm_chart](#build_helm_chart)
 
 ## semver_release
 
@@ -91,3 +92,15 @@ jobs:
            requirements_path: ".container/requirements.txt" 
            install_extras: "azure datadog"
 ```
+
+## build_helm_chart
+
+### Description
+
+### Inputs
+
+### Outputs
+No outputs defined
+
+### Usage
+```yaml
