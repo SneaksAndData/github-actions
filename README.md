@@ -105,12 +105,12 @@ Allows to build helm chart and push it to remote container repository.
 This action relies on git tags to be present in order to generate an artifact tag.
 
 ### Inputs
-  - container_registry_address: 'Container registry address'
-  - application: description: 'Application name'
-  - container_registry_user: 'Container registry username'
-  - container_registry_token: 'Container registry access token'
-  - helm_version: 'Version of helm to install' **Optional**. Default value is **3.9.2**
-  - helm_directory: 'Location of helm chart related to project root' **Optional**. Default value is **.helm**
+  - container_registry_address: Container registry address
+  - application: description: Application name
+  - container_registry_user: Container registry username
+  - container_registry_token: Container registry access token
+  - helm_version: Version of helm to install **Optional**. Default value is **3.9.2**
+  - helm_directory: Location of helm chart related to project root **Optional**. Default value is **.helm**
 
 ### Outputs
 No outputs defined
