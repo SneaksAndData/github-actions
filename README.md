@@ -46,6 +46,8 @@ jobs:
 Installs poetry to build environment and restores dependencies using custom and private pypi indices.
 Optionally can export dependency tree to requirements.txt file.
 
+
+
 ### Inputs
   inputs:
   - pypi_repo_url -- URL of python package index (for custom packages)
@@ -97,6 +99,10 @@ jobs:
 
 ### Description
 
+Allows to build helm chart and push it to remote container repository.
+
+**NOTE**: to be able to use this action, your repository should contain [version tags](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases).
+
 ### Inputs
   - container_registry_address: 'Container registry address'
   - application: description: 'Application name'
@@ -110,7 +116,7 @@ No outputs defined
 
 ### Usage
 ```yaml
-name: Install poetry and package dependencies
+name: Build and publish Helm chart
 
 on:
   workflow_dispatch:
