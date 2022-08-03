@@ -102,6 +102,7 @@ jobs:
 Allows to build helm chart and push it to remote container repository.
 
 **NOTE**: to be able to use this action, your repository should contain [version tags](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases).
+This action relies on git tags to be present in order to generate an artifact tag
 
 ### Inputs
   - container_registry_address: 'Container registry address'
