@@ -1,0 +1,48 @@
+name: 'Build helm chart'
+description: 'Creates helm chart for a project and pushes it to a container registry'
+
+branding:
+  icon: 'tag'
+  color: 'green'
+
+inputs:
+  container_registry_address:
+    description: 'Container registry address'
+    required: true
+
+  application:
+    description: 'Application name'
+    required: true
+
+  container_registry_user:
+    description: 'Container registry username'
+    required: true
+
+  container_registry_token:
+    description: 'Container registry access token'
+    required: true
+
+  helm_version:
+    description: 'Version of helm to install'
+    required: false
+    default: '3.9.2'
+
+  helm_directory:
+    description: 'Location of helm chart related to project root'
+    required: false
+    default: '.helm'
+
+runs:
+  using: "composite"
+  steps:
+    - uses: azure/setup-helm@v3
+      with:
+        version:  ${{ inputs.helm_version }}
+    - run: $GITHUB_ACTION_PATH/build_chart.sh
+      working-directory: ${{ inputs.helm_directory }}
+      env:
+        REPO_ADDRESS: ${{ inputs.container_registry_address }}
+        REPO_LOGIN: ${{ inputs.container_registry_user }}
+        REPO_TOKEN: ${{ inputs.container_registry_token }}
+        APPLICATION: ${{ inputs.application }}
+      shell: bash

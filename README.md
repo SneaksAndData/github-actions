@@ -5,6 +5,7 @@ Repository for common actions used in Sneaks And Data CI/CD processes
 Available actions are:
 1. [semver_release](#semver_release)
 2. [install_poetry](#install_poetry)
+3. [build_helm_chart](#build_helm_chart)
 
 ## semver_release
 
@@ -44,6 +45,8 @@ jobs:
 ### Description
 Installs poetry to build environment and restores dependencies using custom and private pypi indices.
 Optionally can export dependency tree to requirements.txt file.
+
+
 
 ### Inputs
   inputs:
@@ -91,3 +94,45 @@ jobs:
            requirements_path: ".container/requirements.txt" 
            install_extras: "azure datadog"
 ```
+
+## build_helm_chart
+
+### Description
+
+Allows to build helm chart and push it to remote container repository.
+
+**NOTE**: to be able to use this action, your repository should contain [version tags](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases).
+This action relies on git tags to be present in order to generate an artifact tag.
+
+### Inputs
+  - container_registry_address: 'Container registry address'
+  - application: description: 'Application name'
+  - container_registry_user: 'Container registry username'
+  - container_registry_token: 'Container registry access token'
+  - helm_version: 'Version of helm to install' **Optional**. Default value is **3.9.2**
+  - helm_directory: 'Location of helm chart related to project root' **Optional**. Default value is **.helm**
+
+### Outputs
+No outputs defined
+
+### Usage
+```yaml
+name: Build and publish Helm chart
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Build and Push Chart (DEV)
+      uses: SneaksAndData/github-actions/build_helm_chart@add_helm_action
+      with:
+        application: beast
+        container_registry_user: ${{secrets.AZCR_DEV_USER}}
+        container_registry_token:  ${{secrets.AZCR_DEV_TOKEN}}
+        container_registry_address: ${{secrets.AZCR_DEV_USER}}
