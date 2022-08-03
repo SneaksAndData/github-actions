@@ -1,5 +1,5 @@
 name: 'Build helm chart'
-description: 'Creates helm chart for a project and push it to docker registry'
+description: 'Creates helm chart for a project and pushes it to a container registry'
 
 branding:
   icon: 'tag'
