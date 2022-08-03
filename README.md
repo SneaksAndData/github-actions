@@ -130,7 +130,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Build and Push Chart (DEV)
-      uses: SneaksAndData/github-actions/build_helm_chart@add_helm_action
+      uses: SneaksAndData/github-actions/build_helm_chart@v0.0.4
       with:
         application: beast
         container_registry_user: ${{secrets.AZCR_DEV_USER}}
