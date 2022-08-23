@@ -11,11 +11,11 @@ inputs:
     required: true
 
   pypi_token_username:
-    description: Username for authentication at python package index (for custom packages)
+    description: Package index authentication username.
     required: true
 
   pypi_token:
-    description: Token for authentication at python package index (for custom packages)
+    description: Package index authentication token or password.
     required: true
 
   package_name:

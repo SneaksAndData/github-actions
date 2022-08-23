@@ -52,8 +52,8 @@ Optionally can export dependency tree to requirements.txt file.
 ### Inputs
   inputs:
   - pypi_repo_url -- URL of python package index (for custom packages)
-  - pypi_token_username -- Username for authentication at python package index (for custom packages)
-  - pypi_token -- Token for authentication at python package index (for custom packages)
+  - pypi_token_username -- Package index authentication username.
+  - pypi_token -- Package index authentication token or password.
   - export_requirements -- Set to `true` if need to generate requirements.txt. **Optional** defaults to **false**.
   - export_credentials -- If export_requirements is set to true, it exports requirements.txt with
     --with-credentials flag. Otherwise, does nothing. **Optional**. Default value is '**true**'"
@@ -143,7 +143,11 @@ jobs:
 
 ### Description
 
-Creates a python package with a pypi-friendly version number on pull request comment with text `create_package`
+Creates a development version of a python package according to [PEP-440](https://peps.python.org/pep-0440/) from
+an open pull request and uploads it to a provided python index.
+
+Version format is `{Major}.{Minor}.{Patch}a{PR_NUMBER}dev{COMMENT_NUMBER}` where PR_NUMBER is number of pull request and 
+COMMENT_NUMBER is number of comment which triggered a build.
 
 **NOTES**:
 1) To use this action, your repository should contain
@@ -186,4 +190,4 @@ jobs:
           pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
           pypi_token: ${{ secrets.AZOPS_PAT }}
           package_name: python_project
-
+```
