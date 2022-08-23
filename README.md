@@ -146,7 +146,7 @@ jobs:
 Creates a python package with a pypi-friendly version number on pull request comment with text `create_package`
 
 **NOTES**:
-1) To be able to use this action, your repository should contain
+1) To use this action, your repository should contain
 [version tags](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases).
 This action relies on git tags to be present in order to generate an artifact tag.
 2) This action should be placed in separate job with issue_comment pull request trigger. (see Usage below)
