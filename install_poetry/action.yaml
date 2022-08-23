@@ -63,11 +63,6 @@ inputs:
     required: false
     default: "false"
 
-outputs:
-  version:
-    description: "Version"
-    value: ${{ steps.release-generator.outputs.version }}
-
 runs:
   using: "composite"
   steps:
