@@ -35,7 +35,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Create Release
-        uses: SneaksAndData/github-actions/semver_release@v0.0.2
+        uses: SneaksAndData/github-actions/semver_release@v0.0.5
         with:
           major_v: 0
           minor_v: 0
@@ -86,7 +86,7 @@ jobs:
         with:
           fetch-depth: 0
        - name: Install Poetry and dependencies
-         uses: SneaksAndData/github-actions/install_poetry@v0.0.3
+         uses: SneaksAndData/github-actions/install_poetry@v0.0.5
          with:
            pypi_repo_url: ${{ secrets.AZOPS_PYPI_REPO_URL }}
            pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
@@ -131,7 +131,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Build and Push Chart (DEV)
-      uses: SneaksAndData/github-actions/build_helm_chart@v0.0.4
+      uses: SneaksAndData/github-actions/build_helm_chart@v0.0.5
       with:
         application: beast
         container_registry_user: ${{secrets.AZCR_DEV_USER}}
