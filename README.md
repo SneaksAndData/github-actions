@@ -149,7 +149,7 @@ Creates a python package with pypi-friendly version number on pull request comme
 1) To be able to use this action, your repository should contain
 [version tags](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases).
 This action relies on git tags to be present in order to generate an artifact tag.
-2) This action should be placed in separate job with issue_comment pull request trigger.
+2) This action should be placed in separate job with issue_comment pull request trigger. (see Usage below)
 3) This action requires to poetry being installed in build environment (for example, by [install_poetry action](#install_poetry))
 
 ### Inputs
