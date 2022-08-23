@@ -1,4 +1,4 @@
-name: 'Create development package'
+name: 'Publish a development version of a python package'
 description: 'Creates package with dev version and uploads it to python index'
 
 branding:
