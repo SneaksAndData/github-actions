@@ -143,7 +143,7 @@ jobs:
 
 ### Description
 
-Creates a python package with pypi-friendly version number on pull request comment with text `crate_package`
+Creates a python package with a pypi-friendly version number on pull request comment with text `create_package`
 
 **NOTES**:
 1) To be able to use this action, your repository should contain
