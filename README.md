@@ -154,7 +154,7 @@ This action relies on git tags to be present in order to generate an artifact ta
 
 ### Inputs
   - pypi_repo_url: URL of python package index (for custom packages)
-  - pypi_token_username: Username for authentication at python package index (for custom packages)
+  - pypi_token_username: Package index authentication username.
   - pypi_token: Package index authentication token or password.
   - package_name: Name of package to create. This should match name of root project directory
 
