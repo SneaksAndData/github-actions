@@ -1,0 +1,49 @@
+name: 'Publish a development version of a python package'
+description: 'Creates a development version of a python package according to [PEP-440](https://peps.python.org/pep-0440/) from an open pull request and uploads it to a provided python index.'
+
+branding:
+  icon: 'battery-charging'
+  color: 'green'
+
+inputs:
+  pypi_repo_url:
+    description: Package index URL.
+    required: true
+
+  pypi_token_username:
+    description: Package index authentication username.
+    required: true
+
+  pypi_token:
+    description: Package index authentication token or password.
+    required: true
+
+  package_name:
+    description: Name of package to create. This should match name of root project directory
+    required: true
+
+outputs:
+  version:
+    description: "Version"
+    value: ${{ steps.package-generator.outputs.version }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Create development package
+      shell: bash
+      run: $GITHUB_ACTION_PATH/create_package.sh
+      env:
+        REPO_URL: ${{ inputs.pypi_repo_url }}
+        PULL_REQUEST_NUMBER: ${{ github.event.issue.number }}
+        COMMENTS_COUNT: ${{ github.event.issue.comments }}
+        POETRY_HTTP_BASIC_CUSTOM_REPO_USERNAME: ${{ inputs.pypi_token_username }}
+        POETRY_HTTP_BASIC_CUSTOM_REPO_PASSWORD: ${{ inputs.pypi_token }}
+        PACKAGE_NAME: ${{ inputs.package_name }}
+      id: package-generator
+    - name: Create comment
+      uses: peter-evans/create-or-update-comment@v2
+      with:
+        issue-number: ${{ github.event.issue.number }}
+        body:  Created package with number `${{ steps.package-generator.outputs.version }}`
+

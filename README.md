@@ -6,6 +6,7 @@ Available actions are:
 1. [semver_release](#semver_release)
 2. [install_poetry](#install_poetry)
 3. [build_helm_chart](#build_helm_chart)
+4. [create_package](#create_package)
 
 ## semver_release
 
@@ -34,7 +35,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Create Release
-        uses: SneaksAndData/github-actions/semver_release@v0.0.2
+        uses: SneaksAndData/github-actions/semver_release@v0.0.5
         with:
           major_v: 0
           minor_v: 0
@@ -51,8 +52,8 @@ Optionally can export dependency tree to requirements.txt file.
 ### Inputs
   inputs:
   - pypi_repo_url -- URL of python package index (for custom packages)
-  - pypi_token_username -- Username for authentication at python package index (for custom packages)
-  - pypi_token -- Token for authentication at python package index (for custom packages)
+  - pypi_token_username -- Package index authentication username.
+  - pypi_token -- Package index authentication token or password.
   - export_requirements -- Set to `true` if need to generate requirements.txt. **Optional** defaults to **false**.
   - export_credentials -- If export_requirements is set to true, it exports requirements.txt with
     --with-credentials flag. Otherwise, does nothing. **Optional**. Default value is '**true**'"
@@ -85,7 +86,7 @@ jobs:
         with:
           fetch-depth: 0
        - name: Install Poetry and dependencies
-         uses: SneaksAndData/github-actions/install_poetry@v0.0.3
+         uses: SneaksAndData/github-actions/install_poetry@v0.0.5
          with:
            pypi_repo_url: ${{ secrets.AZOPS_PYPI_REPO_URL }}
            pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
@@ -130,9 +131,63 @@ jobs:
         with:
           fetch-depth: 0
       - name: Build and Push Chart (DEV)
-      uses: SneaksAndData/github-actions/build_helm_chart@v0.0.4
+      uses: SneaksAndData/github-actions/build_helm_chart@v0.0.5
       with:
         application: beast
         container_registry_user: ${{secrets.AZCR_DEV_USER}}
         container_registry_token:  ${{secrets.AZCR_DEV_TOKEN}}
         container_registry_address: ${{secrets.AZCR_DEV_USER}}
+```
+        
+## create_package
+
+### Description
+
+Creates a development version of a python package according to [PEP-440](https://peps.python.org/pep-0440/) from
+an open pull request and uploads it to a provided python index.
+
+Version format is `{Major}.{Minor}.{Patch}a{PR_NUMBER}dev{COMMENT_NUMBER}` where PR_NUMBER is number of pull request and 
+COMMENT_NUMBER is number of comment which triggered a build.
+
+**NOTES**:
+1) To use this action, your repository should contain
+[version tags](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases).
+This action relies on git tags to be present in order to generate an artifact tag.
+2) This action should be placed in separate job with issue_comment pull request trigger. (see Usage below)
+3) This action requires to [poetry](https://python-poetry.org/docs/master/) ~1.2 being installed in build environment (for example, by [install_poetry action](#install_poetry))
+
+### Inputs
+  - pypi_repo_url: Package index URL.
+  - pypi_token_username: Package index authentication username.
+  - pypi_token: Package index authentication token or password.
+  - package_name: Name of package to create. This should match name of root project directory
+
+### Outputs
+No outputs defined
+
+### Usage
+```yaml
+on: issue_comment
+
+jobs:
+  pr_commented:
+    name: Build package on PR comment
+    runs-on: ubuntu-latest
+    if: ${{ github.event.issue.pull_request && github.event.comment.body == 'create_package' && github.event.issue.state == 'open' }}
+    steps:
+      - uses: actions/checkout@v2
+      - run: git fetch --prune --unshallow
+      - name: Install Poetry and dependencies
+        uses: SneaksAndData/github-actions/install_poetry@v0.0.5
+        with:
+          pypi_repo_url: ${{ secrets.AZOPS_PYPI_REPO_URL }}
+          pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
+          pypi_token: ${{ secrets.AZOPS_PAT }}
+      - name: Create package
+        uses: SneaksAndData/github-actions/create_package@0.0.5
+        with:
+          pypi_repo_url: ${{ secrets.AZOPS_PYPI_UPLOAD }}
+          pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
+          pypi_token: ${{ secrets.AZOPS_PAT }}
+          package_name: python_project
+```

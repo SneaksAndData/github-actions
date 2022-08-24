@@ -11,11 +11,11 @@ inputs:
     required: true
 
   pypi_token_username:
-    description: Username for authentication at python package index (for custom packages)
+    description: Package index authentication username.
     required: true
 
-  pypi_token:
-    description: Token for authentication at python package index (for custom packages)
+  pypi_token: Package index authentication token or password.
+    description: T
     required: true
 
   export_requirements:
@@ -62,11 +62,6 @@ inputs:
       Optional. Default is 'false'
     required: false
     default: "false"
-
-outputs:
-  version:
-    description: "Version"
-    value: ${{ steps.release-generator.outputs.version }}
 
 runs:
   using: "composite"
