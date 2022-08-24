@@ -157,7 +157,7 @@ This action relies on git tags to be present in order to generate an artifact ta
 3) This action requires to [poetry](https://python-poetry.org/docs/master/) ~1.2 being installed in build environment (for example, by [install_poetry action](#install_poetry))
 
 ### Inputs
-  - pypi_repo_url: URL of python package index (for custom packages)
+  - pypi_repo_url: Package index URL.
   - pypi_token_username: Package index authentication username.
   - pypi_token: Package index authentication token or password.
   - package_name: Name of package to create. This should match name of root project directory
