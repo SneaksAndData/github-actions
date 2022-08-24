@@ -7,7 +7,7 @@ branding:
 
 inputs:
   pypi_repo_url:
-    description: URL of python package index (for custom packages)
+    description: Package index URL.
     required: true
 
   pypi_token_username:
