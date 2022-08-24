@@ -14,8 +14,8 @@ inputs:
     description: Package index authentication username.
     required: true
 
-  pypi_token: Package index authentication token or password.
-    description: T
+  pypi_token:
+    description: Package index authentication token or password.
     required: true
 
   export_requirements:
