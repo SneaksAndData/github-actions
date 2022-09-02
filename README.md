@@ -166,6 +166,10 @@ This action relies on git tags to be present in order to generate an artifact ta
 No outputs defined
 
 ### Usage
+
+Add to `.github/workflows` a workflow file defined as follwoing and replace value in property `package_name` with name
+of root folder of your package:
+
 ```yaml
 on: issue_comment
 
@@ -176,7 +180,9 @@ jobs:
     if: ${{ github.event.issue.pull_request && github.event.comment.body == 'create_package' && github.event.issue.state == 'open' }}
     steps:
       - uses: actions/checkout@v2
-      - run: git fetch --prune --unshallow
+        with:
+          ref: refs/pull/${{github.event.issue.number}}/merge
+          fetch-depth: 0
       - name: Install Poetry and dependencies
         uses: SneaksAndData/github-actions/install_poetry@v0.0.6
         with:
