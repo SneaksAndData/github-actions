@@ -24,7 +24,7 @@ if [[ $INSTALL_PREVIEW == "true" ]]; then
   export POETRY_PREVIEW=1
 fi
 
-curl -sSL https://install.python-poetry.org | python3 - --preview
+curl -sSL https://install.python-poetry.org | python3 -
 export PATH=/github/home/.local/bin:$PATH
 poetry config repositories.custom_repo "$REPO_URL"
 

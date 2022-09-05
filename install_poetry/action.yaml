@@ -37,7 +37,7 @@ inputs:
     required: false
     default: ".container/requirements.txt"
 
-  install_preivew:
+  install_preview:
     description: Install preview version of Poetry. Optional. Default value is 'true'
     required: false
     default: "false"
@@ -81,7 +81,7 @@ runs:
         REQUIREMENTS_PATH: ${{ inputs.requirements_path }}
         REPO_URL: ${{ inputs.pypi_repo_url }}
         INSTALL_PREVIEW: ${{ inputs.install_preview }}
-        VERSION: ${{ inputs.install_preview }}
+        VERSION: ${{ inputs.version }}
         EXPORT_CREDENTIALS: ${{ inputs.export_credentials }}
         EXTRAS: ${{ inputs.install_extras }}
         INSTALL_NO_ROOT: ${{ inputs.install_only_dependencies }}
