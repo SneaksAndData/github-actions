@@ -63,6 +63,12 @@ inputs:
     required: false
     default: "false"
 
+  skip_dependencies:
+    description: |
+      If set to true, installs only poetry without installing dependencies
+    required: false
+    default: "false"
+
 runs:
   using: "composite"
   steps:
@@ -79,4 +85,5 @@ runs:
         EXPORT_CREDENTIALS: ${{ inputs.export_credentials }}
         EXTRAS: ${{ inputs.install_extras }}
         INSTALL_NO_ROOT: ${{ inputs.install_only_dependencies }}
+        SKIP_DEPENDENCIES: ${{ inputs.skip_dependencies}}
       run: $GITHUB_ACTION_PATH/install_poetry.sh

@@ -67,6 +67,7 @@ Optionally can export dependency tree to requirements.txt file.
     If value is 'all', all extras will be installed
   - install_only_dependencies -- If set to true, installs only dependencies for project, adds the parameter
     `--no-root` to `poetry install` command. **Optional**. Default is '**false**'"
+  - skip_dependencies -- If set to true, installs only poetry without installing dependencies. **Optional**. Default is '**false**'"
 
 ### Outputs
 No outputs defined
