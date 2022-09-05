@@ -44,7 +44,12 @@ if [[ "$(echo "$INSTALL_NO_ROOT" | tr '[:upper:]' '[:lower:]')" == 'true' ]]; th
   POETRY_ADDITIONAL_OPTIONS+=("--no-root")
 fi;
 
-poetry install "${POETRY_ADDITIONAL_OPTIONS[@]}"
+if [[ "$(echo "$SKIP_DEPENDENCIES" | tr '[:upper:]' '[:lower:]')" == 'false' ]]; then
+    echo "Install dependencies"
+    poetry install "${POETRY_ADDITIONAL_OPTIONS[@]}"
+  else
+  echo "Install dependencies skipped because SKIP_DEPENDENCIES is set to \"$SKIP_DEPENDENCIES\""
+fi;
 
 EXPORT_ADDITIONAL_OPTIONS=""
 if [[ "$(echo "$EXPORT_CREDENTIALS" | tr '[:upper:]' '[:lower:]')" == "true" ]];
