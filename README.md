@@ -86,15 +86,15 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-       - name: Install Poetry and dependencies
-         uses: SneaksAndData/github-actions/install_poetry@v0.0.6
-         with:
-           pypi_repo_url: ${{ secrets.AZOPS_PYPI_REPO_URL }}
-           pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
-           pypi_token: ${{ secrets.AZOPS_PAT }}
-           export_requirements: True # if you want to generate requirements.txt
-           requirements_path: ".container/requirements.txt" 
-           install_extras: "azure datadog"
+      - name: Install Poetry and dependencies
+        uses: SneaksAndData/github-actions/install_poetry@v0.0.6
+        with:
+          pypi_repo_url: ${{ secrets.AZOPS_PYPI_REPO_URL }}
+          pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
+          pypi_token: ${{ secrets.AZOPS_PAT }}
+          export_requirements: True # if you want to generate requirements.txt
+          requirements_path: ".container/requirements.txt" 
+          install_extras: "azure datadog"
 ```
 
 ## build_helm_chart
@@ -132,12 +132,12 @@ jobs:
         with:
           fetch-depth: 0
       - name: Build and Push Chart (DEV)
-      uses: SneaksAndData/github-actions/build_helm_chart@v0.0.6
-      with:
-        application: beast
-        container_registry_user: ${{secrets.AZCR_DEV_USER}}
-        container_registry_token:  ${{secrets.AZCR_DEV_TOKEN}}
-        container_registry_address: ${{secrets.AZCR_DEV_USER}}
+        uses: SneaksAndData/github-actions/build_helm_chart@v0.0.6
+        with:
+            application: beast
+            container_registry_user: ${{secrets.AZCR_DEV_USER}}
+            container_registry_token:  ${{secrets.AZCR_DEV_TOKEN}}
+            container_registry_address: ${{secrets.AZCR_DEV_USER}}
 ```
         
 ## create_package
@@ -184,12 +184,13 @@ jobs:
         with:
           ref: refs/pull/${{github.event.issue.number}}/merge
           fetch-depth: 0
-      - name: Install Poetry and dependencies
+      - name: Install Poetry 
         uses: SneaksAndData/github-actions/install_poetry@v0.0.6
         with:
           pypi_repo_url: ${{ secrets.AZOPS_PYPI_REPO_URL }}
           pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
           pypi_token: ${{ secrets.AZOPS_PAT }}
+          skip_dependencies: true
       - name: Create package
         uses: SneaksAndData/github-actions/create_package@v0.0.6
         with:
