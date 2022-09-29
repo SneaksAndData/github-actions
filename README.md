@@ -70,7 +70,7 @@ Optionally can export dependency tree to requirements.txt file.
   - skip_dependencies -- If set to true, installs only poetry without installing dependencies. **Optional**. Default is '**false**'"
 
 ### Outputs
-No outputs defined
+  - custom_repo_name Name of configured custom repository to poetry push command
 
 ### Usage
 ```yaml
