@@ -54,24 +54,24 @@ Optionally can export dependency tree to requirements.txt file.
 
 
 ### Inputs
-| Name                      | Description                                                                                                                                   | Optional | Default value               |
-|---------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------|----------|-----------------------------|
-| pypi_repo_url             | URL of python package index (for custom packages)                                                                                             | False    |                             |
-| pypi_token_username       | Package index authentication username.                                                                                                        | False    |                             |
-| pypi_token                | Package index authentication token or password.                                                                                               | False    |                             |
-| export_requirements       | Set to `true` if need to generate requirements.txt. **Optional** defaults to **false**.                                                       | False    |                             |
-| export_credentials        | If export_requirements is set to true, it exports requirements.txt with --with-credentials flag. Otherwise, does nothing.                     | True     | true                        |
-| requirements_path         | Path to requirements.txt to be generated (relative to sources root).                                                                          | True     | .container/requirements.txt | 
-| install_preview           | Install preview version of Poetry. This should be set to **true** in build process until Poetry version 1.2.0 is released.                    | True     | false                       |
-| version                   | Version to install. If value is 'latest', script will install the latest available version of Poetry.                                         | True     | latest                      |
-| install_extras            | List of optional dependencies to install, separated by space. **Optional**. Default is empty. If value is 'all', all extras will be installed | True     |                             |
-| install_only_dependencies | If set to true, installs only dependencies for project, adds the parameter `--no-root` to `poetry install` command.                           | True     | false                       |
-| skip_dependencies         | If set to true, installs only poetry without installing dependencies.                                                                         | True     | false                       |
+| Name                      | Description                                                                                                                | Optional | Default value               |
+|---------------------------|:---------------------------------------------------------------------------------------------------------------------------|----------|-----------------------------|
+| pypi_repo_url             | URL of python package index (for custom packages)                                                                          | False    |                             |
+| pypi_token_username       | Package index authentication username.                                                                                     | False    |                             |
+| pypi_token                | Package index authentication token or password.                                                                            | False    |                             |
+| export_requirements       | Set to `true` if need to generate requirements.txt. **Optional** defaults to **false**.                                    | False    |                             |
+| export_credentials        | If export_requirements is set to true, it exports requirements.txt with --with-credentials flag. Otherwise, does nothing.  | True     | true                        |
+| requirements_path         | Path to requirements.txt to be generated (relative to sources root).                                                       | True     | .container/requirements.txt | 
+| install_preview           | Install preview version of Poetry. This should be set to **true** in build process until Poetry version 1.2.0 is released. | True     | false                       |
+| version                   | Version to install. If value is 'latest', script will install the latest available version of Poetry.                      | True     | latest                      |
+| install_extras            | List of optional dependencies to install, separated by space. If value is 'all', all extras will be installed              | True     |                             |
+| install_only_dependencies | If set to true, installs only dependencies for project, adds the parameter `--no-root` to `poetry install` command.        | True     | false                       |
+| skip_dependencies         | If set to true, installs only poetry without installing dependencies.                                                      | True     | false                       |
 
 ### Outputs
 | Name             | Description                                                 |
 |------------------|:------------------------------------------------------------|
- | custom_repo_name | Name of configured custom repository to poetry push command |
+| custom_repo_name | Name of configured custom repository to poetry push command |
 
 ### Usage
 ```yaml
@@ -110,12 +110,12 @@ This action relies on git tags to be present in order to generate an artifact ta
 ### Inputs
 | Name                       | Description                                    | Optional | Default value |
 |----------------------------|:-----------------------------------------------|----------|---------------|
- | container_registry_address | Container registry address                     | False    |               |
+| container_registry_address | Container registry address                     | False    |               |
 | application:               | Application name                               | False    |               |
 | container_registry_user    | Container registry username                    | False    |               |
 | container_registry_token   | Container registry access token                | False    |               |
 | helm_version               | Version of helm to install                     | True     | 3.9.2         |
- | helm_directory             | Location of helm chart related to project root | True     | .helm         |
+| helm_directory             | Location of helm chart related to project root | True     | .helm         |
 
 ### Outputs
 No outputs defined
@@ -161,12 +161,12 @@ This action relies on git tags to be present in order to generate an artifact ta
 3) This action requires to [poetry](https://python-poetry.org/docs/master/) ~1.2 being installed in build environment (for example, by [install_poetry action](#install_poetry))
 
 ### Inputs
-| Name                                                                                      | Description                                     | Optional | Default value |
-|-------------------------------------------------------------------------------------------|:------------------------------------------------|----------|---------------|
-| pypi_repo_url                                                                             | Package index URL                               | False    |               |
- | pypi_token_username                                                                       | Package index authentication username           | False    |               |
- | pypi_token                                                                                | Package index authentication token or password. | False    |               |
- | package_name: Name of package to create. This should match name of root project directory | False                                           |          |               |
+| Name                | Description                                                                 | Optional | Default value |
+|---------------------|:----------------------------------------------------------------------------|----------|---------------|
+| pypi_repo_url       | Package index URL                                                           | False    |               |
+| pypi_token_username | Package index authentication username                                       | False    |               |
+| pypi_token          | Package index authentication token or password.                             | False    |               |
+| package_name        | Name of package to create. This should match name of root project directory | False    |               |               
 
 ### Outputs
 No outputs defined
