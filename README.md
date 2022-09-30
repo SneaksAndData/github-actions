@@ -71,7 +71,7 @@ Optionally can export dependency tree to requirements.txt file.
 ### Outputs
 | Name             | Description                                                 |
 |------------------|:------------------------------------------------------------|
-| custom_repo_name | Name of configured custom repository to poetry push command |
+| custom_repo_name | Name of configured custom repository for poetry push command |
 
 ### Usage
 ```yaml
