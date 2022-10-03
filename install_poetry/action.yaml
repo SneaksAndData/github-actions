@@ -69,6 +69,11 @@ inputs:
     required: false
     default: "false"
 
+outputs:
+  custom_repo_name:
+    description: "Name of configured custom repository to poetry push command"
+    value: ${{ steps.install-poetry.outputs.custom_repo_name }}
+
 runs:
   using: "composite"
   steps:
@@ -87,3 +92,4 @@ runs:
         INSTALL_NO_ROOT: ${{ inputs.install_only_dependencies }}
         SKIP_DEPENDENCIES: ${{ inputs.skip_dependencies}}
       run: $GITHUB_ACTION_PATH/install_poetry.sh
+      id: install-poetry

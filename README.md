@@ -14,11 +14,15 @@ Available actions are:
 Creates a new github release based on git tags and [semantic versioning](https://semver.org/)
 
 ### Inputs
-- major_v -- major version of current release
-- minor_v -- minor version of current release
+| Name    | Description                      | Optional |
+|---------|:---------------------------------|----------|
+| major_v | major version of current release | False    |
+| minor_v | minor version of current release | False    |
 
 ### Outputs
-- version -- generated new version of the release
+| Name    | Description                          |
+|---------|--------------------------------------|
+| version | generated new version of the release |
 
 ### Usage
 ```yaml
@@ -35,7 +39,9 @@ jobs:
         with:
           fetch-depth: 0
       - name: Create Release
+
         uses: SneaksAndData/github-actions/semver_release@v0.0.8
+        uses: SneaksAndData/github-actions/semver_release@v0.0.9
         with:
           major_v: 0
           minor_v: 0
@@ -50,27 +56,24 @@ Optionally can export dependency tree to requirements.txt file.
 
 
 ### Inputs
-  inputs:
-  - pypi_repo_url -- URL of python package index (for custom packages)
-  - pypi_token_username -- Package index authentication username.
-  - pypi_token -- Package index authentication token or password.
-  - export_requirements -- Set to `true` if need to generate requirements.txt. **Optional** defaults to **false**.
-  - export_credentials -- If export_requirements is set to true, it exports requirements.txt with
-    --with-credentials flag. Otherwise, does nothing. **Optional**. Default value is '**true**'"
-  - requirements_path -- Path to requirements.txt to be generated (relative to sources root).
-    **Optional**. Default value is '**.container/requirements.txt**'.
-  - install_preview -- Install preview version of Poetry. **Optional**. Default value is '**false**'.
-    This should be set to **true** in build process until Poetry version 1.2.0 is released.
-  - version -- Version to install. If value is 'latest', script will install the latest available version of Poetry.
-    **Optional**. Default value is '**latest**'
-  - install_extras -- List of optional dependencies to install, separated by space. **Optional**. Default is empty.
-    If value is 'all', all extras will be installed
-  - install_only_dependencies -- If set to true, installs only dependencies for project, adds the parameter
-    `--no-root` to `poetry install` command. **Optional**. Default is '**false**'"
-  - skip_dependencies -- If set to true, installs only poetry without installing dependencies. **Optional**. Default is '**false**'"
+| Name                      | Description                                                                                                                | Optional | Default value               |
+|---------------------------|:---------------------------------------------------------------------------------------------------------------------------|----------|-----------------------------|
+| pypi_repo_url             | URL of python package index (for custom packages)                                                                          | False    |                             |
+| pypi_token_username       | Package index authentication username.                                                                                     | False    |                             |
+| pypi_token                | Package index authentication token or password.                                                                            | False    |                             |
+| export_requirements       | Set to `true` if need to generate requirements.txt. **Optional** defaults to **false**.                                    | False    |                             |
+| export_credentials        | If export_requirements is set to true, it exports requirements.txt with --with-credentials flag. Otherwise, does nothing.  | True     | true                        |
+| requirements_path         | Path to requirements.txt to be generated (relative to sources root).                                                       | True     | .container/requirements.txt | 
+| install_preview           | Install preview version of Poetry. This should be set to **true** in build process until Poetry version 1.2.0 is released. | True     | false                       |
+| version                   | Version to install. If value is 'latest', script will install the latest available version of Poetry.                      | True     | latest                      |
+| install_extras            | List of optional dependencies to install, separated by space. If value is 'all', all extras will be installed              | True     |                             |
+| install_only_dependencies | If set to true, installs only dependencies for project, adds the parameter `--no-root` to `poetry install` command.        | True     | false                       |
+| skip_dependencies         | If set to true, installs only poetry without installing dependencies.                                                      | True     | false                       |
 
 ### Outputs
-No outputs defined
+| Name             | Description                                                 |
+|------------------|:------------------------------------------------------------|
+| custom_repo_name | Name of configured custom repository for poetry push command |
 
 ### Usage
 ```yaml
@@ -87,14 +90,14 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install Poetry and dependencies
-        uses: SneaksAndData/github-actions/install_poetry@v0.0.8
+        uses: SneaksAndData/github-actions/install_poetry@v0.0.9
         with:
-          pypi_repo_url: ${{ secrets.AZOPS_PYPI_REPO_URL }}
-          pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
-          pypi_token: ${{ secrets.AZOPS_PAT }}
-          export_requirements: True # if you want to generate requirements.txt
-          requirements_path: ".container/requirements.txt" 
-          install_extras: "azure datadog"
+           pypi_repo_url: ${{ secrets.AZOPS_PYPI_REPO_URL }}
+           pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
+           pypi_token: ${{ secrets.AZOPS_PAT }}
+           export_requirements: True # if you want to generate requirements.txt
+           requirements_path: ".container/requirements.txt" 
+           install_extras: "azure datadog"
 ```
 
 ## build_helm_chart
@@ -107,12 +110,14 @@ Allows to build helm chart and push it to remote container repository.
 This action relies on git tags to be present in order to generate an artifact tag.
 
 ### Inputs
-  - container_registry_address: Container registry address
-  - application: description: Application name
-  - container_registry_user: Container registry username
-  - container_registry_token: Container registry access token
-  - helm_version: Version of helm to install **Optional**. Default value is **3.9.2**
-  - helm_directory: Location of helm chart related to project root **Optional**. Default value is **.helm**
+| Name                       | Description                                    | Optional | Default value |
+|----------------------------|:-----------------------------------------------|----------|---------------|
+| container_registry_address | Container registry address                     | False    |               |
+| application:               | Application name                               | False    |               |
+| container_registry_user    | Container registry username                    | False    |               |
+| container_registry_token   | Container registry access token                | False    |               |
+| helm_version               | Version of helm to install                     | True     | 3.9.2         |
+| helm_directory             | Location of helm chart related to project root | True     | .helm         |
 
 ### Outputs
 No outputs defined
@@ -132,12 +137,12 @@ jobs:
         with:
           fetch-depth: 0
       - name: Build and Push Chart (DEV)
-        uses: SneaksAndData/github-actions/build_helm_chart@v0.0.8
+        uses: SneaksAndData/github-actions/build_helm_chart@v0.0.9
         with:
-            application: beast
-            container_registry_user: ${{secrets.AZCR_DEV_USER}}
-            container_registry_token:  ${{secrets.AZCR_DEV_TOKEN}}
-            container_registry_address: ${{secrets.AZCR_DEV_USER}}
+          application: beast
+          container_registry_user: ${{secrets.AZCR_DEV_USER}}
+          container_registry_token:  ${{secrets.AZCR_DEV_TOKEN}}
+          container_registry_address: ${{secrets.AZCR_DEV_USER}}
 ```
         
 ## create_package
@@ -158,10 +163,12 @@ This action relies on git tags to be present in order to generate an artifact ta
 3) This action requires to [poetry](https://python-poetry.org/docs/master/) ~1.2 being installed in build environment (for example, by [install_poetry action](#install_poetry))
 
 ### Inputs
-  - pypi_repo_url: Package index URL.
-  - pypi_token_username: Package index authentication username.
-  - pypi_token: Package index authentication token or password.
-  - package_name: Name of package to create. This should match name of root project directory
+| Name                | Description                                                                 | Optional | Default value |
+|---------------------|:----------------------------------------------------------------------------|----------|---------------|
+| pypi_repo_url       | Package index URL                                                           | False    |               |
+| pypi_token_username | Package index authentication username                                       | False    |               |
+| pypi_token          | Package index authentication token or password.                             | False    |               |
+| package_name        | Name of package to create. This should match name of root project directory | False    |               |               
 
 ### Outputs
 No outputs defined
@@ -184,15 +191,15 @@ jobs:
         with:
           ref: refs/pull/${{github.event.issue.number}}/merge
           fetch-depth: 0
-      - name: Install Poetry 
-        uses: SneaksAndData/github-actions/install_poetry@v0.0.8
+      - name: Install Poetry and dependencies
+        uses: SneaksAndData/github-actions/install_poetry@v0.0.9
         with:
           pypi_repo_url: ${{ secrets.AZOPS_PYPI_REPO_URL }}
           pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
           pypi_token: ${{ secrets.AZOPS_PAT }}
           skip_dependencies: true
       - name: Create package
-        uses: SneaksAndData/github-actions/create_package@v0.0.8
+        uses: SneaksAndData/github-actions/create_package@v0.0.9
         with:
           pypi_repo_url: ${{ secrets.AZOPS_PYPI_UPLOAD }}
           pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
