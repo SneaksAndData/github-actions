@@ -39,8 +39,6 @@ jobs:
         with:
           fetch-depth: 0
       - name: Create Release
-
-        uses: SneaksAndData/github-actions/semver_release@v0.0.8
         uses: SneaksAndData/github-actions/semver_release@v0.0.9
         with:
           major_v: 0
