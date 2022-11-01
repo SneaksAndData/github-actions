@@ -1,0 +1,47 @@
+name: Deploy to spark
+description: Deploy application to Spark server file share
+
+branding:
+  icon: 'battery-charging'
+  color: 'green'
+
+inputs:
+  project_name:
+    description: Name of project to deploy
+    required: true
+
+  cluster_sp_client_id:
+    description:
+    required: true
+
+  cluster_sp_client_password:
+    description:
+    required: true
+
+  tenant_id:
+    description:
+    required: true
+
+  subscription_id:
+    description:
+    required: true
+
+outputs:
+  version:
+    description: "Version"
+    value: ${{ steps.package-generator.outputs.version }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Create development package
+      shell: bash
+      run: $GITHUB_ACTION_PATH/create_package.sh
+      env:
+        PROJECT_NAME: ${{ inputs.project_name }}
+        DEPLOYMENT_ROOT: /ecco/dist
+        CLUSTER_SP_CLIENT_ID: ${{ inputs.cluster_sp_client_id }}
+        CLUSTER_SP_CLIENT_PASSWORD: ${{ inputs.cluster_sp_client_password }}
+        TENANT_ID: ${{ inputs.tenant_id }}
+        SUBSCRIPTION_ID: ${{ inputs.tenant_id }}
+        AKS_NAME: ${{ inputs.aks_name }}
