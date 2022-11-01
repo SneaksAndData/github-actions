@@ -21,4 +21,4 @@ echo "__version__ = '$version'" > "./$PACKAGE_NAME/_version.py"
 echo "REPOSITORY TO PUBLISH IS $REPO_URL"
 poetry config repositories.custom_repo "$REPO_URL"
 poetry build && poetry publish -r custom_repo
-echo "::set-output name=version::$version"
+echo "version=$version" >> "$GITHUB_OUTPUT"
