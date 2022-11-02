@@ -38,13 +38,13 @@ az login --service-principal \
 az account set --subscription $SUBSCRIPTION_ID
 az aks get-credentials --name "$AKS_NAME" --resource-group "$AKS_NAME"
 
-spark_dist_pvc=$(kubectl get pv -n spark | grep spark-dist | cut -d' ' -f1)
-spark_volume_handle=$(kubectl get pv -n spark "$spark_dist_pvc" -o json | jq .spec.csi.volumeHandle | cut -d# -f2)
+distribution_pvc=$(kubectl get pv --namespace "$NAMESPACE" | grep "$CLAIM_NAME" | cut -d' ' -f1)
+spark_volume_handle=$(kubectl get pv --namespace "$NAMESPACE" "$distribution_pvc" -o json | jq .spec.csi.volumeHandle | cut -d# -f2)
 spark_dist_mount_account_secret=azure-storage-account-$spark_volume_handle-secret
-spark_dist_mount_account=$(kubectl get secret -n spark "$spark_dist_mount_account_secret" -o json | jq .data.azurestorageaccountname | cut -d'"' -f2 | base64 -d)
-spark_dist_mount_account_key=$(kubectl get secret -n spark "$spark_dist_mount_account_secret" -o json | jq .data.azurestorageaccountkey | cut -d'"' -f2 | base64 -d)
+spark_dist_mount_account=$(kubectl get secret --namespace "$NAMESPACE" "$spark_dist_mount_account_secret" -o json | jq .data.azurestorageaccountname | cut -d'"' -f2 | base64 -d)
+spark_dist_mount_account_key=$(kubectl get secret --namespace "$NAMESPACE" "$spark_dist_mount_account_secret" -o json | jq .data.azurestorageaccountkey | cut -d'"' -f2 | base64 -d)
 
-destination="https://$spark_dist_mount_account.file.core.windows.net/$spark_dist_pvc"
+destination="https://$spark_dist_mount_account.file.core.windows.net/$distribution_pvc"
         
 echo Generating SAS for upload
 end=$(date -d '+5 minutes' '+%Y-%m-%dT%H:%MZ')
@@ -55,8 +55,8 @@ echo Getting AzCopy
 curl -s -L https://aka.ms/downloadazcopy-v10-linux --output azcopy.tar.gz \
   && tar -xf azcopy.tar.gz -C . --strip-components=1
 
-echo "Deploying $PROJECT_NAME $currentVersion"
-./azcopy copy ./"$DEPLOYMENT_ROOT/$PROJECT_NAME/$currentVersion/*" "$authorized_destination" \
+echo "Deploying $PROJECT_NAME $current_version"
+./azcopy copy ./"$DEPLOYMENT_ROOT/$PROJECT_NAME/$current_version/*" "$authorized_destination" \
   --recursive \
   --overwrite true \
   --put-md5

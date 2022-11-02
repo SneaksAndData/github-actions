@@ -1,5 +1,5 @@
-name: Deploy to spark
-description: Deploy application to Spark server file share
+name: Deploy to PVC
+description: Deploy application to Persistent Volume in Azure Kubernetes services
 
 branding:
   icon: 'battery-charging'
@@ -26,10 +26,13 @@ inputs:
     description: Azure subscription ID
     required: true
 
-outputs:
-  version:
-    description: "Version"
-    value: ${{ steps.package-generator.outputs.version }}
+  namespace:
+    description: Kubernetes namespace name
+    required: true
+
+  claim_name:
+    description: PVC claim name
+    required: true
 
 runs:
   using: "composite"
@@ -45,3 +48,5 @@ runs:
         TENANT_ID: ${{ inputs.tenant_id }}
         SUBSCRIPTION_ID: ${{ inputs.tenant_id }}
         AKS_NAME: ${{ inputs.aks_name }}
+        NAMESPACE: ${{ inputs.namespace }}
+        CLAIM_NAME: ${{ inputs.claim_name }}
