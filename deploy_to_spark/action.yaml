@@ -11,19 +11,19 @@ inputs:
     required: true
 
   cluster_sp_client_id:
-    description:
+    description: Azure application ID
     required: true
 
   cluster_sp_client_password:
-    description:
+    description: Azure application password
     required: true
 
   tenant_id:
-    description:
+    description: Azure tenant ID
     required: true
 
   subscription_id:
-    description:
+    description: Azure subscription ID
     required: true
 
 outputs:

@@ -23,10 +23,10 @@ echo "Preparing upload for $PROJECT_NAME $current_version"
 
 env_path=$(poetry env info | grep Path | head -n 1 | awk '{print $2}')
          
-mkdir -p "./$DEPLOYMENT_ROOT/$PROJECT_NAME/$currentVersion/$PROJECT_NAME"
+mkdir -p "./$DEPLOYMENT_ROOT/$PROJECT_NAME/$current_version/$PROJECT_NAME"
 
-mv -v "$env_path"/lib/python3.9/site-packages/* "./$DEPLOYMENT_ROOT/$PROJECT_NAME/$currentVersion/"
-mv -v ./"$PROJECT_NAME"/* "./$DEPLOYMENT_ROOT/$PROJECT_NAME/$currentVersion/$PROJECT_NAME/"
+mv -v "$env_path"/lib/python3.9/site-packages/* "./$DEPLOYMENT_ROOT/$PROJECT_NAME/$current_version/"
+mv -v ./"$PROJECT_NAME"/* "./$DEPLOYMENT_ROOT/$PROJECT_NAME/$current_version/$PROJECT_NAME/"
 
 echo 'Getting cluster credentials'
 az login --service-principal \
@@ -50,7 +50,7 @@ echo Generating SAS for upload
 end=$(date -d '+5 minutes' '+%Y-%m-%dT%H:%MZ')
 sas=$(az storage account generate-sas --account-key "$spark_dist_mount_account_key" --account-name "$spark_dist_mount_account" --expiry "$end" --https-only --permissions acdlpruw --resource-types sco --services f | cut -d'"' -f2)
 
-authorized_destination="$destination/$PROJECT_NAME/$currentVersion?$sas"
+authorized_destination="$destination/$PROJECT_NAME/$current_version?$sas"
 echo Getting AzCopy
 curl -s -L https://aka.ms/downloadazcopy-v10-linux --output azcopy.tar.gz \
   && tar -xf azcopy.tar.gz -C . --strip-components=1
