@@ -47,7 +47,16 @@ account_key=$(kubectl get secret --namespace "$NAMESPACE" "$account_secret" -o j
 
 echo Generating SAS for upload
 end=$(date -d '+5 minutes' '+%Y-%m-%dT%H:%MZ')
-sas=$(az storage account generate-sas --account-key "$account_key" --account-name "$account_name" --expiry "$end" --https-only --permissions acdlpruw --resource-types sco --services f | cut -d'"' -f2)
+sas=$(
+  az storage account generate-sas \
+      --account-key "$account_key" \
+      --account-name "$account_name" \
+      --expiry "$end" \
+      --https-only \
+      --permissions acdlpruw \
+      --resource-types sco \
+      --services f | cut -d'"' -f2
+)
 
 destination="https://$account_name.file.core.windows.net/$distribution_pvc/$PROJECT_NAME/$current_version"
 authorized_destination="$destination?$sas"
