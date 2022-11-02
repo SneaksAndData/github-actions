@@ -48,7 +48,7 @@ runs:
   steps:
     - name: Create development package
       shell: bash
-      run: $GITHUB_ACTION_PATH/create_package.sh
+      run: $GITHUB_ACTION_PATH/deploy_to_pvc.sh
       env:
         PROJECT_NAME: ${{ inputs.project_name }}
         DEPLOYMENT_ROOT: ${{ inputs.deployment_root }}
