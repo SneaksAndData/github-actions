@@ -19,6 +19,7 @@ set -e
 export PATH="/github/home/.local/bin:$PATH"
 
 current_version=$(git describe --tags --abbrev=7)
+
 echo "Preparing upload for $PROJECT_NAME $current_version"
 
 env_path=$(poetry env info | grep Path | head -n 1 | awk '{print $2}')
