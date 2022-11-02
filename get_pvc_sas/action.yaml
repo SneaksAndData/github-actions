@@ -1,0 +1,38 @@
+name: Deploy to PVC
+description: Deploy application to Persistent Volume in Azure Kubernetes services
+
+branding:
+  icon: 'battery-charging'
+  color: 'green'
+
+inputs:
+  namespace:
+    description: Kubernetes namespace name
+    required: true
+
+  claim_name:
+    description: PVC claim name
+    required: true
+
+  directory_name:
+    description: Deployment relative path
+    required: true
+
+
+outputs:
+  authorized_destination:
+    description: "Generated url with sas for upload"
+    value: ${{ steps.get_pvc_sas.outputs.authorized_destination }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Create development package
+      shell: bash
+      run: $GITHUB_ACTION_PATH/get_pvc_sas.sh
+      env:
+        PROJECT_NAME: ${{ inputs.project_name }}
+        NAMESPACE: ${{ inputs.namespace }}
+        CLAIM_NAME: ${{ inputs.claim_name }}
+        DIRECTORY_NAME: ${{ inputs.directory_name }}
+      id: get_pvc_sas

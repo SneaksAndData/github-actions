@@ -1,0 +1,19 @@
+name: Get Project version
+description: Returns current version of the project
+
+branding:
+  icon: 'battery-charging'
+  color: 'green'
+
+outputs:
+  version:
+    description: "Generated url with sas for upload"
+    value: ${{ steps.get_project_version.outputs.version }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Create development package
+      shell: bash
+      run: $GITHUB_ACTION_PATH/get_project_version.sh
+      id: get_project_version

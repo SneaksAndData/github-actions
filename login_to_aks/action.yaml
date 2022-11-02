@@ -1,15 +1,11 @@
-name: Deploy to PVC
-description: Deploy application to Persistent Volume in Azure Kubernetes services
+name: Login to AKS
+description: Login to azure kubernetes services
 
 branding:
   icon: 'battery-charging'
   color: 'green'
 
 inputs:
-  project_name:
-    description: Name of project to deploy
-    required: true
-
   cluster_sp_client_id:
     description: Azure application ID
     required: true
@@ -26,36 +22,19 @@ inputs:
     description: Azure subscription ID
     required: true
 
-  namespace:
-    description: Kubernetes namespace name
-    required: true
-
-  claim_name:
-    description: PVC claim name
-    required: true
-
   cluster_name:
     description: Kubernetes cluster name
     required: true
-
-  deployment_root:
-    description: Deployment root directory
-    required: false
-    default: /ecco/dist
 
 runs:
   using: "composite"
   steps:
     - name: Create development package
       shell: bash
-      run: $GITHUB_ACTION_PATH/deploy_to_pvc.sh
+      run: $GITHUB_ACTION_PATH/login_to_aks.sh
       env:
-        PROJECT_NAME: ${{ inputs.project_name }}
-        DEPLOYMENT_ROOT: ${{ inputs.deployment_root }}
         CLUSTER_SP_CLIENT_ID: ${{ inputs.cluster_sp_client_id }}
         CLUSTER_SP_CLIENT_PASSWORD: ${{ inputs.cluster_sp_client_password }}
         TENANT_ID: ${{ inputs.tenant_id }}
         SUBSCRIPTION_ID: ${{ inputs.subscription_id }}
         AKS_NAME: ${{ inputs.cluster_name }}
-        NAMESPACE: ${{ inputs.namespace }}
-        CLAIM_NAME: ${{ inputs.claim_name }}
