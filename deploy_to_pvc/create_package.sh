@@ -48,14 +48,14 @@ echo Generating SAS for upload
 end=$(date -d '+5 minutes' '+%Y-%m-%dT%H:%MZ')
 sas=$(az storage account generate-sas --account-key "$account_key" --account-name "$account_name" --expiry "$end" --https-only --permissions acdlpruw --resource-types sco --services f | cut -d'"' -f2)
 
-destination="https://$account_name.file.core.windows.net/$distribution_pvc"
-authorized_destination="$destination/$PROJECT_NAME/$current_version?$sas"
+destination="https://$account_name.file.core.windows.net/$distribution_pvc/$PROJECT_NAME/$current_version"
+authorized_destination="$destination?$sas"
 
 echo Getting AzCopy
 curl -s -L https://aka.ms/downloadazcopy-v10-linux --output azcopy.tar.gz \
   && tar -xf azcopy.tar.gz -C . --strip-components=1
 
-echo "Deploying $PROJECT_NAME $current_version"
+echo "Deploying $PROJECT_NAME $current_version to $destination"
 ./azcopy copy ./"$DEPLOYMENT_ROOT/$PROJECT_NAME/$current_version/*" "$authorized_destination" \
   --recursive \
   --overwrite true \
