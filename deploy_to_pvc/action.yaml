@@ -55,7 +55,7 @@ runs:
         CLUSTER_SP_CLIENT_ID: ${{ inputs.cluster_sp_client_id }}
         CLUSTER_SP_CLIENT_PASSWORD: ${{ inputs.cluster_sp_client_password }}
         TENANT_ID: ${{ inputs.tenant_id }}
-        SUBSCRIPTION_ID: ${{ inputs.tenant_id }}
+        SUBSCRIPTION_ID: ${{ inputs.subscription_id }}
         AKS_NAME: ${{ inputs.cluster_name }}
         NAMESPACE: ${{ inputs.namespace }}
         CLAIM_NAME: ${{ inputs.claim_name }}
