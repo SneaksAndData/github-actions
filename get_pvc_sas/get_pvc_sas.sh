@@ -23,7 +23,8 @@ account_name=$(kubectl get secret --namespace "$NAMESPACE" "$account_secret" -o 
 account_key=$(kubectl get secret --namespace "$NAMESPACE" "$account_secret" -o json | jq .data.azurestorageaccountkey | cut -d'"' -f2 | base64 -d)
 
 
-echo Generating SAS for upload
+destination="https://$account_name.file.core.windows.net/$distribution_pvc/$DIRECTORY_NAME"
+echo "Generating SAS for upload to $destination"
 end=$(date -d '+5 minutes' '+%Y-%m-%dT%H:%MZ')
 sas=$(
   az storage account generate-sas \
@@ -36,7 +37,6 @@ sas=$(
       --services f | cut -d'"' -f2
 )
 
-destination="https://$account_name.file.core.windows.net/$distribution_pvc/$DIRECTORY_NAME"
 authorized_destination="$destination?$sas"
 echo "::add-mask::$sas"
 echo "::add-mask::$authorized_destination"
