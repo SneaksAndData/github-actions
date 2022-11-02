@@ -31,7 +31,6 @@ runs:
       shell: bash
       run: $GITHUB_ACTION_PATH/get_pvc_sas.sh
       env:
-        PROJECT_NAME: ${{ inputs.project_name }}
         NAMESPACE: ${{ inputs.namespace }}
         CLAIM_NAME: ${{ inputs.claim_name }}
         DIRECTORY_NAME: ${{ inputs.directory_name }}
