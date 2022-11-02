@@ -34,6 +34,15 @@ inputs:
     description: PVC claim name
     required: true
 
+  cluster_name:
+    description: Kubernetes cluster name
+    required: true
+
+  deployment_root:
+    description: Deployment root directory
+    required: false
+    default: /ecco/dist
+
 runs:
   using: "composite"
   steps:
@@ -42,11 +51,11 @@ runs:
       run: $GITHUB_ACTION_PATH/create_package.sh
       env:
         PROJECT_NAME: ${{ inputs.project_name }}
-        DEPLOYMENT_ROOT: /ecco/dist
+        DEPLOYMENT_ROOT: ${{ inputs.deployment_root }}
         CLUSTER_SP_CLIENT_ID: ${{ inputs.cluster_sp_client_id }}
         CLUSTER_SP_CLIENT_PASSWORD: ${{ inputs.cluster_sp_client_password }}
         TENANT_ID: ${{ inputs.tenant_id }}
         SUBSCRIPTION_ID: ${{ inputs.tenant_id }}
-        AKS_NAME: ${{ inputs.aks_name }}
+        AKS_NAME: ${{ inputs.cluster_name }}
         NAMESPACE: ${{ inputs.namespace }}
         CLAIM_NAME: ${{ inputs.claim_name }}
