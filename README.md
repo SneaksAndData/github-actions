@@ -195,6 +195,7 @@ jobs:
           pypi_repo_url: ${{ secrets.AZOPS_PYPI_REPO_URL }}
           pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
           pypi_token: ${{ secrets.AZOPS_PAT }}
+          skip_dependencies: true
       - name: Create package
         uses: SneaksAndData/github-actions/create_package@v0.0.9
         with:
