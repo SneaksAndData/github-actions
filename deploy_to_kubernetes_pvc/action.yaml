@@ -1,10 +1,9 @@
-name: Deploy python project
-description: Deploys python project to azure file share
+name: Deploy to azure file share
+description: Deploy a project to azure file share that is connected to a kubernetes cluster as Persistent Volume Claim
 
 branding:
   icon: 'battery-charging'
   color: 'green'
-
 
 inputs:
   cluster_sp_client_id:
@@ -45,6 +44,10 @@ inputs:
     default: spark-dist
     description: Kubernetes namespace
 
+  project_type:
+    required: true
+    description: Project type Should be either `python` or `dbt`
+
 outputs:
   version:
     description: "Generated url with sas for upload"
@@ -74,7 +77,16 @@ runs:
         claim_name: ${{ inputs.pvc_name }}
         directory_name: ${{ inputs.project_name }}/${{steps.version.outputs.version}}
     - name: Prepare site-packages for deployment
+      if: ${{ inputs.project_type == 'python' }}
       uses: $GITHUB_ACTION_PATH/../prepare_python_deployment
+      with:
+        deployment_root: ${{ inputs.deployment_root }}
+        project_version: ${{ steps.version.outputs.version }}
+        destination: ${{ steps.sas.outputs.authorized_destination }}
+        project_name: ${{ inputs.project_name }}
+    - name: Prepare site-packages for deployment
+      if: ${{ inputs.project_type == 'dbt' }}
+      uses: $GITHUB_ACTION_PATH/../prepare_dbt_deployment
       with:
         deployment_root: ${{ inputs.deployment_root }}
         project_version: ${{ steps.version.outputs.version }}
