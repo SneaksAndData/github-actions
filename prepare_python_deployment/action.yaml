@@ -1,25 +1,21 @@
 name: Login to AKS
-description: Login to azure kubernetes services
+description: Prepare source deployment of python application
 
 branding:
   icon: 'battery-charging'
   color: 'green'
 
 inputs:
-  deployment_root:
-    description: Azure application ID
+  output_directory:
+    description: Output directory
     required: true
 
   project_version:
-    description: Azure application password
-    required: true
-
-  destination:
-    description: Azure tenant ID
+    description: Version of project to deploy
     required: true
 
   project_name:
-    description: Azure subscription ID
+    description: Name of project to deploy
     required: true
 
 runs:
@@ -29,7 +25,6 @@ runs:
       shell: bash
       run: $GITHUB_ACTION_PATH/prepare_python_deployment.sh
       env:
-        DEPLOYMENT_ROOT: ${{ inputs.deployment_root }}
+        OUTPUT_DIRECTORY: ${{ inputs.output_directory }}
         PROJECT_VERSION: ${{ inputs.project_version }}
-        DESTINATION: ${{ inputs.destination }}
         PROJECT_NAME: ${{ inputs.project_name }}

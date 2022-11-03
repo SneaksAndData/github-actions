@@ -1,5 +1,5 @@
 name: Login to AKS
-description: Login to azure kubernetes services
+description: Login to Azure Kubernetes Services
 
 branding:
   icon: 'battery-charging'

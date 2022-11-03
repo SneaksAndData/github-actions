@@ -1,5 +1,5 @@
 name: Deploy to PVC
-description: Deploy application to Persistent Volume in Azure Kubernetes services
+description: Deploy application Azure file share connected to an AKS Kubernetes cluster as a persistent volume claim
 
 branding:
   icon: 'battery-charging'
@@ -7,31 +7,30 @@ branding:
 
 inputs:
   namespace:
-    description: Kubernetes namespace name
+    description: Persistent Volume Claim namespace
     required: true
 
   claim_name:
-    description: PVC claim name
+    description: Persistent Volume Claim name
     required: true
 
   directory_name:
-    description: Deployment relative path
+    description: Relative path inside Azure file share
     required: true
-
 
 outputs:
   authorized_destination:
     description: "Generated url with sas for upload"
-    value: ${{ steps.get_pvc_sas.outputs.authorized_destination }}
+    value: ${{ steps.sas.outputs.authorized_destination }}
 
 runs:
   using: "composite"
   steps:
-    - name: Create development package
+    - name: Get volume shared action signature
       shell: bash
       run: $GITHUB_ACTION_PATH/get_pvc_sas.sh
       env:
         NAMESPACE: ${{ inputs.namespace }}
         CLAIM_NAME: ${{ inputs.claim_name }}
         DIRECTORY_NAME: ${{ inputs.directory_name }}
-      id: get_pvc_sas
+      id: sas

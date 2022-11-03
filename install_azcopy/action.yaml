@@ -1,5 +1,5 @@
 name: Install azcopy
-description: Installs azcopy
+description: Installs azcopy v10 in build environment
 
 branding:
   icon: 'battery-charging'
@@ -10,17 +10,4 @@ runs:
   steps:
     - name: Install poetry and package dependencies
       shell: bash
-      env:
-        POETRY_HTTP_BASIC_CUSTOM_REPO_USERNAME: ${{ inputs.pypi_token_username }}
-        POETRY_HTTP_BASIC_CUSTOM_REPO_PASSWORD: ${{ inputs.pypi_token }}
-        EXPORT_REQUIREMENTS: ${{ inputs.export_requirements }}
-        REQUIREMENTS_PATH: ${{ inputs.requirements_path }}
-        REPO_URL: ${{ inputs.pypi_repo_url }}
-        INSTALL_PREVIEW: ${{ inputs.install_preview }}
-        VERSION: ${{ inputs.version }}
-        EXPORT_CREDENTIALS: ${{ inputs.export_credentials }}
-        EXTRAS: ${{ inputs.install_extras }}
-        INSTALL_NO_ROOT: ${{ inputs.install_only_dependencies }}
-        SKIP_DEPENDENCIES: ${{ inputs.skip_dependencies}}
       run: $GITHUB_ACTION_PATH/install_azcopy.sh
-      id: install-poetry

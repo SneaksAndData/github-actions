@@ -1,0 +1,19 @@
+name: Generate version
+description: Returns current version of the project
+
+branding:
+  icon: 'battery-charging'
+  color: 'green'
+
+outputs:
+  version:
+    description: "Version of current project based on git tags"
+    value: ${{ steps.version.outputs.version }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Create development package
+      shell: bash
+      run: $GITHUB_ACTION_PATH/generate_version.sh
+      id: version

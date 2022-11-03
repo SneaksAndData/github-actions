@@ -7,6 +7,10 @@ Available actions are:
 2. [install_poetry](#install_poetry)
 3. [build_helm_chart](#build_helm_chart)
 4. [create_package](#create_package)
+5. [generate_version](#generate_version)
+6. [install_azcopy](#install_azcopy)
+7. [login_to_aks](#login_to_aks)
+7. [prepare_python_deployment](#prepare_python_deployment)
 
 ## semver_release
 
@@ -69,8 +73,8 @@ Optionally can export dependency tree to requirements.txt file.
 | skip_dependencies         | If set to true, installs only poetry without installing dependencies.                                                      | True     | false                       |
 
 ### Outputs
-| Name             | Description                                                 |
-|------------------|:------------------------------------------------------------|
+| Name             | Description                                                  |
+|------------------|:-------------------------------------------------------------|
 | custom_repo_name | Name of configured custom repository for poetry push command |
 
 ### Usage
@@ -204,3 +208,51 @@ jobs:
           pypi_token: ${{ secrets.AZOPS_PAT }}
           package_name: python_project
 ```
+
+## generate_version
+
+Generates project version based on current git commit and git tags.
+
+**NOTES**:
+1) To use this action, your repository should contain
+[version tags](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases).
+This action relies on git tags to be present in order to generate a version.
+2) Generated version is will not be compatible with [PEP-440](https://peps.python.org/pep-0440/), so this versions 
+should not be used with python packages. Although, this action can be used with
+[source code deployments](#prepare_python_deployment) of python applications.
+
+
+### Inputs
+No inputs defined
+### Outputs
+| Name                | Description                                                                 |
+|---------------------|:----------------------------------------------------------------------------|
+| version             | generated version string                                                    |
+
+
+## install_azcopy
+
+Installs azcopy v10 in current build directory.
+
+### Inputs
+No inputs defined
+### Outputs
+No outputs defined
+
+## login_to_aks
+Get AKS login credentials for kubectl
+
+### Inputs
+| Name                       | Description                              | Optional | Default value |
+|----------------------------|:-----------------------------------------|----------|---------------|
+| cluster_sp_client_id       | Cluster service principal application id | False    |               |
+| cluster_sp_client_password | Cluster service principal password       | False    |               |
+| tenant_id                  | Azure tenant ID                          | False    |               |
+| subscription_id            | Azure subscription ID                    | False    |               |               
+| cluster_name               | Name of the cluster                      | False    |               |
+
+### Outputs
+No outputs defined
+
+# prepare_python_deployment
+Copy python site-packages of current virtual environment and installs application into it. 

@@ -18,6 +18,6 @@ echo "Preparing to deploy $PROJECT_NAME $PROJECT_VERSION"
 set -Eeuo pipefail
 env_path=$(poetry env info | grep Path | head -n 1 | cut -d':' -f2 | xargs)
 
-mkdir -p "./$DEPLOYMENT_ROOT/$PROJECT_NAME/$PROJECT_VERSION/$PROJECT_NAME"
-mv -v "$env_path"/lib/python3.9/site-packages/* "./$DEPLOYMENT_ROOT/$PROJECT_NAME/$PROJECT_VERSION/"
-mv -v ./"$PROJECT_NAME"/* "./$DEPLOYMENT_ROOT/$PROJECT_NAME/$PROJECT_VERSION/$PROJECT_NAME/"
+mkdir -p "./$OUTPUT_DIRECTORY/$PROJECT_NAME/$PROJECT_VERSION/$PROJECT_NAME"
+mv -v "$env_path"/lib/python3.9/site-packages/* "./$OUTPUT_DIRECTORY/$PROJECT_NAME/$PROJECT_VERSION/"
+mv -v ./"$PROJECT_NAME"/* "./$OUTPUT_DIRECTORY/$PROJECT_NAME/$PROJECT_VERSION/$PROJECT_NAME/"
