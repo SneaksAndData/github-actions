@@ -65,7 +65,7 @@ runs:
       uses: $GITHUB_ACTION_PATH/../login_to_aks
       with:
         cluster_sp_client_id: ${{ inputs.cluster_sp_client_id }}
-        cluster_sp_client_password: ${{ inputs.cluster_sp_client_password }}
+        cluster_sp_client_password: ${{ inputs.cluster_sp_client_password
         tenant_id: ${{ inputs.tenant_id }}
         subscription_id: ${{ inputs.subscription_id }}
         cluster_name: ${{ inputs.cluster_name }}
