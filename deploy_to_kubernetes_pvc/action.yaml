@@ -57,12 +57,12 @@ runs:
   using: "composite"
   steps:
     - name: Install azcopy
-      uses: $GITHUB_ACTION_REPOSITORY/install_azcopy
+      uses: SneaksAndData/github-actions/install_azcopy
     - name: Get project version
-      uses: $GITHUB_ACTION_REPOSITORY/get_project_version
+      uses: SneaksAndData/github-actions/get_project_version
       id: version
     - name: Get cluster credentials
-      uses: $GITHUB_ACTION_REPOSITORY/login_to_aks
+      uses: SneaksAndData/github-actions/login_to_aks
       with:
         cluster_sp_client_id: ${{ inputs.cluster_sp_client_id }}
         cluster_sp_client_password: ${{ inputs.cluster_sp_client_password }}
@@ -70,21 +70,21 @@ runs:
         subscription_id: ${{ inputs.subscription_id }}
         cluster_name: ${{ inputs.cluster_name }}
     - name: Generate SAS for upload
-      uses: $GITHUB_ACTION_REPOSITORY/get_pvc_sas
+      uses: SneaksAndData/github-actions/get_pvc_sas
       id: sas
       with:
         namespace: ${{ inputs.kubernetes_namespace }}
         claim_name: ${{ inputs.pvc_name }}
         directory_name: ${{ inputs.project_name }}/${{steps.version.outputs.version}}
     - name: Prepare site-packages for deployment
-      uses: $GITHUB_ACTION_REPOSITORY/prepare_python_deployment
+      uses: SneaksAndData/github-actions/prepare_python_deployment
       with:
         deployment_root: ${{ inputs.deployment_root }}
         project_version: ${{ steps.version.outputs.version }}
         destination: ${{ steps.sas.outputs.authorized_destination }}
         project_name: ${{ inputs.project_name }}
     - name: Deploy ${{ inputs.project_name }}
-      uses: $GITHUB_ACTION_REPOSITORY/run_azcopy
+      uses: SneaksAndData/github-actions/run_azcopy
       with:
         source_directory: ${{ inputs.deployment_root }}/${{inputs.project_name}}/${{ steps.version.outputs.version }}/*
         target: ${{ steps.sas.outputs.authorized_destination }}
