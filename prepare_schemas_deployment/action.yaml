@@ -1,0 +1,30 @@
+name: Prepare DBT deployment
+description: Prepare source deployment of DBT queries
+
+branding:
+  icon: 'battery-charging'
+  color: 'green'
+
+inputs:
+  output_directory:
+    description: Output directory
+    required: true
+
+  project_version:
+    description: Version of project to deploy
+    required: true
+
+  project_name:
+    description: Name of project to deploy
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Prepare python deployment
+      shell: bash
+      run: $GITHUB_ACTION_PATH/prepare_schemas_deployment.sh
+      env:
+        DEPLOYMENT_ROOT: ${{ inputs.deployment_root }}
+        PROJECT_VERSION: ${{ inputs.project_version }}
+        PROJECT_NAME: ${{ inputs.project_name }}

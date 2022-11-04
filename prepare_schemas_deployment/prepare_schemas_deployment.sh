@@ -16,5 +16,5 @@
 
 set -Eeuo pipefail
 
-mkdir -p "./$DEPLOYMENT_ROOT/$PROJECT_NAME/$PROJECT_VERSION/"
-mv -v ./target/run/* "./$DEPLOYMENT_ROOT/$PROJECT_NAME/$PROJECT_VERSION/"
+mkdir -p "./$DEPLOYMENT_ROOT/$PROJECT_NAME-schemas/$PROJECT_VERSION/"
+mv -v ./schemas/* "./$DEPLOYMENT_ROOT/$PROJECT_NAME-schemas/$PROJECT_VERSION/"
