@@ -1,4 +1,4 @@
-name: Login to AKS
+name: Prepare python deployment
 description: Prepare source deployment of python application
 
 branding:
