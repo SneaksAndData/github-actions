@@ -15,7 +15,8 @@
 #  limitations under the License.
 
 set -Eeuo pipefail
-version=$(git describe --tags --abbrev=0)a$PULL_REQUEST_NUMBER.dev$COMMENTS_COUNT
+next_version=$(git describe --tags --abbrev=0 | awk -F. '/[0-9]+\./{$NF++;print}' OFS=.)
+version=${next_version}a${PULL_REQUEST_NUMBER}.dev${COMMENTS_COUNT}
 sed -i "s/version = \"0.0.0\"/version = \"$version\"/" pyproject.toml
 echo "__version__ = '$version'" > "./$PACKAGE_NAME/_version.py"
 echo "REPOSITORY TO PUBLISH IS $REPO_URL"
