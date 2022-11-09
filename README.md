@@ -277,9 +277,6 @@ jobs:
     name: install azcopy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
       - name: Install azcopy v10
         uses: SneaksAndData/github-actions/install_azcopy@0.0.9
 ```
