@@ -326,11 +326,11 @@ jobs:
 Copy python site-packages of current virtual environment and installs application into it. 
 
 ### Inputs
-| Name             | Description                 | Optional | Default value |
-|------------------|:----------------------------|----------|---------------|
-| output_directory | Directory for action output | False    |               |
-| project_version  | Version of the project      | False    |               |
-| project_name     | Name of the project         | False    |               |
+| Name             | Description                                   | Optional | Default value |
+|------------------|:----------------------------------------------|----------|---------------|
+| output_directory | Local directory on build agent to store files | False    |               |
+| project_version  | Version of the project                        | False    |               |
+| project_name     | Name of the project                           | False    |               |
 
 **NOTES**:
 1) To use this action, your project should use poetry for virtual environment management. Ensure that you installed
@@ -377,11 +377,11 @@ jobs:
 Prepare DBT models for deployment to an Azure file share.
 
 ### Inputs
-| Name             | Description                 | Optional | Default value |
-|------------------|:----------------------------|----------|---------------|
-| output_directory | Directory for action output | False    |               |
-| project_version  | Version of the project      | False    |               |
-| project_name     | Name of the project         | False    |               |
+| Name             | Description                                   | Optional | Default value |
+|------------------|:----------------------------------------------|----------|---------------|
+| output_directory | Local directory on build agent to store files | False    |               |
+| project_version  | Version of the project                        | False    |               |
+| project_name     | Name of the project                           | False    |               |
 
 ### Outputs
 No outputs defined
@@ -424,11 +424,11 @@ jobs:
 Prepare DBT schemas for deployment to an Azure file share.
 
 ### Inputs
-| Name             | Description                 | Optional | Default value |
-|------------------|:----------------------------|----------|---------------|
-| output_directory | Directory for action output | False    |               |
-| project_version  | Version of the project      | False    |               |
-| project_name     | Name of the project         | False    |               |
+| Name             | Description                                   | Optional | Default value |
+|------------------|:----------------------------------------------|----------|---------------|
+| output_directory | Local directory on build agent to store files | False    |               |
+| project_version  | Version of the project                        | False    |               |
+| project_name     | Name of the project                           | False    |               |
 
 ### Outputs
 No outputs defined
@@ -470,10 +470,10 @@ jobs:
 Copy data from local directory on build agent to Azure blob container or file share
 
 ### Inputs
-| Name             | Description                     | Optional | Default value |
-|------------------|:--------------------------------|----------|---------------|
-| source_directory | Local directory to copy from    | False    |               |
-| target           | Azure blob container to copy to | False    |               |
+| Name             | Description             | Optional | Default value |
+|------------------|:------------------------|----------|---------------|
+| source_directory | Local directory to copy | False    |               |
+| target           | Target Azure file share | False    |               |
 
 ### Outputs
 No outputs defined
