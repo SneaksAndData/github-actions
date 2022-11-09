@@ -18,6 +18,10 @@ inputs:
     description: Name of project to deploy
     required: true
 
+  project_directory:
+    description: Name of directory within the project to deploy
+    required: false
+
 runs:
   using: "composite"
   steps:
@@ -28,3 +32,4 @@ runs:
         OUTPUT_DIRECTORY: ${{ inputs.output_directory }}
         PROJECT_VERSION: ${{ inputs.project_version }}
         PROJECT_NAME: ${{ inputs.project_name }}
+        PROJECT_DIRECTORY : ${{ inputs.project_directory }}

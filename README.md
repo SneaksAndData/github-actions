@@ -323,11 +323,12 @@ jobs:
 Copy python site-packages of current virtual environment and installs application into it. 
 
 ### Inputs
-| Name             | Description                                   | Optional | Default value |
-|------------------|:----------------------------------------------|----------|---------------|
-| output_directory | Local directory on build agent to store files | False    |               |
-| project_version  | Version of the project                        | False    |               |
-| project_name     | Name of the project                           | False    |               |
+| Name              | Description                                                      | Optional | Default value |
+|-------------------|:-----------------------------------------------------------------|----------|---------------|
+| output_directory  | Local directory on build agent to store files                    | False    |               |
+| project_version   | Version of the project                                           | False    |               |
+| project_name      | Name of the project                                              | False    |               |
+| project_directory | Directory name inside the project (if differs from project name) | True     | ""            |
 
 **NOTES**:
 1) To use this action, your project should use poetry for virtual environment management. Ensure that you installed
