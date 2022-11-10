@@ -14,6 +14,7 @@ Available actions are:
 9. [prepare_dbt_deployment](#prepare_dbt_deployment)
 10. [prepare_schemas_deployment](#prepare_schemas_deployment)
 11. [run_azcopy](#run_azcopy)
+12. [get_azure_share_sas](#get_azure_share_sas)
 
 ## semver_release
 
@@ -511,5 +512,51 @@ jobs:
         uses: SneaksAndData/github-actions/run_azcopy@0.0.9
         with:
           source_directory: /dbt/dbt_project/${{ steps.version.outputs.version }}/*
+          target: ${{ steps.sas.outputs.authorized_destination }}
+```
+## get_azure_share_sas
+
+### Description
+Generates new temporary
+[Shared Access Signature](https://learn.microsoft.com/en-us/azure/storage/common/storage-sas-overview)
+for a file share, attached to a storage account.
+
+**NOTES**:
+1) The generated SAS is valid for 5 minutes.
+
+### Inputs
+| Name           | Description                              | Optional |
+|----------------|:-----------------------------------------|----------|
+| directory_name | Path within file share                   | False    |
+| account_key    | Name of the storage account of the share | False    |
+| account_name   | Key of the storage account of the share  | False    |
+
+### Outputs
+| Name                   | Description                                                 |
+|------------------------|-------------------------------------------------------------|
+| authorized_destination | URL of the file share with attached shared access signature |
+
+### Usage
+```yaml
+name: Release a new version
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate SAS for upload
+        uses: SneaksAndData/github-actions/get_azure_share_sas@0.0.9
+        with:
+          directory_name: share-name/path/within/share
+          account_key: ${{ secrets.ACCOUNT_KEY }}
+          account_name: ${{ secrets.ACCOUNT_NAME }}
+        id: sas
+      - name: Copy data
+        uses: SneaksAndData/github-actions/run_azcopy@0.0.9
+        with:
+          source_directory: source/directory/on/build/agent
           target: ${{ steps.sas.outputs.authorized_destination }}
 ```
