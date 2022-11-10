@@ -38,4 +38,5 @@ runs:
         DIRECTORY_NAME: ${{ inputs.directory_name }}
         ACCOUNT_KEY: ${{ inputs.account_key }}
         ACCOUNT_NAME: ${{ inputs.account_name }}
+        DEPLOY_ENVIRONMENT: ${{ inputs.deploy_environment }}
       id: sas
