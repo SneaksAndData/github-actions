@@ -16,20 +16,15 @@
 
 set -Eeuo pipefail
 
-distribution_pvc=$(kubectl get pv --namespace "$NAMESPACE" | grep "$CLAIM_NAME" | cut -d' ' -f1)
-volume_handle=$(kubectl get pv --namespace "$NAMESPACE" "$distribution_pvc" -o json | jq .spec.csi.volumeHandle | cut -d# -f2)
-account_secret=azure-storage-account-$volume_handle-secret
-account_name=$(kubectl get secret --namespace "$NAMESPACE" "$account_secret" -o json | jq .data.azurestorageaccountname | cut -d'"' -f2 | base64 -d)
-account_key=$(kubectl get secret --namespace "$NAMESPACE" "$account_secret" -o json | jq .data.azurestorageaccountkey | cut -d'"' -f2 | base64 -d)
+distribution_pvc="spark-code-mount-$DEPLOY_ENVIRONMENT"
+destination="https://$ACCOUNT_NAME.file.core.windows.net/$distribution_pvc/$DIRECTORY_NAME"
 
-
-destination="https://$account_name.file.core.windows.net/$distribution_pvc/$DIRECTORY_NAME"
 echo "Generating SAS for upload to $destination"
 end=$(date -d '+5 minutes' '+%Y-%m-%dT%H:%MZ')
 sas=$(
   az storage account generate-sas \
-      --account-key "$account_key" \
-      --account-name "$account_name" \
+      --account-key "$ACCOUNT_KEY" \
+      --account-name "$ACCOUNT_NAME" \
       --expiry "$end" \
       --https-only \
       --permissions acdlpruw \

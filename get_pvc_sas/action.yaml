@@ -6,17 +6,22 @@ branding:
   color: 'green'
 
 inputs:
-  namespace:
-    description: Persistent Volume Claim namespace
-    required: true
-
-  claim_name:
-    description: Persistent Volume Claim name
-    required: true
-
   directory_name:
     description: Relative path inside Azure file share
     required: true
+
+  deploy_environment:
+    description: Deploy environment name
+    required: true
+
+  account_key:
+    description: Storage account key
+    required: true
+
+  account_name:
+    description: Storage account name
+    required: true
+
 
 outputs:
   authorized_destination:
@@ -30,7 +35,7 @@ runs:
       shell: bash
       run: $GITHUB_ACTION_PATH/get_pvc_sas.sh
       env:
-        NAMESPACE: ${{ inputs.namespace }}
-        CLAIM_NAME: ${{ inputs.claim_name }}
         DIRECTORY_NAME: ${{ inputs.directory_name }}
+        ACCOUNT_KEY: ${{ inputs.account_key }}
+        ACCOUNT_NAME: ${{ inputs.account_name }}
       id: sas
