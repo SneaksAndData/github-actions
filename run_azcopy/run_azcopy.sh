@@ -14,5 +14,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+set -Eeuo pipefail
+
 echo "Copy from $SOURCE_DIRECTORY to $DESTINATION"
 ./azcopy copy "./$SOURCE_DIRECTORY/*" "$DESTINATION" --recursive --overwrite true --put-md5

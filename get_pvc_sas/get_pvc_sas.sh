@@ -14,7 +14,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-set -e
+set -Eeuo pipefail
 
 distribution_pvc=$(kubectl get pv --namespace "$NAMESPACE" | grep "$CLAIM_NAME" | cut -d' ' -f1)
 volume_handle=$(kubectl get pv --namespace "$NAMESPACE" "$distribution_pvc" -o json | jq .spec.csi.volumeHandle | cut -d# -f2)

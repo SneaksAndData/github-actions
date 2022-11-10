@@ -14,6 +14,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+set -Eeuo pipefail
+
 echo "Preparing to deploy $PROJECT_NAME $PROJECT_VERSION"
 set -Eeuo pipefail
 env_path=$(poetry env info | grep Path | head -n 1 | cut -d':' -f2 | xargs)

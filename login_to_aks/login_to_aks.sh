@@ -14,6 +14,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+set -Eeuo pipefail
+
 echo 'Getting cluster credentials'
 az login --service-principal \
   --username "$CLUSTER_SP_CLIENT_ID" \

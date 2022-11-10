@@ -15,6 +15,7 @@
 #  limitations under the License.
 
 set -Eeuo pipefail
+
 next_version=$(git describe --tags --abbrev=0 | awk -F. '/[0-9]+\./{$NF++;print}' OFS=.)
 version=${next_version}a${PULL_REQUEST_NUMBER}.dev${COMMENTS_COUNT}
 sed -i "s/version = \"0.0.0\"/version = \"$version\"/" pyproject.toml

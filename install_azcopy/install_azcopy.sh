@@ -14,6 +14,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+set -Eeuo pipefail
+
 echo Getting AzCopy
 curl -s -L https://aka.ms/downloadazcopy-v10-linux --output azcopy.tar.gz \
   && tar -xf azcopy.tar.gz -C . --strip-components=1
