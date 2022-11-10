@@ -16,5 +16,8 @@
 
 set -Eeuo pipefail
 
-mkdir -p "./$DEPLOYMENT_ROOT/$PROJECT_NAME/$PROJECT_VERSION/"
-mv -v ./target/run/* "./$DEPLOYMENT_ROOT/$PROJECT_NAME/$PROJECT_VERSION/"
+SOURCE_DIRECTORY="./$DEPLOYMENT_ROOT/$PROJECT_NAME/$PROJECT_VERSION/"
+mkdir -p SOURCE_DIRECTORY
+mv -v ./target/run/* "$SOURCE_DIRECTORY"
+
+./azcopy copy "./$SOURCE_DIRECTORY/*" "$DESTINATION" --recursive --overwrite true --put-md5

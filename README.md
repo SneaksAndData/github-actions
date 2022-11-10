@@ -10,16 +10,16 @@ Available actions are:
 5. [generate_version](#generate_version)
 6. [install_azcopy](#install_azcopy)
 7. [login_to_aks](#login_to_aks)
-8. [prepare_python_deployment](#prepare_python_deployment)
-9. [prepare_dbt_deployment](#prepare_dbt_deployment)
-10. [prepare_schemas_deployment](#prepare_schemas_deployment)
+8. [deploy_python](#deploy_python)
+9. [deploy_dbt](#deploy_dbt)
+10. [deploy_schemas](#deploy_schemas)
 11. [run_azcopy](#run_azcopy)
 12. [get_azure_share_sas](#get_azure_share_sas)
 
 ## semver_release
 
 ### Description
-Creates a new github release based on git tags and [semantic versioning](https://semver.org/)
+Creates a new GitHub release based on git tags and [semantic versioning](https://semver.org/)
 
 ### Inputs
 | Name    | Description                      | Optional |
@@ -223,7 +223,7 @@ Generates project version based on current git commit and git tags.
 This action relies on git tags to be present in order to generate a version.
 2) Generated version is will not be compatible with [PEP-440](https://peps.python.org/pep-0440/), so this versions 
 should not be used with python packages. Although, this action can be used with
-[source code deployments](#prepare_python_deployment) of python applications.
+[source code deployments](#deploy_python) of python applications.
 
 
 ### Inputs
@@ -249,7 +249,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get project version
-        uses: SneaksAndData/github-actions/generate_version@0.0.9
+        uses: SneaksAndData/github-actions/generate_version@0.0.10
         id: version
       - run: echo "$version"
         env:
@@ -279,7 +279,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install azcopy v10
-        uses: SneaksAndData/github-actions/install_azcopy@0.0.9
+        uses: SneaksAndData/github-actions/install_azcopy@0.0.10
 ```
 
 ## login_to_aks
@@ -311,7 +311,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get cluster credentials
-        uses: SneaksAndData/github-actions/login_to_aks@0.0.9
+        uses: SneaksAndData/github-actions/login_to_aks@0.0.10
         with:
           cluster_sp_client_id: $AZURE_CLIENT_ID
           cluster_sp_client_password: $AZURE_CLIENT_SECRET
@@ -320,7 +320,7 @@ jobs:
           cluster_name: $AZURE_AKS_NAME
 ```
 
-# prepare_python_deployment
+# deploy_python
 Copy python site-packages of current virtual environment and installs application into it. 
 
 ### Inputs
@@ -330,6 +330,8 @@ Copy python site-packages of current virtual environment and installs applicatio
 | project_version   | Version of the project                                           | False    |               |
 | project_name      | Name of the project                                              | False    |               |
 | project_directory | Directory name inside the project (if differs from project name) | True     | ""            |
+| destination       | Directory or SAS for upload                                      | False    |               |
+| python_version    | Project python version                                           | True     | 3.9           |
 
 **NOTES**:
 1) To use this action, your project should use poetry for virtual environment management. Ensure that you installed
@@ -354,17 +356,17 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get project version
-        uses: SneaksAndData/github-actions/generate_version@0.0.9
+        uses: SneaksAndData/github-actions/generate_version@0.0.10
         id: version
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@0.0.9
+        uses: SneaksAndData/github-actions/get_azure_share_sas@0.0.10
         with:
-          namespace: k8s-namespace
-          claim_name: persistent-volume
-          directory_name: python/${{steps.version.outputs.version}}
+          directory_name: share-name/path/within/share
+          account_key: ${{ secrets.ACCOUNT_KEY }}
+          account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Prepare site-packages for deployment
-        uses: SneaksAndData/github-actions/prepare_python_deployment@0.0.9
+        uses: SneaksAndData/github-actions/deploy_python@0.0.10
         with:
           deployment_root: /python
           project_version: ${{ steps.version.outputs.version }}
@@ -372,7 +374,7 @@ jobs:
           project_name: python_project
 ```
 
-# prepare_dbt_deployment
+# deploy_dbt
 Prepare DBT models for deployment to an Azure file share.
 
 ### Inputs
@@ -381,6 +383,7 @@ Prepare DBT models for deployment to an Azure file share.
 | output_directory | Local directory on build agent to store files | False    |               |
 | project_version  | Version of the project                        | False    |               |
 | project_name     | Name of the project                           | False    |               |
+| destination      | Directory or SAS for upload                   | False    |               |
 
 ### Outputs
 No outputs defined
@@ -401,17 +404,17 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get project version
-        uses: SneaksAndData/github-actions/generate_version@0.0.9
+        uses: SneaksAndData/github-actions/generate_version@0.0.10
         id: version
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@0.0.9
+        uses: SneaksAndData/github-actions/get_azure_share_sas@0.0.10
         with:
-          namespace: k8s-namespace
-          claim_name: persistent-volume
-          directory_name: python/${{steps.version.outputs.version}}
+          directory_name: share-name/path/within/share
+          account_key: ${{ secrets.ACCOUNT_KEY }}
+          account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Prepare dbt for deployment
-        uses: SneaksAndData/github-actions/prepare_dbt_deployment@0.0.9
+        uses: SneaksAndData/github-actions/deploy_dbt@0.0.10
         with:
           deployment_root: /dbt
           project_version: ${{ steps.version.outputs.version }}
@@ -419,7 +422,7 @@ jobs:
           project_name: dbt_project
 ```
 
-# prepare_schemas_deployment
+# deploy_schemas
 Prepare DBT schemas for deployment to an Azure file share.
 
 ### Inputs
@@ -428,6 +431,7 @@ Prepare DBT schemas for deployment to an Azure file share.
 | output_directory | Local directory on build agent to store files | False    |               |
 | project_version  | Version of the project                        | False    |               |
 | project_name     | Name of the project                           | False    |               |
+| destination      | Directory or SAS for upload                   | False    |               |
 
 ### Outputs
 No outputs defined
@@ -447,17 +451,17 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get project version
-        uses: SneaksAndData/github-actions/generate_version@0.0.9
+        uses: SneaksAndData/github-actions/generate_version@0.0.10
         id: version
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@0.0.9
+        uses: SneaksAndData/github-actions/get_azure_share_sas@0.0.10
         with:
-          namespace: k8s-namespace
-          claim_name: persistent-volume
-          directory_name: python/${{steps.version.outputs.version}}
+          directory_name: share-name/path/within/share
+          account_key: ${{ secrets.ACCOUNT_KEY }}
+          account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Prepare dbt for deployment
-        uses: SneaksAndData/github-actions/prepare_chemas_deployment@0.0.9
+        uses: SneaksAndData/github-actions/deploy_schemas@0.0.10
         with:
           deployment_root: /dbt
           project_version: ${{ steps.version.outputs.version }}
@@ -488,30 +492,17 @@ jobs:
   copy_files:
     name: Copy files
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Get project version
-        uses: SneaksAndData/github-actions/generate_version@0.0.9
-        id: version
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@0.0.9
+        uses: SneaksAndData/github-actions/get_azure_share_sas@0.0.10
         with:
-          namespace: k8s-namespace
-          claim_name: persistent-volume
-          directory_name: python/${{steps.version.outputs.version}}
+          directory_name: share-name/path/within/share
+          account_key: ${{ secrets.ACCOUNT_KEY }}
+          account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
-      - name: Prepare dbt for deployment
-        uses: SneaksAndData/github-actions/prepare_chemas_deployment@0.0.9
+      - name: Copy data
+        uses: SneaksAndData/github-actions/run_azcopy@0.0.10
         with:
-          deployment_root: /dbt
-          project_version: ${{ steps.version.outputs.version }}
-          destination: ${{ steps.sas.outputs.authorized_destination }}
-          project_name: dbt_project
-      - name: Deploy project
-        uses: SneaksAndData/github-actions/run_azcopy@0.0.9
-        with:
-          source_directory: /dbt/dbt_project/${{ steps.version.outputs.version }}/*
+          source_directory: source/directory/on/build/agent
           target: ${{ steps.sas.outputs.authorized_destination }}
 ```
 ## get_azure_share_sas
@@ -548,14 +539,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@0.0.9
+        uses: SneaksAndData/github-actions/get_azure_share_sas@0.0.10
         with:
           directory_name: share-name/path/within/share
           account_key: ${{ secrets.ACCOUNT_KEY }}
           account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Copy data
-        uses: SneaksAndData/github-actions/run_azcopy@0.0.9
+        uses: SneaksAndData/github-actions/run_azcopy@0.0.10
         with:
           source_directory: source/directory/on/build/agent
           target: ${{ steps.sas.outputs.authorized_destination }}

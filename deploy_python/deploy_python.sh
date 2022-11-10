@@ -16,5 +16,17 @@
 
 set -Eeuo pipefail
 
-mkdir -p "./$DEPLOYMENT_ROOT/$PROJECT_NAME-schemas/$PROJECT_VERSION/"
-mv -v ./schemas/* "./$DEPLOYMENT_ROOT/$PROJECT_NAME-schemas/$PROJECT_VERSION/"
+echo "Preparing to deploy $PROJECT_NAME $PROJECT_VERSION"
+set -Eeuo pipefail
+env_path=$(poetry env info | grep Path | head -n 1 | cut -d':' -f2 | xargs)
+
+if [ -z "$PROJECT_DIRECTORY" ]; then
+      PROJECT_DIRECTORY="$PROJECT_NAME"
+fi;
+
+SOURCE_DIRECTORY="./$DEPLOYMENT_ROOT/$PROJECT_NAME/$PROJECT_VERSION/"
+mkdir -p "$SOURCE_DIRECTORY"
+mv -v "$env_path"/lib/python"$PYTHON_VERSION"/site-packages/* "$SOURCE_DIRECTORY"
+mv -v ./"$PROJECT_DIRECTORY"/* "$SOURCE_DIRECTORY"
+
+./azcopy copy "./$SOURCE_DIRECTORY/*" "$DESTINATION" --recursive --overwrite true --put-md5

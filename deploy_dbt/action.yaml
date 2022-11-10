@@ -1,5 +1,5 @@
-name: Prepare DBT deployment
-description: Prepare source deployment of DBT queries
+name: Deploy DBT
+description: Deploy source code of DBT queries
 
 branding:
   icon: 'battery-charging'
@@ -18,13 +18,18 @@ inputs:
     description: Name of project to deploy
     required: true
 
+  destination:
+    required: true
+    description: Destination directory or SAS token
+
 runs:
   using: "composite"
   steps:
     - name: Prepare python deployment
       shell: bash
-      run: $GITHUB_ACTION_PATH/prepare_dbt_deployment.sh
+      run: $GITHUB_ACTION_PATH/deploy_dbt.sh
       env:
         DEPLOYMENT_ROOT: ${{ inputs.deployment_root }}
         PROJECT_VERSION: ${{ inputs.project_version }}
         PROJECT_NAME: ${{ inputs.project_name }}
+        DESTINATION: ${{ inputs.destination }}

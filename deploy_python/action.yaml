@@ -1,5 +1,5 @@
-name: Prepare python deployment
-description: Prepare source deployment of python application
+name: Deploy python code
+description: Deploy source code of python application
 
 branding:
   icon: 'battery-charging'
@@ -18,18 +18,29 @@ inputs:
     description: Name of project to deploy
     required: true
 
+  destination:
+    required: true
+    description: Destination directory or SAS token
+
   project_directory:
     description: Name of directory within the project to deploy
     required: false
+
+  python_version:
+    description: Python version
+    required: false
+    default: "3.9"
 
 runs:
   using: "composite"
   steps:
     - name: Prepare python deployment
       shell: bash
-      run: $GITHUB_ACTION_PATH/prepare_python_deployment.sh
+      run: $GITHUB_ACTION_PATH/deploy_python.sh
       env:
         OUTPUT_DIRECTORY: ${{ inputs.output_directory }}
         PROJECT_VERSION: ${{ inputs.project_version }}
         PROJECT_NAME: ${{ inputs.project_name }}
         PROJECT_DIRECTORY : ${{ inputs.project_directory }}
+        PYTHON_VERSION: ${{ inputs.python_version }}
+        DESTINATION: ${{ inputs.destination }}
