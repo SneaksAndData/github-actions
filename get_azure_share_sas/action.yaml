@@ -10,10 +10,6 @@ inputs:
     description: Relative path inside Azure file share
     required: true
 
-  deploy_environment:
-    description: Deploy environment name
-    required: true
-
   account_key:
     description: Storage account key
     required: true
@@ -33,10 +29,9 @@ runs:
   steps:
     - name: Get volume shared action signature
       shell: bash
-      run: $GITHUB_ACTION_PATH/get_pvc_sas.sh
+      run: $GITHUB_ACTION_PATH/get_azure_share_sas.sh
       env:
         DIRECTORY_NAME: ${{ inputs.directory_name }}
         ACCOUNT_KEY: ${{ inputs.account_key }}
         ACCOUNT_NAME: ${{ inputs.account_name }}
-        DEPLOY_ENVIRONMENT: ${{ inputs.deploy_environment }}
       id: sas

@@ -356,7 +356,7 @@ jobs:
         uses: SneaksAndData/github-actions/generate_version@0.0.9
         id: version
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_pvc_sas@0.0.9
+        uses: SneaksAndData/github-actions/get_azure_share_sas@0.0.9
         with:
           namespace: k8s-namespace
           claim_name: persistent-volume
@@ -403,7 +403,7 @@ jobs:
         uses: SneaksAndData/github-actions/generate_version@0.0.9
         id: version
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_pvc_sas@0.0.9
+        uses: SneaksAndData/github-actions/get_azure_share_sas@0.0.9
         with:
           namespace: k8s-namespace
           claim_name: persistent-volume
@@ -449,7 +449,7 @@ jobs:
         uses: SneaksAndData/github-actions/generate_version@0.0.9
         id: version
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_pvc_sas@0.0.9
+        uses: SneaksAndData/github-actions/get_azure_share_sas@0.0.9
         with:
           namespace: k8s-namespace
           claim_name: persistent-volume
@@ -494,7 +494,7 @@ jobs:
         uses: SneaksAndData/github-actions/generate_version@0.0.9
         id: version
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_pvc_sas@0.0.9
+        uses: SneaksAndData/github-actions/get_azure_share_sas@0.0.9
         with:
           namespace: k8s-namespace
           claim_name: persistent-volume

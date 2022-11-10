@@ -16,8 +16,7 @@
 
 set -Eeuo pipefail
 
-distribution_pvc="spark-code-mount-$DEPLOY_ENVIRONMENT"
-destination="https://$ACCOUNT_NAME.file.core.windows.net/$distribution_pvc/$DIRECTORY_NAME"
+destination="https://$ACCOUNT_NAME.file.core.windows.net/$DIRECTORY_NAME"
 
 echo "Generating SAS for upload to $destination"
 end=$(date -d '+5 minutes' '+%Y-%m-%dT%H:%MZ')
