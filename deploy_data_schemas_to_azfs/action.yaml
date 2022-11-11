@@ -22,6 +22,10 @@ inputs:
     required: true
     description: Destination directory or SAS token
 
+  deployment_root:
+    required: true
+    description: Root directory in the deployment file structure
+
 runs:
   using: "composite"
   steps:
