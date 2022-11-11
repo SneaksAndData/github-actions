@@ -283,7 +283,7 @@ jobs:
 ```
 
 ## login_to_aks
-Get AKS login credentials for kubectl
+Get AKS login credentials for kubectl. Service principal used must have a permission to list cluster credentials.
 
 ### Inputs
 | Name                       | Description                              | Optional | Default value |
