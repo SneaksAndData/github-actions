@@ -1,0 +1,35 @@
+name: Deploy schemas
+description: Deploy schemas
+
+branding:
+  icon: 'battery-charging'
+  color: 'green'
+
+inputs:
+  output_directory:
+    description: Output directory
+    required: true
+
+  project_version:
+    description: Version of project to deploy
+    required: true
+
+  project_name:
+    description: Name of project to deploy
+    required: true
+
+  destination:
+    required: true
+    description: Destination directory or SAS token
+
+runs:
+  using: "composite"
+  steps:
+    - name: Prepare python deployment
+      shell: bash
+      run: $GITHUB_ACTION_PATH/deploy_data_schemas_to_azfs.sh
+      env:
+        DEPLOYMENT_ROOT: ${{ inputs.deployment_root }}
+        PROJECT_VERSION: ${{ inputs.project_version }}
+        PROJECT_NAME: ${{ inputs.project_name }}
+        DESTINATION: ${{ inputs.destination }}

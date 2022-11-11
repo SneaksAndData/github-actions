@@ -16,11 +16,22 @@
 
 set -Eeuo pipefail
 
-next_version=$(git describe --tags --abbrev=0 | awk -F. '/[0-9]+\./{$NF++;print}' OFS=.)
-version=${next_version}a${PULL_REQUEST_NUMBER}.dev${COMMENTS_COUNT}
-sed -i "s/version = \"0.0.0\"/version = \"$version\"/" pyproject.toml
-echo "__version__ = '$version'" > "./$PACKAGE_NAME/_version.py"
-echo "REPOSITORY TO PUBLISH IS $REPO_URL"
-poetry config repositories.custom_repo "$REPO_URL"
-poetry build && poetry publish -r custom_repo
-echo "version=$version" >> "$GITHUB_OUTPUT"
+destination="https://$ACCOUNT_NAME.file.core.windows.net/$DIRECTORY_NAME"
+
+echo "Generating SAS for upload to $destination"
+end=$(date -d '+5 minutes' '+%Y-%m-%dT%H:%MZ')
+sas=$(
+  az storage account generate-sas \
+      --account-key "$ACCOUNT_KEY" \
+      --account-name "$ACCOUNT_NAME" \
+      --expiry "$end" \
+      --https-only \
+      --permissions acdlpruw \
+      --resource-types sco \
+      --services f | cut -d'"' -f2
+)
+
+authorized_destination="$destination?$sas"
+echo "::add-mask::$sas"
+echo "::add-mask::$authorized_destination"
+echo "authorized_destination=$authorized_destination" >> "$GITHUB_OUTPUT"

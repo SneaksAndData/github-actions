@@ -16,11 +16,5 @@
 
 set -Eeuo pipefail
 
-next_version=$(git describe --tags --abbrev=0 | awk -F. '/[0-9]+\./{$NF++;print}' OFS=.)
-version=${next_version}a${PULL_REQUEST_NUMBER}.dev${COMMENTS_COUNT}
-sed -i "s/version = \"0.0.0\"/version = \"$version\"/" pyproject.toml
-echo "__version__ = '$version'" > "./$PACKAGE_NAME/_version.py"
-echo "REPOSITORY TO PUBLISH IS $REPO_URL"
-poetry config repositories.custom_repo "$REPO_URL"
-poetry build && poetry publish -r custom_repo
-echo "version=$version" >> "$GITHUB_OUTPUT"
+echo "Copy from $SOURCE_DIRECTORY to $DESTINATION"
+./azcopy copy "./$SOURCE_DIRECTORY/*" "$DESTINATION" --recursive --overwrite true --put-md5

@@ -1,0 +1,40 @@
+name: Login to AKS
+description: Login to Azure Kubernetes Services
+
+branding:
+  icon: 'battery-charging'
+  color: 'green'
+
+inputs:
+  cluster_sp_client_id:
+    description: Azure application ID
+    required: true
+
+  cluster_sp_client_password:
+    description: Azure application password
+    required: true
+
+  tenant_id:
+    description: Azure tenant ID
+    required: true
+
+  subscription_id:
+    description: Azure subscription ID
+    required: true
+
+  cluster_name:
+    description: Kubernetes cluster name
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Create development package
+      shell: bash
+      run: $GITHUB_ACTION_PATH/login_to_aks.sh
+      env:
+        CLUSTER_SP_CLIENT_ID: ${{ inputs.cluster_sp_client_id }}
+        CLUSTER_SP_CLIENT_PASSWORD: ${{ inputs.cluster_sp_client_password }}
+        TENANT_ID: ${{ inputs.tenant_id }}
+        SUBSCRIPTION_ID: ${{ inputs.subscription_id }}
+        AKS_NAME: ${{ inputs.cluster_name }}

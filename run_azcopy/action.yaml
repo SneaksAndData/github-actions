@@ -1,0 +1,25 @@
+name: Run azcopy
+description: Copy files with azcopy
+
+branding:
+  icon: 'battery-charging'
+  color: 'green'
+
+inputs:
+  source_directory:
+    required: true
+    description: A directory to copy files from
+
+  target:
+    required: true
+    description: Destination directory or SAS token
+
+runs:
+  using: "composite"
+  steps:
+    - name: Prepare python deployment
+      shell: bash
+      run: $GITHUB_ACTION_PATH/run_azcopy.sh
+      env:
+        SOURCE_DIRECTORY: ${{ inputs.source_directory }}
+        DESTINATION: ${{ inputs.target }}

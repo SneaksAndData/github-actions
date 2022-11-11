@@ -16,11 +16,17 @@
 
 set -Eeuo pipefail
 
-next_version=$(git describe --tags --abbrev=0 | awk -F. '/[0-9]+\./{$NF++;print}' OFS=.)
-version=${next_version}a${PULL_REQUEST_NUMBER}.dev${COMMENTS_COUNT}
-sed -i "s/version = \"0.0.0\"/version = \"$version\"/" pyproject.toml
-echo "__version__ = '$version'" > "./$PACKAGE_NAME/_version.py"
-echo "REPOSITORY TO PUBLISH IS $REPO_URL"
-poetry config repositories.custom_repo "$REPO_URL"
-poetry build && poetry publish -r custom_repo
-echo "version=$version" >> "$GITHUB_OUTPUT"
+echo "Preparing to deploy $PROJECT_NAME $PROJECT_VERSION"
+set -Eeuo pipefail
+env_path=$(poetry env info | grep Path | head -n 1 | cut -d':' -f2 | xargs)
+
+if [ -z "$PROJECT_DIRECTORY" ]; then
+      PROJECT_DIRECTORY="$PROJECT_NAME"
+fi;
+
+SOURCE_DIRECTORY="./$DEPLOYMENT_ROOT/$PROJECT_NAME/$PROJECT_VERSION/"
+mkdir -p "$SOURCE_DIRECTORY"
+mv -v "$env_path"/lib/python"$PYTHON_VERSION"/site-packages/* "$SOURCE_DIRECTORY"
+mv -v ./"$PROJECT_DIRECTORY"/* "$SOURCE_DIRECTORY"
+
+./azcopy copy "./$SOURCE_DIRECTORY/*" "$DESTINATION" --recursive --overwrite true --put-md5

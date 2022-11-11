@@ -1,0 +1,13 @@
+name: Install azcopy
+description: Installs azcopy v10 in build environment
+
+branding:
+  icon: 'battery-charging'
+  color: 'green'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install poetry and package dependencies
+      shell: bash
+      run: $GITHUB_ACTION_PATH/install_azcopy.sh
