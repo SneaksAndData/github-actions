@@ -1,5 +1,5 @@
-name: Deploy DBT
-description: Deploy source code of DBT queries
+name: Deploy schemas
+description: Deploy schemas
 
 branding:
   icon: 'battery-charging'
@@ -27,7 +27,7 @@ runs:
   steps:
     - name: Prepare python deployment
       shell: bash
-      run: $GITHUB_ACTION_PATH/deploy_dbt.sh
+      run: $GITHUB_ACTION_PATH/deploy_data_schemas_to_azfs.sh
       env:
         DEPLOYMENT_ROOT: ${{ inputs.deployment_root }}
         PROJECT_VERSION: ${{ inputs.project_version }}

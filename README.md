@@ -10,9 +10,9 @@ Available actions are:
 5. [generate_version](#generate_version)
 6. [install_azcopy](#install_azcopy)
 7. [login_to_aks](#login_to_aks)
-8. [deploy_python](#deploy_python)
-9. [deploy_dbt](#deploy_dbt)
-10. [deploy_schemas](#deploy_schemas)
+8. [deploy_poetry_project_to_azfs](#deploy_poetry_project_to_azfs)
+9. [deploy_dbt_project_to_azfs](#deploy_dbt_project_to_azfs)
+10. [deploy_data_schemas_to_azfs](#deploy_data_schemas_to_azfs)
 11. [run_azcopy](#run_azcopy)
 12. [get_azure_share_sas](#get_azure_share_sas)
 
@@ -223,7 +223,7 @@ Generates project version based on current git commit and git tags.
 This action relies on git tags to be present in order to generate a version.
 2) Generated version is will not be compatible with [PEP-440](https://peps.python.org/pep-0440/), so this versions 
 should not be used with python packages. Although, this action can be used with
-[source code deployments](#deploy_python) of python applications.
+[source code deployments](#deploy_poetry_project_to_azfs) of python applications.
 
 
 ### Inputs
@@ -320,7 +320,7 @@ jobs:
           cluster_name: $AZURE_AKS_NAME
 ```
 
-# deploy_python
+# deploy_poetry_project_to_azfs
 Copy python site-packages of current virtual environment and installs application into it. 
 
 ### Inputs
@@ -366,7 +366,7 @@ jobs:
           account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Prepare site-packages for deployment
-        uses: SneaksAndData/github-actions/deploy_python@0.0.10
+        uses: SneaksAndData/github-actions/deploy_poetry_project_to_azfs@0.0.10
         with:
           deployment_root: /python
           project_version: ${{ steps.version.outputs.version }}
@@ -374,7 +374,7 @@ jobs:
           project_name: python_project
 ```
 
-# deploy_dbt
+# deploy_dbt_project_to_azfs
 Prepare DBT models for deployment to an Azure file share.
 
 ### Inputs
@@ -414,7 +414,7 @@ jobs:
           account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Prepare dbt for deployment
-        uses: SneaksAndData/github-actions/deploy_dbt@0.0.10
+        uses: SneaksAndData/github-actions/deploy_dbt_project_to_azfs@0.0.10
         with:
           deployment_root: /dbt
           project_version: ${{ steps.version.outputs.version }}
@@ -422,7 +422,7 @@ jobs:
           project_name: dbt_project
 ```
 
-# deploy_schemas
+# deploy_data_schemas_to_azfs
 Prepare DBT schemas for deployment to an Azure file share.
 
 ### Inputs
@@ -461,7 +461,7 @@ jobs:
           account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Prepare dbt for deployment
-        uses: SneaksAndData/github-actions/deploy_schemas@0.0.10
+        uses: SneaksAndData/github-actions/deploy_data_schemas_to_azfs@0.0.10
         with:
           deployment_root: /dbt
           project_version: ${{ steps.version.outputs.version }}
