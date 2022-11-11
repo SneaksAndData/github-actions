@@ -6,10 +6,6 @@ branding:
   color: 'green'
 
 inputs:
-  output_directory:
-    description: Output directory
-    required: true
-
   project_version:
     description: Version of project to deploy
     required: true
@@ -21,6 +17,10 @@ inputs:
   destination:
     required: true
     description: Destination directory or SAS token
+
+  deployment_root:
+    required: true
+    description: Root directory in the deployment file structure
 
 runs:
   using: "composite"

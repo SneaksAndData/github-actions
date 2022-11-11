@@ -283,7 +283,7 @@ jobs:
 ```
 
 ## login_to_aks
-Get AKS login credentials for kubectl
+Get AKS login credentials for kubectl. Service principal used must have a permission to list cluster credentials.
 
 ### Inputs
 | Name                       | Description                              | Optional | Default value |
@@ -326,12 +326,12 @@ Copy python site-packages of current virtual environment and installs applicatio
 ### Inputs
 | Name              | Description                                                      | Optional | Default value |
 |-------------------|:-----------------------------------------------------------------|----------|---------------|
-| output_directory  | Local directory on build agent to store files                    | False    |               |
 | project_version   | Version of the project                                           | False    |               |
 | project_name      | Name of the project                                              | False    |               |
 | project_directory | Directory name inside the project (if differs from project name) | True     | ""            |
 | destination       | Directory or SAS for upload                                      | False    |               |
 | python_version    | Project python version                                           | True     | 3.9           |
+| deployment_root   | Root directory in the file share                                 | False    |               |
 
 **NOTES**:
 1) To use this action, your project should use poetry for virtual environment management. Ensure that you installed
@@ -380,10 +380,10 @@ Prepare DBT models for deployment to an Azure file share.
 ### Inputs
 | Name             | Description                                   | Optional | Default value |
 |------------------|:----------------------------------------------|----------|---------------|
-| output_directory | Local directory on build agent to store files | False    |               |
 | project_version  | Version of the project                        | False    |               |
 | project_name     | Name of the project                           | False    |               |
 | destination      | Directory or SAS for upload                   | False    |               |
+| deployment_root  | Root directory in the file share              | False    |               |
 
 ### Outputs
 No outputs defined
@@ -428,10 +428,10 @@ Prepare DBT schemas for deployment to an Azure file share.
 ### Inputs
 | Name             | Description                                   | Optional | Default value |
 |------------------|:----------------------------------------------|----------|---------------|
-| output_directory | Local directory on build agent to store files | False    |               |
 | project_version  | Version of the project                        | False    |               |
 | project_name     | Name of the project                           | False    |               |
 | destination      | Directory or SAS for upload                   | False    |               |
+| deployment_root  | Root directory in the file share              | False    |               |
 
 ### Outputs
 No outputs defined
