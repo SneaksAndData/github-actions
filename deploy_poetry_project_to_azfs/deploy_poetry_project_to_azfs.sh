@@ -21,12 +21,12 @@ set -Eeuo pipefail
 env_path=$(poetry env info | grep Path | head -n 1 | cut -d':' -f2 | xargs)
 
 if [ -z "$PROJECT_DIRECTORY" ]; then
-      PROJECT_DIRECTORY="$PROJECT_NAME"
+      PROJECT_DIRECTORY="${PROJECT_NAME/-/_/}"
 fi;
 
 SOURCE_DIRECTORY="./$DEPLOYMENT_ROOT/$PROJECT_NAME/$PROJECT_VERSION/"
 mkdir -p "$SOURCE_DIRECTORY"
 mv -v "$env_path"/lib/python"$PYTHON_VERSION"/site-packages/* "$SOURCE_DIRECTORY"
-mv -v ./"$PROJECT_DIRECTORY"/* "$SOURCE_DIRECTORY"
+mv -v ./"$PROJECT_DIRECTORY"/* "$SOURCE_DIRECTORY/$PROJECT_DIRECTORY"
 
 ./azcopy copy "./$SOURCE_DIRECTORY/*" "$DESTINATION" --recursive --overwrite true --put-md5
