@@ -6,10 +6,6 @@ branding:
   color: 'green'
 
 inputs:
-  output_directory:
-    description: Output directory
-    required: true
-
   project_version:
     description: Version of project to deploy
     required: true
@@ -43,7 +39,6 @@ runs:
       run: $GITHUB_ACTION_PATH/deploy_poetry_project_to_azfs.sh
       env:
         DEPLOYMENT_ROOT: ${{ inputs.deployment_root }}
-        OUTPUT_DIRECTORY: ${{ inputs.output_directory }}
         PROJECT_VERSION: ${{ inputs.project_version }}
         PROJECT_NAME: ${{ inputs.project_name }}
         PROJECT_DIRECTORY : ${{ inputs.project_directory }}

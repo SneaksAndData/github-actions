@@ -6,10 +6,6 @@ branding:
   color: 'green'
 
 inputs:
-  output_directory:
-    description: Output directory
-    required: true
-
   project_version:
     description: Version of project to deploy
     required: true
