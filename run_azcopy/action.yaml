@@ -6,13 +6,20 @@ branding:
   color: 'green'
 
 inputs:
-  source_directory:
+  source:
     required: true
     description: A directory to copy files from
 
   target:
     required: true
     description: Destination directory or SAS token
+
+  put_md5:
+    required: false
+    default: "true"
+    description: |
+      Create an MD5 hash of each file, and save the hash as the Content-MD5 property
+      of the destination blob or file. (By default the hash is NOT created.) Only available when uploading.
 
 runs:
   using: "composite"
@@ -21,5 +28,6 @@ runs:
       shell: bash
       run: $GITHUB_ACTION_PATH/run_azcopy.sh
       env:
-        SOURCE_DIRECTORY: ${{ inputs.source_directory }}
-        DESTINATION: ${{ inputs.target }}
+        SOURCE: ${{ inputs.source }}
+        TARGET: ${{ inputs.target }}
+        PUT_MD5: ${{ inputs.put_md5 }}
