@@ -470,13 +470,15 @@ jobs:
 ```
 
 # run_azcopy
-Copy data from local directory on build agent to Azure blob container or file share
+Invoke [azcopy copy](https://learn.microsoft.com/en-us/azure/storage/common/storage-ref-azcopy-copy?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json)
+command in pipeline.
 
 ### Inputs
-| Name    | Description                         | Optional | Default value |
-|---------|:------------------------------------|----------|---------------|
-| source  | Source directory or SAS url to copy | False    |               |
-| target  | Target directory or SAS url         | False    |               |
+| Name    | Description                                    | Optional | Default value |
+|---------|:-----------------------------------------------|----------|---------------|
+| source  | Source directory or SAS url to copy            | False    |               |
+| target  | Target directory or SAS url                    | False    |               |
+| put_md5 | If `true` sets `--put-md5` parameter to azcopy | True     | True          |
 
 ### Outputs
 No outputs defined

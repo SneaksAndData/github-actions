@@ -16,7 +16,7 @@ inputs:
 
   put_md5:
     required: false
-    default: "false"
+    default: "true"
     description: |
       Create an MD5 hash of each file, and save the hash as the Content-MD5 property
       of the destination blob or file. (By default the hash is NOT created.) Only available when uploading.
