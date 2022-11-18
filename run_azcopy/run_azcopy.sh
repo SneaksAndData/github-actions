@@ -19,6 +19,6 @@ set -Eeuo pipefail
 echo "Copy from $SOURCE to $TARGET"
 AZCOPY_OPTIONS=("--recursive" "--overwrite" "true")
 if [[ "$(echo "$PUT_MD5" | tr '[:upper:]' '[:lower:]')" == 'true' ]]; then
-  $AZCOPY_OPTIONS+=("--put-md5")
+  AZCOPY_OPTIONS+=("--put-md5")
 fi;
 ./azcopy copy "$SOURCE" "$TARGET" "${AZCOPY_OPTIONS[@]}"
