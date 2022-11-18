@@ -514,15 +514,18 @@ Generates new temporary
 [Shared Access Signature](https://learn.microsoft.com/en-us/azure/storage/common/storage-sas-overview)
 for a file share, attached to a storage account.
 
-**NOTES**:
-1) The generated SAS is valid for 5 minutes.
-
 ### Inputs
-| Name           | Description                              | Optional |
-|----------------|:-----------------------------------------|----------|
-| directory_name | Path within file share                   | False    |
-| account_key    | Name of the storage account of the share | False    |
-| account_name   | Key of the storage account of the share  | False    |
+| Name            | Description                                                  | Optional | Default Value |
+|-----------------|:-------------------------------------------------------------|----------|---------------|
+| directory_name  | Path within file share                                       | False    |               |
+| account_key     | Name of the storage account of the share                     | False    |               |
+| account_name    | Key of the storage account of the share                      | False    |               |
+| expiration_date | Expiration date in format that can be used by `date` command | True     | +10 minutes   |
+
+
+**NOTES**:
+1) Expiration date should be in format that can be used by `date` command,
+   see [man 1 date](https://man7.org/linux/man-pages/man1/date.1.html)
 
 ### Outputs
 | Name                   | Description                                                 |

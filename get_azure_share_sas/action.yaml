@@ -19,7 +19,7 @@ inputs:
     required: true
 
   expiration_date:
-    description: expiration date in format that could be used by date --date=... command
+    description: Expiration date in format that can be used by date command
     required: false
     default: "+10 minutes"
 
