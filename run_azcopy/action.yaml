@@ -14,6 +14,13 @@ inputs:
     required: true
     description: Destination directory or SAS token
 
+  put_md5:
+    required: false
+    default: "false"
+    description: |
+      Create an MD5 hash of each file, and save the hash as the Content-MD5 property
+      of the destination blob or file. (By default the hash is NOT created.) Only available when uploading.
+
 runs:
   using: "composite"
   steps:
@@ -23,3 +30,4 @@ runs:
       env:
         SOURCE: ${{ inputs.source }}
         TARGET: ${{ inputs.target }}
+        PUT_MD5: ${{ inputs.put_md5 }}
