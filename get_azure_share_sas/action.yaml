@@ -18,6 +18,11 @@ inputs:
     description: Storage account name
     required: true
 
+  expiration_date:
+    description: Expiration date in format that can be used by date command
+    required: false
+    default: "+10 minutes"
+
 
 outputs:
   authorized_destination:
@@ -34,4 +39,5 @@ runs:
         DIRECTORY_NAME: ${{ inputs.directory_name }}
         ACCOUNT_KEY: ${{ inputs.account_key }}
         ACCOUNT_NAME: ${{ inputs.account_name }}
+        EXPIRATION_DATE: ${{ inputs.expiration_date }}
       id: sas

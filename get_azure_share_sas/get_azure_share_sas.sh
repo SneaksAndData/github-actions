@@ -18,8 +18,8 @@ set -Eeuo pipefail
 
 destination="https://$ACCOUNT_NAME.file.core.windows.net/$DIRECTORY_NAME"
 
-echo "Generating SAS for upload to $destination"
-end=$(date -d '+5 minutes' '+%Y-%m-%dT%H:%MZ')
+end=$(date -d "$EXPIRATION_DATE" '+%Y-%m-%dT%H:%MZ')
+echo "Generating SAS for $destination with expiration date $end"
 sas=$(
   az storage account generate-sas \
       --account-key "$ACCOUNT_KEY" \
