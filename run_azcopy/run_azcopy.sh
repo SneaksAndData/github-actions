@@ -16,5 +16,5 @@
 
 set -Eeuo pipefail
 
-echo "Copy from $SOURCE_DIRECTORY to $DESTINATION"
-./azcopy copy "./$SOURCE_DIRECTORY/*" "$DESTINATION" --recursive --overwrite true --put-md5
+echo "Copy from $SOURCE to $TARGET"
+./azcopy copy "$SOURCE" "$TARGET" --recursive --overwrite true --put-md5
