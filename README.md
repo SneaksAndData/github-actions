@@ -515,17 +515,16 @@ Generates new temporary
 for a file share, attached to a storage account.
 
 ### Inputs
-| Name            | Description                                                  | Optional | Default Value |
-|-----------------|:-------------------------------------------------------------|----------|---------------|
-| directory_name  | Path within file share                                       | False    |               |
-| account_key     | Name of the storage account of the share                     | False    |               |
-| account_name    | Key of the storage account of the share                      | False    |               |
-| expiration_date | Expiration date in format that can be used by `date` command | True     | +10 minutes   |
+| Name            | Description                                                      | Optional | Default Value |
+|-----------------|:-----------------------------------------------------------------|----------|---------------|
+| directory_name  | Path within file share                                           | False    |               |
+| account_key     | Name of the storage account of the share                         | False    |               |
+| account_name    | Key of the storage account of the share                          | False    |               |
+| expiration_date | Expiration date in format that can be used by the `date` command | True     | +10 minutes   |
 
 
 **NOTES**:
-1) Expiration date should be in format that can be used by `date` command,
-   see [man 1 date](https://man7.org/linux/man-pages/man1/date.1.html)
+1) For the expiration date format see [man 1 date](https://man7.org/linux/man-pages/man1/date.1.html)
 
 ### Outputs
 | Name                   | Description                                                 |
