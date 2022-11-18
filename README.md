@@ -47,7 +47,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Create Release
-        uses: SneaksAndData/github-actions/semver_release@v0.0.10
+        uses: SneaksAndData/github-actions/semver_release@v0.0.12
         with:
           major_v: 0
           minor_v: 0
@@ -96,7 +96,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install Poetry and dependencies
-        uses: SneaksAndData/github-actions/install_poetry@v0.0.10
+        uses: SneaksAndData/github-actions/install_poetry@v0.0.12
         with:
            pypi_repo_url: ${{ secrets.AZOPS_PYPI_REPO_URL }}
            pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
@@ -143,7 +143,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Build and Push Chart (DEV)
-        uses: SneaksAndData/github-actions/build_helm_chart@v0.0.10
+        uses: SneaksAndData/github-actions/build_helm_chart@v0.0.12
         with:
           application: beast
           container_registry_user: ${{secrets.AZCR_DEV_USER}}
@@ -198,14 +198,14 @@ jobs:
           ref: refs/pull/${{github.event.issue.number}}/merge
           fetch-depth: 0
       - name: Install Poetry and dependencies
-        uses: SneaksAndData/github-actions/install_poetry@v0.0.10
+        uses: SneaksAndData/github-actions/install_poetry@v0.0.12
         with:
           pypi_repo_url: ${{ secrets.AZOPS_PYPI_REPO_URL }}
           pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
           pypi_token: ${{ secrets.AZOPS_PAT }}
           skip_dependencies: true
       - name: Create package
-        uses: SneaksAndData/github-actions/create_package@v0.0.10
+        uses: SneaksAndData/github-actions/create_package@v0.0.12
         with:
           pypi_repo_url: ${{ secrets.AZOPS_PYPI_UPLOAD }}
           pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
@@ -249,7 +249,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get project version
-        uses: SneaksAndData/github-actions/generate_version@0.0.10
+        uses: SneaksAndData/github-actions/generate_version@v0.0.12
         id: version
       - run: echo "$version"
         env:
@@ -279,7 +279,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install azcopy v10
-        uses: SneaksAndData/github-actions/install_azcopy@0.0.10
+        uses: SneaksAndData/github-actions/install_azcopy@v0.0.12
 ```
 
 ## login_to_aks
@@ -311,7 +311,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get cluster credentials
-        uses: SneaksAndData/github-actions/login_to_aks@0.0.10
+        uses: SneaksAndData/github-actions/login_to_aks@v0.0.12
         with:
           cluster_sp_client_id: $AZURE_CLIENT_ID
           cluster_sp_client_password: $AZURE_CLIENT_SECRET
@@ -356,17 +356,17 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get project version
-        uses: SneaksAndData/github-actions/generate_version@0.0.10
+        uses: SneaksAndData/github-actions/generate_version@v0.0.12
         id: version
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@0.0.10
+        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.12
         with:
           directory_name: share-name/path/within/share
           account_key: ${{ secrets.ACCOUNT_KEY }}
           account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Prepare site-packages for deployment
-        uses: SneaksAndData/github-actions/deploy_poetry_project_to_azfs@0.0.10
+        uses: SneaksAndData/github-actions/deploy_poetry_project_to_azfs@v0.0.12
         with:
           deployment_root: /python
           project_version: ${{ steps.version.outputs.version }}
@@ -404,17 +404,17 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get project version
-        uses: SneaksAndData/github-actions/generate_version@0.0.10
+        uses: SneaksAndData/github-actions/generate_version@v0.0.12
         id: version
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@0.0.10
+        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.12
         with:
           directory_name: share-name/path/within/share
           account_key: ${{ secrets.ACCOUNT_KEY }}
           account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Prepare dbt for deployment
-        uses: SneaksAndData/github-actions/deploy_dbt_project_to_azfs@0.0.10
+        uses: SneaksAndData/github-actions/deploy_dbt_project_to_azfs@v0.0.12
         with:
           deployment_root: /dbt
           project_version: ${{ steps.version.outputs.version }}
@@ -451,17 +451,17 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get project version
-        uses: SneaksAndData/github-actions/generate_version@0.0.10
+        uses: SneaksAndData/github-actions/generate_version@v0.0.12
         id: version
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@0.0.10
+        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.12
         with:
           directory_name: share-name/path/within/share
           account_key: ${{ secrets.ACCOUNT_KEY }}
           account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Prepare dbt for deployment
-        uses: SneaksAndData/github-actions/deploy_data_schemas_to_azfs@0.0.10
+        uses: SneaksAndData/github-actions/deploy_data_schemas_to_azfs@v0.0.12
         with:
           deployment_root: /dbt
           project_version: ${{ steps.version.outputs.version }}
@@ -473,10 +473,10 @@ jobs:
 Copy data from local directory on build agent to Azure blob container or file share
 
 ### Inputs
-| Name             | Description             | Optional | Default value |
-|------------------|:------------------------|----------|---------------|
-| source_directory | Local directory to copy | False    |               |
-| target           | Target Azure file share | False    |               |
+| Name    | Description                         | Optional | Default value |
+|---------|:------------------------------------|----------|---------------|
+| source  | Source directory or SAS url to copy | False    |               |
+| target  | Target directory or SAS url         | False    |               |
 
 ### Outputs
 No outputs defined
@@ -493,16 +493,16 @@ jobs:
     name: Copy files
     steps:
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@0.0.10
+        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.12
         with:
           directory_name: share-name/path/within/share
           account_key: ${{ secrets.ACCOUNT_KEY }}
           account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Copy data
-        uses: SneaksAndData/github-actions/run_azcopy@0.0.10
+        uses: SneaksAndData/github-actions/run_azcopy@v0.0.12
         with:
-          source_directory: source/directory/on/build/agent
+          source: source/directory/on/build/agent
           target: ${{ steps.sas.outputs.authorized_destination }}
 ```
 ## get_azure_share_sas
@@ -539,14 +539,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@0.0.10
+        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.12
         with:
           directory_name: share-name/path/within/share
           account_key: ${{ secrets.ACCOUNT_KEY }}
           account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Copy data
-        uses: SneaksAndData/github-actions/run_azcopy@0.0.10
+        uses: SneaksAndData/github-actions/run_azcopy@v0.0.12
         with:
           source_directory: source/directory/on/build/agent
           target: ${{ steps.sas.outputs.authorized_destination }}

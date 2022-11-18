@@ -6,7 +6,7 @@ branding:
   color: 'green'
 
 inputs:
-  source_directory:
+  source:
     required: true
     description: A directory to copy files from
 
@@ -21,5 +21,5 @@ runs:
       shell: bash
       run: $GITHUB_ACTION_PATH/run_azcopy.sh
       env:
-        SOURCE_DIRECTORY: ${{ inputs.source_directory }}
-        DESTINATION: ${{ inputs.target }}
+        SOURCE: ${{ inputs.source }}
+        TARGET: ${{ inputs.target }}
