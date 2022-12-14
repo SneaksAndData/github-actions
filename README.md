@@ -75,6 +75,7 @@ Optionally can export dependency tree to requirements.txt file.
 | install_extras            | List of optional dependencies to install, separated by space. If value is 'all', all extras will be installed              | True     |                             |
 | install_only_dependencies | If set to true, installs only dependencies for project, adds the parameter `--no-root` to `poetry install` command.        | True     | false                       |
 | skip_dependencies         | If set to true, installs only poetry without installing dependencies.                                                      | True     | false                       |
+| export_dev_requirements   | If export_requirements is set to true, it exports dev requirements.txt with --without-dev flag. Otherwise, does nothing.   | True     | true                        |
 
 ### Outputs
 | Name             | Description                                                  |
