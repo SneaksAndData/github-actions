@@ -58,6 +58,11 @@ then
   EXPORT_ADDITIONAL_OPTIONS="$EXPORT_ADDITIONAL_OPTIONS --with-credentials"
 fi;
 
+if [[ "$(echo "$EXPORT_DEV_REQUIREMENTS" | tr '[:upper:]' '[:lower:]')" == "true" ]];
+then
+  EXPORT_ADDITIONAL_OPTIONS="$EXPORT_ADDITIONAL_OPTIONS --without dev"
+fi;
+
 if [[ "$(echo "$EXPORT_REQUIREMENTS" | tr '[:upper:]' '[:lower:]')" == "true" ]]; then
   REQUIREMENTS_ABSOLUTE_PATH="$PWD/$REQUIREMENTS_PATH"
   # shellcheck disable=SC2086

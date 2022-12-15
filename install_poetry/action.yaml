@@ -30,6 +30,13 @@ inputs:
     required: false
     default: "true"
 
+  export_dev_requirements:
+    description: |
+      If export_requirements is set to true, it exports dev requirements.txt with --without-dev flag.
+      Otherwise, does nothing. Optional. Default value is 'true'
+    required: false
+    default: "true"
+
   requirements_path:
     description: |
       Path to requirements.txt to be generated (relative to sources root).
@@ -91,5 +98,6 @@ runs:
         EXTRAS: ${{ inputs.install_extras }}
         INSTALL_NO_ROOT: ${{ inputs.install_only_dependencies }}
         SKIP_DEPENDENCIES: ${{ inputs.skip_dependencies}}
+        EXPORT_DEV_REQUIREMENTS: ${{ inputs.export_dev_requirements}}
       run: $GITHUB_ACTION_PATH/install_poetry.sh
       id: install-poetry
