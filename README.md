@@ -172,7 +172,7 @@ This action relies on git tags to be present in order to generate an artifact ta
 ### Inputs
 | Name                | Description                                                                 | Optional | Default value |
 |---------------------|:----------------------------------------------------------------------------|----------|---------------|
-| pypi_repo_url       | Package index URL                                                           | False    |               |
+| pypi_repo_url       | Package index URL                                                           | True     |               |
 | pypi_token_username | Package index authentication username                                       | False    |               |
 | pypi_token          | Package index authentication token or password.                             | False    |               |
 | package_name        | Name of package to create. This should match name of root project directory | False    |               |               

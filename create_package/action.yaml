@@ -8,7 +8,8 @@ branding:
 inputs:
   pypi_repo_url:
     description: Package index URL.
-    required: true
+    required: false
+    default: ""
 
   pypi_token_username:
     description: Package index authentication username.
