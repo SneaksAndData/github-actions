@@ -24,7 +24,7 @@ require 'openssl'
 require 'jwt'  # https://rubygems.org/gems/jwt
 
 # Private key contents
-private_key = OpenSSL::PKey::RSA.new(ENV["DELAMAIN_PRIVATE_KEY"])
+private_key = OpenSSL::PKey::RSA.new(ENV["APP_PRIVATE_KEY"])
 
 # Generate the JWT
 payload = {
@@ -33,7 +33,7 @@ payload = {
   # JWT expiration time (10 minute maximum)
   exp: Time.now.to_i + (10 * 60),
   # GitHub App's identifier
-  iss: "${{ env.DELAMAIN_APP_ID }}"
+  iss: ENV("APP_ID")
 }
 
 jwt = JWT.encode(payload, private_key, "RS256")
@@ -45,7 +45,7 @@ echo "$jwt_script" > /tmp/jwt_script
 sudo gem install jwt
 ruby /tmp/jwt_script > /tmp/jwt
 
-github_token_ednpoint="https://api.github.com/app/installations/$DELAMAIN_APP_INSTALLATION_ID/access_tokens"
+github_token_ednpoint="https://api.github.com/app/installations/$APP_INSTALLATION_ID/access_tokens"
 curl -X POST -H "Authorization: Bearer $(cat /tmp/jwt)" \
   -H "Accept: application/vnd.github+json" "$github_token_ednpoint" | jq '.token' | cut -d'"' -f2 > /tmp/access_token
 

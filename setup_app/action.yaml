@@ -1,5 +1,5 @@
 name: Setup git to use app
-description: Reconfigure git to have ability to create github repositories
+description: Reconfigure git to have ability to create github pull requests
 
 branding:
   icon: 'bar-chart'
@@ -14,12 +14,16 @@ inputs:
     description: Application installation id
     required: true
 
+  app_id:
+    description: Application id
+    required: true
+
   git_user_email:
     description: Email for git client
     required: true
 
   git_user_name:
-    description: Email for git client
+    description: User name for git client
     required: true
 
 outputs:
@@ -33,8 +37,9 @@ runs:
     - run: $GITHUB_ACTION_PATH/setup_app.sh
       id: reconfigure_git
       env:
-        DELAMAIN_PRIVATE_KEY: ${{ inputs.app_private_key }}
-        DELAMAIN_APP_INSTALLATION_ID: ${{ inputs.app_installation_id }}
+        APP_PRIVATE_KEY: ${{ inputs.app_private_key }}
+        APP_ID: ${{ inputs.app_id }}
+        APP_INSTALLATION_ID: ${{ inputs.app_installation_id }}
         GIT_USER_EMAIL: ${{ inputs.git_user_email }}
         GIT_USER_NAME: ${{ inputs.git_user_name }}
       shell: bash
