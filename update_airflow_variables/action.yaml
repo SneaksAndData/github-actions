@@ -1,0 +1,35 @@
+name: Upgrade airflow variables
+description: Upgrade airflow variables
+
+branding:
+  icon: 'bar-chart'
+  color: 'green'
+
+inputs:
+  project_name:
+    description: Repository name
+    required: true
+
+  project_versoin:
+    description: New project version
+    required: true
+
+  project_graph:
+    description: Project graph
+    required: true
+
+outputs:
+  access_token:
+    description: "Access token"
+    value: ${{ steps.reconfigure_git.outputs.access_token }}
+
+runs:
+  using: "composite"
+  steps:
+    - run: $GITHUB_ACTION_PATH/update_variables.sh
+      id: reconfigure_git
+      env:
+        PROJECT_NAME: ${{ inputs.project_name }}
+        PROJECT_VERSION: ${{ inputs.project_version }}
+        PROJECT_GRAPH: ${{ inputs.project_graph }}
+      shell: bash
