@@ -15,6 +15,7 @@ Available actions are:
 10. [deploy_data_schemas_to_azfs](#deploy_data_schemas_to_azfs)
 11. [run_azcopy](#run_azcopy)
 12. [get_azure_share_sas](#get_azure_share_sas)
+13. [setup_app](#setup_app)
 
 ## semver_release
 
@@ -556,3 +557,23 @@ jobs:
           source_directory: source/directory/on/build/agent
           target: ${{ steps.sas.outputs.authorized_destination }}
 ```
+
+## setup_app
+
+Configure git to use GitHub app in next steps of workflow. This strep is required for interation with GitHub api in the
+next workflow steps.
+
+
+### Inputs
+| Name                | Description                 | Optional | Default Value |
+|---------------------|:----------------------------|----------|---------------|
+| app_private_key     | Private key of application  | False    |               |
+| app_installation_id | Application installation Id | False    |               |
+| git_user_email      | User email for git client   | False    |               |
+| git_user_name       | User name for git client    | False    |               |
+
+### Outputs
+| Name         | Description                    |
+|--------------|--------------------------------|
+| access_token | Access token generated for app |
+
