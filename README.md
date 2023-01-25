@@ -18,7 +18,7 @@ Available actions are:
 13. [setup_gh_app](#setup_gh_app)
 14. [update_airflow_variables](#update_airflow_variables)
 15. [create_pr](#create_pr)
-16. [deploy_with_github_workflow](#deploy_with_github_workflow)
+16. [deploy_with_gh_workflow](#deploy_with_gh_workflow)
 
 ## semver_release
 
@@ -561,7 +561,7 @@ jobs:
           target: ${{ steps.sas.outputs.authorized_destination }}
 ```
 
-## setup_app
+## setup_gh_app
 
 ### Description
 
@@ -594,7 +594,7 @@ jobs:
     steps:
       - name: Reconfigure Git to use App
         id: delamain_auth
-        uses: SneaksAndData/github-actions/setup_app@v0.0.12
+        uses: SneaksAndData/github-actions/setup_gh_app@v0.0.12
         with:
           app_private_key: ${{ env.APP_PRIVATE_KEY }}
           app_installation_id: ${{ env.APP_INSTALLATION_ID }}
@@ -687,7 +687,7 @@ jobs:
           deploy_environment: ${{ github.event.inputs.environment }}
 ```
 
-## deploy_with_github_workflow
+## deploy_with_gh_workflow
 
 Create pull request in repository
 
@@ -721,7 +721,7 @@ jobs:
     steps:
       - name: Deploy variables
         if: ${{ startsWith(github.ref, 'refs/tags') }}
-        uses: SneaksAndData/github-actions/deploy_with_github_workflow@v0.0.12
+        uses: SneaksAndData/github-actions/deploy_with_gh_workflow@v0.0.12
         with:
           project_name: ${{ env.PROJECT_NAME }}
           working_directory: github-repository

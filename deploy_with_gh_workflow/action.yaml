@@ -1,5 +1,5 @@
-name: Upgrade airflow variables
-description: Upgrade airflow variables
+name: Deploy with github workflow
+description: Deploy project using GitHub Workflow
 
 branding:
   icon: 'bar-chart'
@@ -34,7 +34,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: $GITHUB_ACTION_PATH/deploy_with_github_workflow.sh
+    - run: $GITHUB_ACTION_PATH/deploy_with_gh_workflow.sh
       working-directory: ${{ inputs.working_directory }}
       env:
         PROJECT_NAME: ${{ inputs.project_name }}

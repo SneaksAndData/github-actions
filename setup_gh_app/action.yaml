@@ -1,5 +1,5 @@
 name: Setup git to use app
-description: Reconfigure git to have ability to create github pull requests
+description:
 
 branding:
   icon: 'bar-chart'
@@ -34,7 +34,7 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - run: $GITHUB_ACTION_PATH/setup_app.sh
+    - run: $GITHUB_ACTION_PATH/setup_gh_app.sh
       id: reconfigure_git
       env:
         APP_PRIVATE_KEY: ${{ inputs.app_private_key }}
