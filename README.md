@@ -101,7 +101,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install Poetry and dependencies
-        uses: SneaksAndData/github-actions/install_poetry@v0.0.12
+        uses: SneaksAndData/github-actions/poetry@v0.0.12
         with:
            pypi_repo_url: ${{ secrets.AZOPS_PYPI_REPO_URL }}
            pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
@@ -203,7 +203,7 @@ jobs:
           ref: refs/pull/${{github.event.issue.number}}/merge
           fetch-depth: 0
       - name: Install Poetry and dependencies
-        uses: SneaksAndData/github-actions/install_poetry@v0.0.12
+        uses: SneaksAndData/github-actions/poetry@v0.0.12
         with:
           pypi_repo_url: ${{ secrets.AZOPS_PYPI_REPO_URL }}
           pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
@@ -284,7 +284,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install azcopy v10
-        uses: SneaksAndData/github-actions/install_azcopy@v0.0.12
+        uses: SneaksAndData/github-actions/azcopy@v0.0.12
 ```
 
 ## login_to_aks
@@ -371,7 +371,7 @@ jobs:
           account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Prepare site-packages for deployment
-        uses: SneaksAndData/github-actions/deploy_poetry_project_to_azfs@v0.0.12
+        uses: SneaksAndData/github-actions/poetry_project_to_azfs@v0.0.12
         with:
           deployment_root: /python
           project_version: ${{ steps.version.outputs.version }}
@@ -419,7 +419,7 @@ jobs:
           account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Prepare dbt for deployment
-        uses: SneaksAndData/github-actions/deploy_dbt_project_to_azfs@v0.0.12
+        uses: SneaksAndData/github-actions/dbt_project_to_azfs@v0.0.12
         with:
           deployment_root: /dbt
           project_version: ${{ steps.version.outputs.version }}
@@ -466,7 +466,7 @@ jobs:
           account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Prepare dbt for deployment
-        uses: SneaksAndData/github-actions/deploy_data_schemas_to_azfs@v0.0.12
+        uses: SneaksAndData/github-actions/data_schemas_to_azfs@v0.0.12
         with:
           deployment_root: /dbt
           project_version: ${{ steps.version.outputs.version }}
@@ -721,7 +721,7 @@ jobs:
     steps:
       - name: Deploy variables
         if: ${{ startsWith(github.ref, 'refs/tags') }}
-        uses: SneaksAndData/github-actions/deploy_with_github_workflow@v0.0.12
+        uses: SneaksAndData/github-actions/github_workflow@v0.0.12
         with:
           project_name: ${{ env.PROJECT_NAME }}
           working_directory: github-repository

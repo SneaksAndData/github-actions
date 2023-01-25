@@ -99,5 +99,5 @@ runs:
         INSTALL_NO_ROOT: ${{ inputs.install_only_dependencies }}
         SKIP_DEPENDENCIES: ${{ inputs.skip_dependencies}}
         EXPORT_DEV_REQUIREMENTS: ${{ inputs.export_dev_requirements}}
-      run: $GITHUB_ACTION_PATH/install_poetry.sh
+      run: $GITHUB_ACTION_PATH/poetry.sh
       id: install-poetry

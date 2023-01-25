@@ -10,4 +10,4 @@ runs:
   steps:
     - name: Install poetry and package dependencies
       shell: bash
-      run: $GITHUB_ACTION_PATH/install_azcopy.sh
+      run: $GITHUB_ACTION_PATH/azcopy.sh

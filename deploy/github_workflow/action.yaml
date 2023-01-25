@@ -34,7 +34,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: $GITHUB_ACTION_PATH/deploy_with_github_workflow.sh
+    - run: $GITHUB_ACTION_PATH/github_workflow.sh
       working-directory: ${{ inputs.working_directory }}
       env:
         PROJECT_NAME: ${{ inputs.project_name }}

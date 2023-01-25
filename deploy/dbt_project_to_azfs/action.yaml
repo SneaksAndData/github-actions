@@ -27,7 +27,7 @@ runs:
   steps:
     - name: Prepare python deployment
       shell: bash
-      run: $GITHUB_ACTION_PATH/deploy_dbt_project_to_azfs.sh
+      run: $GITHUB_ACTION_PATH/dbt_project_to_azfs.sh
       env:
         DEPLOYMENT_ROOT: ${{ inputs.deployment_root }}
         PROJECT_VERSION: ${{ inputs.project_version }}
