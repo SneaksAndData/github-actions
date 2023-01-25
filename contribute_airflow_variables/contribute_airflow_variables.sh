@@ -17,7 +17,7 @@
 set -Eeuo pipefail
 
 git add .
-git commit -m "Updating $PROJECT_NAME to $PROJECT_VERSION" \
+git commit -m "Updating $PROJECT_NAME to $PROJECT_VERSION"
 git push --set-upstream origin "update-$PROJECT_NAME-$PROJECT_VERSION"
 
 if [[ "$DEPLOY_ENVIRONMENT" != "test" ]]; then
