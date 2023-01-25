@@ -16,19 +16,12 @@
 
 set -Eeuo pipefail
 
-is_completed=''
+git add .
+git commit -m "Updating $PROJECT_NAME to $PROJECT_VERSION" \
+git push --set-upstream origin "update-$PROJECT_NAME-$PROJECT_VERSION"
 
-while [ "$is_completed" == '' ]
-do
+if [[ "$DEPLOY_ENVIRONMENT" != "test" ]]; then
 
-  echo "Waiting for the deployment package to be generated"
-  sleep 5
-  is_completed=$(gh workflow view 'Prepare Helm Chart' --repo "$TARGET_REPO_NAME" | grep "Updating $PROJECT_NAME to $PROJECT_VERSION" | grep main | grep completed || true)
+  sleep 1 && gh pr create --base main --fill && gh pr merge --auto --delete-branch --squash
 
-done
-
-new_release=$(gh release list --repo "$TARGET_REPO_NAME" --limit 1 | tail -n 1 | cut -d$'\t' -f1)
-
-echo "Submitting a deployment for a new configuration release $new_release"
-
-gh workflow run 'Deploy Variables to Airflow' --repo "$TARGET_REPO_NAME" --field environment="$DEPLOY_ENVIRONMENT" --ref "refs/tags/$new_release"
+fi
