@@ -19,13 +19,13 @@ set -Eeuo pipefail
 git checkout -b update-ecco-cdp-silver-"$PROJECT_VERSION"
 cat <<EOF > /tmp/command.jq
 . + {
-      "models_path": "/ecco/dist/$PROJECT_NAME/$PROJECT_VERSION/${PROJECT_NAME/-/_/}/models/**",
-      "schemas_path":"/ecco/dist/${PROJECT_NAME}-schemas/$PROJECT_VERSION",
-      "graph": "$PROJECT_GRAPH"
+      "models_path": "/ecco/dist/$PROJECT_NAME/$PROJECT_VERSION/${PROJECT_NAME//-/_}/models/**",
+      "schemas_path": "/ecco/dist/${PROJECT_NAME}-schemas/$PROJECT_VERSION",
+      "graph": $PROJECT_GRAPH
     }
 EOF
 echo "jq command begin <============================>"
 cat /tmp/command.jq
 echo "jq command end   <============================>"
-jq --monochrome-output --from-file /tmp/command.jq ".helm/variables/${PROJECT_NAME/-/_/}.json" > /tmp/updated.json
-mv /tmp/updated.json ".helm/variables/${PROJECT_NAME/-/_/}.json"
+jq --monochrome-output --from-file /tmp/command.jq ".helm/variables/${PROJECT_NAME//-/_}.json" > /tmp/updated.json
+mv /tmp/updated.json ".helm/variables/${PROJECT_NAME//-/_}.json"
