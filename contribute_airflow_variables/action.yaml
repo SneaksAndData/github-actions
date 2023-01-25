@@ -22,7 +22,7 @@ inputs:
     description: Working directory
     required: true
 
-  repo_name:
+  target_repo_name:
     description: Repository name
     required: true
 
@@ -41,5 +41,5 @@ runs:
         PROJECT_VERSION: ${{ inputs.project_version }}
         DEPLOY_ENVIRONMENT: ${{ inputs.deploy_environment }}
         GH_TOKEN: ${{ inputs.access_token }}
-        REPO_NAME: ${{ inputs.repo_name }}
+        TARGET_REPO_NAME: ${{ inputs.target_repo_name }}
       shell: bash
