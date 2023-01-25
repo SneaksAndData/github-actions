@@ -18,11 +18,6 @@ inputs:
     description: Project graph
     required: true
 
-outputs:
-  access_token:
-    description: "Access token"
-    value: ${{ steps.reconfigure_git.outputs.access_token }}
-
 runs:
   using: "composite"
   steps:
