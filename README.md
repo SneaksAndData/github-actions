@@ -613,7 +613,7 @@ jobs:
 
 ## update_airflow_variables
 
-Update airflow variables to use selected project and graph, previously generated in workflow steps.
+Update airflow configuration of a specified dbt project to the current version (git tag) and provided execution graph
 
 ### Inputs
 | Name              | Description                         | Optional | Default Value |
