@@ -18,11 +18,15 @@ inputs:
     description: Project graph
     required: true
 
+  working_directory:
+    description: Working directory
+    required: true
+
 runs:
   using: "composite"
   steps:
     - run: $GITHUB_ACTION_PATH/update_variables.sh
-      id: reconfigure_git
+      working-directory: ${{ inputs.working_directory }}
       env:
         PROJECT_NAME: ${{ inputs.project_name }}
         PROJECT_VERSION: ${{ inputs.project_version }}
