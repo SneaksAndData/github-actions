@@ -651,7 +651,7 @@ jobs:
 Create pull request in repository
 
 **NOTES**:
-1) If deploy environment is not equal to `test`, this action creates pull request and merge it. Otherwise,
+1) If deploy environment is not equal to `test`, this action creates pull request and merges it. Otherwise,
 it only pushes a new branch.
 
 ### Inputs
