@@ -1,0 +1,39 @@
+name: Upgrade airflow variables
+description: Upgrade airflow variables
+
+branding:
+  icon: 'bar-chart'
+  color: 'green'
+
+inputs:
+  project_name:
+    description: Repository name
+    required: true
+
+  project_version:
+    description: Repository name
+    required: true
+
+  deploy_environment:
+    description: Repository name
+    required: true
+
+  working_directory:
+    description: Working directory
+    required: true
+
+  access_token:
+    description: Working directory
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - run: $GITHUB_ACTION_PATH/deploy_airflow_variables.sh
+      working-directory: ${{ inputs.working_directory }}
+      env:
+        PROJECT_NAME: ${{ inputs.project_name }}
+        PROJECT_VERSION: ${{ inputs.project_version }}
+        DEPLOY_ENVIRONMENT: ${{ inputs.deploy_environment }}
+        GH_TOKEN: ${{ inputs.access_token }}
+      shell: bash
