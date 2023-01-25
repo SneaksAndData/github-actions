@@ -565,7 +565,7 @@ jobs:
 
 ### Description
 
-Configure git to use GitHub app in next steps of workflow. This strep is required for interation with GitHub api in the
+Configure git client in the workflow job to authenticate to GitHub using a GitHub App instead of builtin repo-scoped GITHUB_TOKEN.
 next workflow steps.
 
 ### Inputs
