@@ -14,10 +14,6 @@ inputs:
     description: Repository name
     required: true
 
-  deploy_environment:
-    description: Repository name
-    required: true
-
   working_directory:
     description: Working directory
     required: true
@@ -26,14 +22,24 @@ inputs:
     description: Working directory
     required: true
 
+  target_repo_name:
+    description: Repository name
+    required: true
+
+  deploy_environment:
+    description: Repository name
+    required: false
+    default: production
+
 runs:
   using: "composite"
   steps:
-    - run: $GITHUB_ACTION_PATH/contribute_airflow_variables.sh
+    - run: $GITHUB_ACTION_PATH/deploy_with_github_workflow.sh
       working-directory: ${{ inputs.working_directory }}
       env:
         PROJECT_NAME: ${{ inputs.project_name }}
         PROJECT_VERSION: ${{ inputs.project_version }}
         DEPLOY_ENVIRONMENT: ${{ inputs.deploy_environment }}
         GH_TOKEN: ${{ inputs.access_token }}
+        TARGET_REPO_NAME: ${{ inputs.target_repo_name }}
       shell: bash
