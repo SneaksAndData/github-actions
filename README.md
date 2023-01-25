@@ -16,6 +16,9 @@ Available actions are:
 11. [run_azcopy](#run_azcopy)
 12. [get_azure_share_sas](#get_azure_share_sas)
 13. [setup_app](#setup_app)
+14. [update_airflow_variables](#update_airflow_variables)
+15. [create_pr](#create_pr)
+16. [deploy_with_github_workflow](#deploy_with_github_workflow)
 
 ## semver_release
 
