@@ -10,7 +10,7 @@ inputs:
     description: Repository name
     required: true
 
-  project_versoin:
+  project_version:
     description: New project version
     required: true
 
