@@ -593,12 +593,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Reconfigure Git to use App
-        id: delamain_auth
+        id: setup_gh_app
         uses: SneaksAndData/github-actions/setup_gh_app@v0.0.12
         with:
-          app_private_key: ${{ env.APP_PRIVATE_KEY }}
-          app_installation_id: ${{ env.APP_INSTALLATION_ID }}
-          app_id: ${{ env.APP_ID }}
+          app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
+          app_installation_id: 1234567
+          app_id: 89123
           git_user_name: "Github App"
           git_user_email: "user@example.com"
 
@@ -606,7 +606,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: SneaksAndData/airflow-variables
-          token: ${{ secrets.ACCESS_TOKEN }}
+          token: ${{ steps.setup_gh_app.outputs.access_token }}
           path: airflow-variables
           fetch-depth: 0
 ```
