@@ -605,9 +605,9 @@ jobs:
       - name: Checkout Airflow Variables
         uses: actions/checkout@v3
         with:
-          repository: 'SneaksAndData/airflow-variables'
-          token: ${{ steps.delamain_auth.outputs.access_token }}
-          path: 'airflow-variables'
+          repository: SneaksAndData/airflow-variables
+          token: ${{ secrets.ACCESS_TOKEN }}
+          path: airflow-variables
           fetch-depth: 0
 ```
 
@@ -640,10 +640,10 @@ jobs:
       - name: Update Project Version
         uses: SneaksAndData/github-actions/update_airflow_variables@v0.0.12
         with:
-          project_name: ${{ env.PROJECT_NAME }}
+          project_name: dbt-project
           working_directory: github-repository
-          project_version: ${{steps.version.outputs.version}}
-          project_graph: ${{steps.airflow_dag.outputs.PROJECT_GRAPH}}
+          project_version: 0.0.1
+          project_graph: "{}"
 ```
 
 ## create_pr
@@ -680,11 +680,11 @@ jobs:
       - name: Contribute Variable Changes
         uses: SneaksAndData/github-actions/create_pr@v0.0.12
         with:
-          project_name: ${{ env.PROJECT_NAME }}
+          project_name: dbt-project
           working_directory: github-repository
-          project_version: ${{steps.version.outputs.version}}
-          access_token: ${{ steps.delamain_auth.outputs.access_token }}
-          deploy_environment: ${{ github.event.inputs.environment }}
+          project_version: 0.0.1
+          access_token: ${{ secrets.ACCESS_TOKEN }}
+          deploy_environment: production
 ```
 
 ## deploy_with_gh_workflow
@@ -723,8 +723,8 @@ jobs:
         if: ${{ startsWith(github.ref, 'refs/tags') }}
         uses: SneaksAndData/github-actions/deploy_with_gh_workflow@v0.0.12
         with:
-          project_name: ${{ env.PROJECT_NAME }}
+          project_name: dbt-project
           working_directory: github-repository
-          project_version: ${{steps.version.outputs.version}}
-          access_token: ${{ steps.delamain_auth.outputs.access_token }}
+          project_version: 0.0.1
+          access_token: ${{ secrets.ACCESS_TOKEN }}
 ```
