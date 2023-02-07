@@ -24,4 +24,4 @@ fi;
 if [[ "$(echo "$DELETE_DESTINATION" | tr '[:upper:]' '[:lower:]')" == 'true' ]]; then
   AZCOPY_OPTIONS+=("--delete-destination" "true")
 fi;
-./azcopy $MODE "$SOURCE" "$TARGET" "${AZCOPY_OPTIONS[@]}"
+./azcopy "$MODE" "$SOURCE" "$TARGET" "${AZCOPY_OPTIONS[@]}"
