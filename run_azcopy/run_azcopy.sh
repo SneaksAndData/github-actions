@@ -21,4 +21,7 @@ AZCOPY_OPTIONS=("--recursive" "--overwrite" "true")
 if [[ "$(echo "$PUT_MD5" | tr '[:upper:]' '[:lower:]')" == 'true' ]]; then
   AZCOPY_OPTIONS+=("--put-md5")
 fi;
-./azcopy copy "$SOURCE" "$TARGET" "${AZCOPY_OPTIONS[@]}"
+if [[ "$(echo "$DELETE_DESTINATION" | tr '[:upper:]' '[:lower:]')" == 'true' ]]; then
+  AZCOPY_OPTIONS+=("--delete-destination" "true")
+fi;
+./azcopy $MODE "$SOURCE" "$TARGET" "${AZCOPY_OPTIONS[@]}"
