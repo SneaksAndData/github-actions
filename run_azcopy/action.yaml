@@ -1,5 +1,5 @@
 name: Run azcopy
-description: Copy files with azcopy
+description: Copy/Sync files with azcopy
 
 branding:
   icon: 'battery-charging'
@@ -14,12 +14,24 @@ inputs:
     required: true
     description: Destination directory or SAS token
 
+  mode:
+    required: false
+    default: "copy"
+    description: azcopy action mode (copy or sync)
+
   put_md5:
     required: false
     default: "true"
     description: |
       Create an MD5 hash of each file, and save the hash as the Content-MD5 property
       of the destination blob or file. (By default the hash is NOT created.) Only available when uploading.
+
+  delete_destination:
+    required: false
+    default: "false"
+    description: |
+      When mode="sync", if the 'delete_destination' flag is set to true, then sync will delete files and blobs
+      at the destination that aren't present at the source.
 
 runs:
   using: "composite"
@@ -30,4 +42,6 @@ runs:
       env:
         SOURCE: ${{ inputs.source }}
         TARGET: ${{ inputs.target }}
+        MODE: ${{ inputs.mode }}
         PUT_MD5: ${{ inputs.put_md5 }}
+        DELETE_DESTINATION: ${{ inputs.delete_destination }}

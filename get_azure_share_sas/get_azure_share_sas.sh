@@ -28,7 +28,7 @@ sas=$(
       --https-only \
       --permissions acdlpruw \
       --resource-types sco \
-      --services f | cut -d'"' -f2
+      --services fb | cut -d'"' -f2
 )
 
 authorized_destination="$destination?$sas"
