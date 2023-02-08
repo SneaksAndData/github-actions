@@ -1,0 +1,32 @@
+name: Export airflow dag and sql files
+description: Export airflow dag and sql files
+
+branding:
+  icon: 'battery-charging'
+  color: 'green'
+
+inputs:
+
+  deploy_environment:
+    required: true
+    description: Deploy environment either 'test' or 'production'
+
+  project_name:
+    description: Name of project to deploy
+    required: true
+
+outputs:
+  airflow_dag:
+    description: Export airflow dag
+    value: ${{ steps.graph.outputs.graph }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Prepare python deployment
+      shell: bash
+      run: $GITHUB_ACTION_PATH/export_dag_and_sql.sh
+      env:
+        DEPLOY_ENVIRONMENT: ${{ inputs.environment }}
+        PROJECT_NAME: ${{ inputs.project_name }}
+      id: graph
