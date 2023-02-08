@@ -16,8 +16,22 @@
 
 set -Eeuo pipefail
 
-SOURCE_DIRECTORY="./$DEPLOYMENT_ROOT/$PROJECT_NAME/$PROJECT_VERSION/"
-mkdir -p "$SOURCE_DIRECTORY"
-mv -v ./target/run/* "$SOURCE_DIRECTORY"
+DBT_TARGET_SCHEMA=$(echo "$BRANCH" | sed "s/-/_/g" | sed "s/\//_/g")
+export DBT_TARGET_SCHEMA
 
-./azcopy copy "./$SOURCE_DIRECTORY/*" "$DESTINATION" --recursive --overwrite true --put-md5
+if [[ "$DEPLOY_ENVIRONMENT" == 'test' ]];
+  then
+    profile_target='dev';
+  else
+    profile_target='prod';
+fi;
+
+mkdir -p ~/.ssh
+ssh-keyscan -p "$SPARK_PORT" "$SPARK_HOST" >> ~/.ssh/known_hosts
+echo "$SSH_KEY" > ~/.ssh/spark
+chmod 0600 ~/.ssh/spark
+
+ssh -fNT -i ~/.ssh/spark "${SPARK_USER}@${SPARK_HOST}" -p "$SPARK_PORT" -L 10001:localhost:10000
+
+poetry run dbt compile --profiles-dir .dbt --target $profile_target
+poetry run dbt seed --profiles-dir .dbt --target $profile_target
