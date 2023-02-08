@@ -42,4 +42,6 @@ runs:
       env:
         SOURCE: ${{ inputs.source }}
         TARGET: ${{ inputs.target }}
+        MODE: ${{ inputs.mode }}
         PUT_MD5: ${{ inputs.put_md5 }}
+        DELETE_DESTINATION: ${{ inputs.delete_destination }}
