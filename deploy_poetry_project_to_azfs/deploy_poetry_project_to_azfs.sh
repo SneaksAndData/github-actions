@@ -30,4 +30,4 @@ mkdir -p "$SOURCE_DIRECTORY/$PROJECT_DIRECTORY"
 mv -v "$env_path"/lib/python"$PYTHON_VERSION"/site-packages/* "$SOURCE_DIRECTORY"
 mv -v ./"$PROJECT_DIRECTORY"/* "$SOURCE_DIRECTORY/$PROJECT_DIRECTORY"
 
-./azcopy copy "./$SOURCE_DIRECTORY/*" "$DESTINATION" --recursive --overwrite true --put-md5
+./azcopy copy "./$SOURCE_DIRECTORY/*" "$DESTINATION" --recursive --overwrite true
