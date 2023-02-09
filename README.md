@@ -481,7 +481,7 @@ command in pipeline.
 | target             | Target directory or SAS url                    | False    |               |
 | mode               | azcopy action mode (copy or sync)              | True     | copy          |
 | put_md5            | If `true` sets `--put-md5` parameter to azcopy | True     | True          |
-| delete_destination | azcopy --delete-destination flag               | True     | True          |
+| delete_destination | azcopy --delete-destination flag               | True     | False         |
 
 ### Outputs
 No outputs defined
