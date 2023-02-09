@@ -16,7 +16,6 @@
 
 set -Eeuo pipefail
 
-echo Getting AzCopy
-curl -s -L https://aka.ms/downloadazcopy-v10-linux --output azcopy.tar.gz \
-  && tar -xf azcopy.tar.gz -C . --strip-components=1
-
+echo "Getting AzCopy from $DOWNLOAD_URI"
+curl -s -L "$DOWNLOAD_URI" --output azcopy.tar.gz \
+  && tar xzvf azcopy.tar.gz -C . --strip-components=1
