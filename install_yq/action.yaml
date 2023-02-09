@@ -1,0 +1,21 @@
+name: Install azcopy
+description: Installs azcopy v10 in build environment
+
+branding:
+  icon: 'battery-charging'
+  color: 'green'
+
+inputs:
+  download_uri:
+    description: Url to download azcopy from
+    required: false
+    default: https://aka.ms/downloadazcopy-v10-linux
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install poetry and package dependencies
+      shell: bash
+      env:
+        DOWNLOAD_URI: ${{ inputs.download_uri }}
+      run: $GITHUB_ACTION_PATH/install_yq.sh
