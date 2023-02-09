@@ -728,3 +728,78 @@ jobs:
           project_version: 0.0.1
           access_token: ${{ secrets.ACCESS_TOKEN }}
 ```
+
+## export_dag_and_sql
+
+Export airflow dag and sql files for use in [update_airflow_variables](#update_airflow_variables) step. 
+
+### Inputs
+| Name               | Description                                                   | Optional | Default Value |
+|--------------------|:--------------------------------------------------------------|----------|---------------|
+| deploy_environment | Environment name to deploy                                    | True     | production    |
+| project_name       | Name of the project                                           | False    |               |
+
+### Outputs
+| Name        | Description                    |
+|-------------|--------------------------------|
+| airflow_dag | AirFlow dag serialized as JSON |
+
+### Usage
+````yaml
+name: Generate Airflow DAG
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Export airflow dag and sql files
+        uses: SneaksAndData/github-actions/export_dag_and_sql@v0.0.12
+        with:
+          deploy_environment: test
+          project_name: dbt_project
+        id: airflow_dag
+````
+
+## run_dbt_compile
+
+Run DBT compile command.
+
+**NOTES**:
+1) This action requires connection to a spark cluster via SS via SSH.
+
+### Inputs
+| Name               | Description                | Optional | Default Value |
+|--------------------|:---------------------------|----------|---------------|
+| deploy_environment | Environment name to deploy | True     | production    |
+| project_name       | Name of the project        | False    |               |
+| ssh_key            | SSH private key            | False    |               |
+| spark_host         | Spark server host name     |          |               |
+| spark_port         | Spark SSH port             |          |               |
+| spark_user         | Spark user name            |          |               |
+
+### Outputs
+
+### Usage
+````yaml
+name: Generate Airflow DAG
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name:  DBT Compile (generate manifest)
+        uses: SneaksAndData/github-actions/run_dbt_compile@dbt_actions
+        with:
+          deploy_environment: production
+          project_name: dbt-project
+          ssh_key: ${{ secrets.DBT_DEPLOYMENT_CLUSTER_SSH_KEY }}
+          spark_host: spark-gh.sneaksanddata.com
+          spark_port: 2222
+          spark_user: spark
+````

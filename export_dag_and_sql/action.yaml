@@ -8,8 +8,9 @@ branding:
 inputs:
 
   deploy_environment:
-    required: true
     description: Deploy environment either 'test' or 'production'
+    required: false
+    default: production
 
   project_name:
     description: Name of project to deploy
