@@ -19,6 +19,8 @@ Available actions are:
 14. [update_airflow_variables](#update_airflow_variables)
 15. [create_pr](#create_pr)
 16. [deploy_with_gh_workflow](#deploy_with_gh_workflow)
+17. [export_dag_and_sql](#export_dag_and_sql)
+18. [run_dbt_compile](#run_dbt_compile)
 
 ## semver_release
 
