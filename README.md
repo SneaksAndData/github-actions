@@ -524,7 +524,7 @@ for a file share, attached to a storage account.
 | account_key     | Name of the storage account of the share                         | False    |               |
 | account_name    | Key of the storage account of the share                          | False    |               |
 | expiration_date | Expiration date in format that can be used by the `date` command | True     | +10 minutes   |
-| directory_type  | Type of directory (blob or fileshare)                            | True     | blob          |
+| directory_type  | Type of directory (blob or fileshare)                            | True     | fileshare     |
 
 
 **NOTES**:
