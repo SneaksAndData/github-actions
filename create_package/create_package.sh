@@ -16,7 +16,7 @@
 
 set -Eeuo pipefail
 
-if [[ -n "$VERSION" ]]; then
+if [[ -z "$VERSION" ]]; then
   next_version=$(git describe --tags --abbrev=0 | awk -F. '/[0-9]+\./{$NF++;print}' OFS=.)
   version=${next_version}a${PULL_REQUEST_NUMBER}.dev${COMMENTS_COUNT}
 else
