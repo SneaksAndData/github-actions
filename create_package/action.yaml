@@ -48,6 +48,7 @@ runs:
       id: package-generator
     - name: Create comment
       uses: peter-evans/create-or-update-comment@v2
+      if: github.event.issue.number
       with:
         issue-number: ${{ github.event.issue.number }}
         body:  Created package with number `${{ steps.package-generator.outputs.version }}`
