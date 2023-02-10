@@ -22,6 +22,11 @@ inputs:
     description: Name of package to create. This should match name of root project directory
     required: true
 
+  version:
+    description: Version of package (if not provided, a new development version will be generated)
+    required: false
+    default: ''
+
 outputs:
   version:
     description: "Version"
