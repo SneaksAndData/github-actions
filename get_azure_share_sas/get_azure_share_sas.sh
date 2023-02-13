@@ -16,7 +16,19 @@
 
 set -Eeuo pipefail
 
-destination="https://$ACCOUNT_NAME.file.core.windows.net/$DIRECTORY_NAME"
+
+if [[ "$(echo "$DIRECTORY_TYPE" | tr '[:upper:]' '[:lower:]')" == 'fileshare' ]]; then
+  destination="https://$ACCOUNT_NAME.file.core.windows.net/$DIRECTORY_NAME"
+  services="f"
+elif [[ "$(echo "$DIRECTORY_TYPE" | tr '[:upper:]' '[:lower:]')" == 'blob' ]]; then
+  destination="https://$ACCOUNT_NAME.blob.core.windows.net/$DIRECTORY_NAME"
+  services="b"
+else
+  echo "Directory type \"$DIRECTORY_TYPE\" not supported"
+  exit 1;
+fi;
+
+
 
 end=$(date -d "$EXPIRATION_DATE" '+%Y-%m-%dT%H:%MZ')
 echo "Generating SAS for $destination with expiration date $end"
@@ -28,7 +40,7 @@ sas=$(
       --https-only \
       --permissions acdlpruw \
       --resource-types sco \
-      --services fb | cut -d'"' -f2
+      --services "$services" | cut -d'"' -f2
 )
 
 authorized_destination="$destination?$sas"

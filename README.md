@@ -481,11 +481,13 @@ Invoke [azcopy copy](https://learn.microsoft.com/en-us/azure/storage/common/stor
 command in pipeline.
 
 ### Inputs
-| Name    | Description                                    | Optional | Default value |
-|---------|:-----------------------------------------------|----------|---------------|
-| source  | Source directory or SAS url to copy            | False    |               |
-| target  | Target directory or SAS url                    | False    |               |
-| put_md5 | If `true` sets `--put-md5` parameter to azcopy | True     | True          |
+| Name               | Description                                    | Optional | Default value |
+|--------------------|:-----------------------------------------------|----------|---------------|
+| source             | Source directory or SAS url to copy            | False    |               |
+| target             | Target directory or SAS url                    | False    |               |
+| mode               | azcopy action mode (copy or sync)              | True     | copy          |
+| put_md5            | If `true` sets `--put-md5` parameter to azcopy | True     | True          |
+| delete_destination | azcopy --delete-destination flag               | True     | False         |
 
 ### Outputs
 No outputs defined
@@ -528,6 +530,7 @@ for a file share, attached to a storage account.
 | account_key     | Name of the storage account of the share                         | False    |               |
 | account_name    | Key of the storage account of the share                          | False    |               |
 | expiration_date | Expiration date in format that can be used by the `date` command | True     | +10 minutes   |
+| directory_type  | Type of directory (blob or fileshare)                            | True     | fileshare     |
 
 
 **NOTES**:
