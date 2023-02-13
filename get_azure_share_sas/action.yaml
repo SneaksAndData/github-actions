@@ -23,6 +23,10 @@ inputs:
     required: false
     default: "+10 minutes"
 
+  directory_type:
+    description: Type of directory (blob or fileshare)
+    required: false
+    default: "fileshare"
 
 outputs:
   authorized_destination:
@@ -40,4 +44,5 @@ runs:
         ACCOUNT_KEY: ${{ inputs.account_key }}
         ACCOUNT_NAME: ${{ inputs.account_name }}
         EXPIRATION_DATE: ${{ inputs.expiration_date }}
+        DIRECTORY_TYPE: ${{ inputs.directory_type }}
       id: sas
