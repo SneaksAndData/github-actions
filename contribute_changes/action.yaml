@@ -26,14 +26,20 @@ inputs:
     description: Github access token
     required: true
 
+  merge:
+    description: Set true if need to immediately merge changes
+    required: false
+    default: 'false'
+
 runs:
   using: "composite"
   steps:
-    - run: $GITHUB_ACTION_PATH/create_pr.sh
+    - run: $GITHUB_ACTION_PATH/contribute_changes.sh
       working-directory: ${{ inputs.working_directory }}
       env:
         PROJECT_NAME: ${{ inputs.project_name }}
         PROJECT_VERSION: ${{ inputs.project_version }}
         DEPLOY_ENVIRONMENT: ${{ inputs.deploy_environment }}
         GH_TOKEN: ${{ inputs.access_token }}
+        MERGE: ${{ inputs.merge }}
       shell: bash

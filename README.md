@@ -20,7 +20,6 @@ Available actions are:
 15. [create_pr](#create_pr)
 16. [deploy_with_gh_workflow](#deploy_with_gh_workflow)
 17. [export_dag_and_sql](#export_dag_and_sql)
-18. [run_dbt_compile](#run_dbt_compile)
 
 ## semver_release
 
@@ -763,45 +762,4 @@ jobs:
           deploy_environment: test
           project_name: dbt_project
         id: airflow_dag
-````
-
-## run_dbt_compile
-
-Run DBT compile command.
-
-**NOTES**:
-1) This action requires connection to a spark cluster via SS via SSH.
-
-### Inputs
-| Name               | Description                | Optional | Default Value |
-|--------------------|:---------------------------|----------|---------------|
-| deploy_environment | Environment name to deploy | True     | production    |
-| project_name       | Name of the project        | False    |               |
-| ssh_key            | SSH private key            | False    |               |
-| spark_host         | Spark server host name     |          |               |
-| spark_port         | Spark SSH port             |          |               |
-| spark_user         | Spark user name            |          |               |
-
-### Outputs
-
-### Usage
-````yaml
-name: Generate Airflow DAG
-
-on:
-  workflow_dispatch:
-
-jobs:
-  create_release:
-    runs-on: ubuntu-latest
-    steps:
-      - name:  DBT Compile (generate manifest)
-        uses: SneaksAndData/github-actions/run_dbt_compile@dbt_actions
-        with:
-          deploy_environment: production
-          project_name: dbt-project
-          ssh_key: ${{ secrets.DBT_DEPLOYMENT_CLUSTER_SSH_KEY }}
-          spark_host: spark-gh.sneaksanddata.com
-          spark_port: 2222
-          spark_user: spark
 ````

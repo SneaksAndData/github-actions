@@ -31,6 +31,16 @@ inputs:
     required: false
     default: production
 
+  generate_package_workflow_name:
+    description: Generate package workflow name
+    required: false
+    default: 'Prepare Helm Chart'
+
+  deploy_workflow_name:
+    description: Generate package workflow name
+    required: false
+    default: 'Deploy Variables to Airflow'
+
 runs:
   using: "composite"
   steps:
@@ -42,4 +52,6 @@ runs:
         DEPLOY_ENVIRONMENT: ${{ inputs.deploy_environment }}
         GH_TOKEN: ${{ inputs.access_token }}
         TARGET_REPO_NAME: ${{ inputs.target_repo_name }}
+        GENERATE_PACKAGE_WORKFLOW_NAME: ${{ inputs.generate_package_workflow_name }}
+        DEPLOY_WORKFLOW_NAME: ${{ inputs.deploy_workflow_name }}
       shell: bash
