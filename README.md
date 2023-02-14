@@ -18,7 +18,7 @@ Available actions are:
 13. [setup_gh_app](#setup_gh_app)
 14. [update_airflow_variables](#update_airflow_variables)
 15. [contribute_changes](#contribute_changes)
-16. [deploy_with_gh_workflow](#deploy_with_gh_workflow)
+16. [activate_workflow](#activate_workflow)
 17. [export_dag_and_sql](#export_dag_and_sql)
 
 ## semver_release
@@ -691,23 +691,21 @@ jobs:
           deploy_environment: production
 ```
 
-## deploy_with_gh_workflow
+## activate_workflow
 
 Create pull request in repository
 
-**NOTES**:
-1) This action requires workflows with names `Prepare Helm Chart` and `Deploy vairables to Airflow` to be
-present in repository
-
 ### Inputs
-| Name               | Description                                                   | Optional | Default Value |
-|--------------------|:--------------------------------------------------------------|----------|---------------|
-| project_name       | Name of the project                                           | False    |               |
-| project_version    | Version of the project                                        | False    |               |
-| working_directory  | Directory with airflow-variables GitHub repo                  | False    |               |
-| access_token       | An access token with push and create pull request permissions | False    |               |
-| target_repo_name   | Repository to deploy                                          | False    |               |
-| deploy_environment | Environment name to deploy                                    | True     | production    |
+| Name                           | Description                                                   | Optional | Default Value               |
+|--------------------------------|:--------------------------------------------------------------|----------|-----------------------------|
+| project_name                   | Name of the project                                           | False    |                             |
+| project_version                | Version of the project                                        | False    |                             |
+| working_directory              | Directory with airflow-variables GitHub repo                  | False    |                             |
+| access_token                   | An access token with push and create pull request permissions | False    |                             |
+| target_repo_name               | Repository to deploy                                          | False    |                             |
+| deploy_environment             | Environment name to deploy                                    | True     | production                  |
+| generate_package_workflow_name | Name of workflow that generates deployment package            | True     | Prepare Helm Chart          |
+| deploy_workflow_name           | Name of workflow to trigger                                   | True     | Deploy Variables to Airflow |
 
 ### Outputs
 No outputs defined
@@ -725,7 +723,7 @@ jobs:
     steps:
       - name: Deploy variables
         if: ${{ startsWith(github.ref, 'refs/tags') }}
-        uses: SneaksAndData/github-actions/deploy_with_gh_workflow@v0.0.12
+        uses: SneaksAndData/github-actions/activate_workflow@v0.0.12
         with:
           project_name: dbt-project
           working_directory: github-repository

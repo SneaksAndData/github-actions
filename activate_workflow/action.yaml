@@ -32,7 +32,7 @@ inputs:
     default: production
 
   generate_package_workflow_name:
-    description: Generate package workflow name
+    description: Name of workflow that generates deployment package
     required: false
     default: 'Prepare Helm Chart'
 
@@ -44,7 +44,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: $GITHUB_ACTION_PATH/deploy_with_gh_workflow.sh
+    - run: $GITHUB_ACTION_PATH/activate_workflow.sh
       working-directory: ${{ inputs.working_directory }}
       env:
         PROJECT_NAME: ${{ inputs.project_name }}
