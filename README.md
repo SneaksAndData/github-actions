@@ -17,7 +17,7 @@ Available actions are:
 12. [get_azure_share_sas](#get_azure_share_sas)
 13. [setup_gh_app](#setup_gh_app)
 14. [update_airflow_variables](#update_airflow_variables)
-15. [create_pr](#create_pr)
+15. [contribute_changes](#contribute_changes)
 16. [deploy_with_gh_workflow](#deploy_with_gh_workflow)
 17. [export_dag_and_sql](#export_dag_and_sql)
 
@@ -650,7 +650,7 @@ jobs:
           project_graph: "{}"
 ```
 
-## create_pr
+## contribute_changes
 
 Create pull request in repository
 
@@ -682,7 +682,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Contribute Variable Changes
-        uses: SneaksAndData/github-actions/create_pr@v0.0.12
+        uses: SneaksAndData/github-actions/contribute_changes@v0.0.12
         with:
           project_name: dbt-project
           working_directory: github-repository
