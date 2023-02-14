@@ -14,10 +14,6 @@ inputs:
     description: New version of project to set
     required: true
 
-  deploy_environment:
-    description: Deployment environment name
-    required: true
-
   working_directory:
     description: Directory with airflow-variables repository
     required: true
@@ -39,7 +35,6 @@ runs:
       env:
         PROJECT_NAME: ${{ inputs.project_name }}
         PROJECT_VERSION: ${{ inputs.project_version }}
-        DEPLOY_ENVIRONMENT: ${{ inputs.deploy_environment }}
         GH_TOKEN: ${{ inputs.access_token }}
         MERGE: ${{ inputs.merge }}
       shell: bash

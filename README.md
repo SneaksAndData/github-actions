@@ -52,7 +52,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Create Release
-        uses: SneaksAndData/github-actions/semver_release@v0.0.12
+        uses: SneaksAndData/github-actions/semver_release@v0.0.17
         with:
           major_v: 0
           minor_v: 0
@@ -102,7 +102,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install Poetry and dependencies
-        uses: SneaksAndData/github-actions/install_poetry@v0.0.12
+        uses: SneaksAndData/github-actions/install_poetry@v0.0.17
         with:
            pypi_repo_url: ${{ secrets.AZOPS_PYPI_REPO_URL }}
            pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
@@ -149,7 +149,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Build and Push Chart (DEV)
-        uses: SneaksAndData/github-actions/build_helm_chart@v0.0.12
+        uses: SneaksAndData/github-actions/build_helm_chart@v0.0.17
         with:
           application: beast
           container_registry_user: ${{secrets.AZCR_DEV_USER}}
@@ -204,14 +204,14 @@ jobs:
           ref: refs/pull/${{github.event.issue.number}}/merge
           fetch-depth: 0
       - name: Install Poetry and dependencies
-        uses: SneaksAndData/github-actions/install_poetry@v0.0.12
+        uses: SneaksAndData/github-actions/install_poetry@v0.0.17
         with:
           pypi_repo_url: ${{ secrets.AZOPS_PYPI_REPO_URL }}
           pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
           pypi_token: ${{ secrets.AZOPS_PAT }}
           skip_dependencies: true
       - name: Create package
-        uses: SneaksAndData/github-actions/create_package@v0.0.12
+        uses: SneaksAndData/github-actions/create_package@v0.0.17
         with:
           pypi_repo_url: ${{ secrets.AZOPS_PYPI_UPLOAD }}
           pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
@@ -255,7 +255,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get project version
-        uses: SneaksAndData/github-actions/generate_version@v0.0.12
+        uses: SneaksAndData/github-actions/generate_version@v0.0.17
         id: version
       - run: echo "$version"
         env:
@@ -285,7 +285,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install azcopy v10
-        uses: SneaksAndData/github-actions/install_azcopy@v0.0.12
+        uses: SneaksAndData/github-actions/install_azcopy@v0.0.17
 ```
 
 ## login_to_aks
@@ -317,7 +317,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get cluster credentials
-        uses: SneaksAndData/github-actions/login_to_aks@v0.0.12
+        uses: SneaksAndData/github-actions/login_to_aks@v0.0.17
         with:
           cluster_sp_client_id: $AZURE_CLIENT_ID
           cluster_sp_client_password: $AZURE_CLIENT_SECRET
@@ -362,17 +362,17 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get project version
-        uses: SneaksAndData/github-actions/generate_version@v0.0.12
+        uses: SneaksAndData/github-actions/generate_version@v0.0.17
         id: version
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.12
+        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.17
         with:
           directory_name: share-name/path/within/share
           account_key: ${{ secrets.ACCOUNT_KEY }}
           account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Prepare site-packages for deployment
-        uses: SneaksAndData/github-actions/deploy_poetry_project_to_azfs@v0.0.12
+        uses: SneaksAndData/github-actions/deploy_poetry_project_to_azfs@v0.0.17
         with:
           deployment_root: /python
           project_version: ${{ steps.version.outputs.version }}
@@ -410,17 +410,17 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get project version
-        uses: SneaksAndData/github-actions/generate_version@v0.0.12
+        uses: SneaksAndData/github-actions/generate_version@v0.0.17
         id: version
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.12
+        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.17
         with:
           directory_name: share-name/path/within/share
           account_key: ${{ secrets.ACCOUNT_KEY }}
           account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Prepare dbt for deployment
-        uses: SneaksAndData/github-actions/deploy_dbt_project_to_azfs@v0.0.12
+        uses: SneaksAndData/github-actions/deploy_dbt_project_to_azfs@v0.0.17
         with:
           deployment_root: /dbt
           project_version: ${{ steps.version.outputs.version }}
@@ -457,17 +457,17 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get project version
-        uses: SneaksAndData/github-actions/generate_version@v0.0.12
+        uses: SneaksAndData/github-actions/generate_version@v0.0.17
         id: version
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.12
+        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.17
         with:
           directory_name: share-name/path/within/share
           account_key: ${{ secrets.ACCOUNT_KEY }}
           account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Prepare dbt for deployment
-        uses: SneaksAndData/github-actions/deploy_data_schemas_to_azfs@v0.0.12
+        uses: SneaksAndData/github-actions/deploy_data_schemas_to_azfs@v0.0.17
         with:
           deployment_root: /dbt
           project_version: ${{ steps.version.outputs.version }}
@@ -503,14 +503,14 @@ jobs:
     name: Copy files
     steps:
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.12
+        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.17
         with:
           directory_name: share-name/path/within/share
           account_key: ${{ secrets.ACCOUNT_KEY }}
           account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Copy data
-        uses: SneaksAndData/github-actions/run_azcopy@v0.0.12
+        uses: SneaksAndData/github-actions/run_azcopy@v0.0.17
         with:
           source: source/directory/on/build/agent
           target: ${{ steps.sas.outputs.authorized_destination }}
@@ -552,14 +552,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.12
+        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.17
         with:
           directory_name: share-name/path/within/share
           account_key: ${{ secrets.ACCOUNT_KEY }}
           account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Copy data
-        uses: SneaksAndData/github-actions/run_azcopy@v0.0.12
+        uses: SneaksAndData/github-actions/run_azcopy@v0.0.17
         with:
           source_directory: source/directory/on/build/agent
           target: ${{ steps.sas.outputs.authorized_destination }}
@@ -598,7 +598,7 @@ jobs:
     steps:
       - name: Reconfigure Git to use App
         id: setup_gh_app
-        uses: SneaksAndData/github-actions/setup_gh_app@v0.0.12
+        uses: SneaksAndData/github-actions/setup_gh_app@v0.0.17
         with:
           app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
           app_installation_id: 1234567
@@ -642,7 +642,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Update Project Version
-        uses: SneaksAndData/github-actions/update_airflow_variables@v0.0.12
+        uses: SneaksAndData/github-actions/update_airflow_variables@v0.0.17
         with:
           project_name: dbt-project
           working_directory: github-repository
@@ -654,18 +654,14 @@ jobs:
 
 Create pull request in repository
 
-**NOTES**:
-1) If deploy environment is not equal to `test`, this action creates pull request and merges it. Otherwise,
-it only pushes a new branch.
-
 ### Inputs
-| Name               | Description                                                   | Optional | Default Value |
-|--------------------|:--------------------------------------------------------------|----------|---------------|
-| project_name       | Name of the project                                           | False    |               |
-| project_version    | Version of the project                                        | False    |               |
-| working_directory  | Directory with airflow-variables GitHub repo                  | False    |               |
-| access_token       | An access token with push and create pull request permissions | False    |               |
-| deploy_environment | Environment name to deploy                                    | False    |               |
+| Name              | Description                                                                                 | Optional | Default Value |
+|-------------------|:--------------------------------------------------------------------------------------------|----------|---------------|
+| project_name      | Name of the project                                                                         | False    |               |
+| project_version   | Version of the project                                                                      | False    |               |
+| working_directory | Directory with airflow-variables GitHub repo                                                | False    |               |
+| access_token      | An access token with push and create pull request permissions                               | False    |               |
+| merge             | True if action should merge changes. Otherwise just create a branch and open a Pull Request | False    |               |
 
 ### Outputs
 No outputs defined
@@ -678,17 +674,17 @@ on:
   workflow_dispatch:
 
 jobs:
-  create_release:
+  contribute_changes:
     runs-on: ubuntu-latest
     steps:
       - name: Contribute Variable Changes
-        uses: SneaksAndData/github-actions/contribute_changes@v0.0.12
+        uses: SneaksAndData/github-actions/contribute_changes@v0.0.17
         with:
           project_name: dbt-project
           working_directory: github-repository
           project_version: 0.0.1
           access_token: ${{ secrets.ACCESS_TOKEN }}
-          deploy_environment: production
+          merge: false
 ```
 
 ## activate_workflow
@@ -722,8 +718,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy variables
-        if: ${{ startsWith(github.ref, 'refs/tags') }}
-        uses: SneaksAndData/github-actions/activate_workflow@v0.0.12
+        uses: SneaksAndData/github-actions/activate_workflow@v0.0.17
         with:
           project_name: dbt-project
           working_directory: github-repository
@@ -758,7 +753,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Export airflow dag and sql files
-        uses: SneaksAndData/github-actions/export_dag_and_sql@v0.0.12
+        uses: SneaksAndData/github-actions/export_dag_and_sql@v0.0.17
         with:
           deploy_environment: test
           project_name: dbt_project
