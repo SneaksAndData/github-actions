@@ -19,7 +19,7 @@ Available actions are:
 14. [update_airflow_variables](#update_airflow_variables)
 15. [contribute_changes](#contribute_changes)
 16. [activate_workflow](#activate_workflow)
-17. [export_dag_and_sql](#export_dag_and_sql)
+17. [export_dbt_sql](#export_dbt_sql)
 
 ## semver_release
 
@@ -726,7 +726,7 @@ jobs:
           access_token: ${{ secrets.ACCESS_TOKEN }}
 ```
 
-## export_dag_and_sql
+## export_dbt_sql
 
 Export airflow dag and sql files for use in [update_airflow_variables](#update_airflow_variables) step. 
 
@@ -753,7 +753,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Export airflow dag and sql files
-        uses: SneaksAndData/github-actions/export_dag_and_sql@v0.0.17
+        uses: SneaksAndData/github-actions/export_dbt_sql@v0.0.17
         with:
           deploy_environment: test
           project_name: dbt_project
