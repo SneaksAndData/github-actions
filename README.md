@@ -695,6 +695,7 @@ Triggers a specified GitHub Workflow file with parameters.
 |--------------------|:--------------------------------------------------------------|----------|---------------|
 | access_token       | An access token with push and create pull request permissions | False    |               |
 | repo_name          | Repository to deploy                                          | False    |               |
+| workflow_name      | Name of the workflow to activate                              | False    |               |
 | deploy_environment | Environment name to deploy                                    | True     | production    |
 
 ### Outputs
