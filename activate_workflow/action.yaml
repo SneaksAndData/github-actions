@@ -6,24 +6,16 @@ branding:
   color: 'green'
 
 inputs:
-  project_name:
-    description: Repository name
-    required: true
-
-  project_version:
-    description: Repository name
-    required: true
-
-  working_directory:
-    description: Working directory
-    required: true
-
   access_token:
-    description: Working directory
+    description: Github access token
     required: true
 
-  target_repo_name:
+  repo_name:
     description: Repository name
+    required: true
+
+  workflow_name:
+    description: Name of the workflow to activate
     required: true
 
   deploy_environment:
@@ -31,27 +23,13 @@ inputs:
     required: false
     default: production
 
-  generate_package_workflow_name:
-    description: Name of workflow that generates deployment package
-    required: false
-    default: 'Prepare Helm Chart'
-
-  deploy_workflow_name:
-    description: Generate package workflow name
-    required: false
-    default: 'Deploy Variables to Airflow'
-
 runs:
   using: "composite"
   steps:
     - run: $GITHUB_ACTION_PATH/activate_workflow.sh
-      working-directory: ${{ inputs.working_directory }}
       env:
-        PROJECT_NAME: ${{ inputs.project_name }}
-        PROJECT_VERSION: ${{ inputs.project_version }}
-        DEPLOY_ENVIRONMENT: ${{ inputs.deploy_environment }}
         GH_TOKEN: ${{ inputs.access_token }}
-        TARGET_REPO_NAME: ${{ inputs.target_repo_name }}
-        GENERATE_PACKAGE_WORKFLOW_NAME: ${{ inputs.generate_package_workflow_name }}
-        DEPLOY_WORKFLOW_NAME: ${{ inputs.deploy_workflow_name }}
+        DEPLOY_ENVIRONMENT: ${{ inputs.deploy_environment }}
+        REPO_NAME: ${{ inputs.repo_name }}
+        WORKFLOW_NAME: ${{ inputs.workflow_name }}
       shell: bash

@@ -691,16 +691,11 @@ jobs:
 Create pull request in repository
 
 ### Inputs
-| Name                           | Description                                                   | Optional | Default Value               |
-|--------------------------------|:--------------------------------------------------------------|----------|-----------------------------|
-| project_name                   | Name of the project                                           | False    |                             |
-| project_version                | Version of the project                                        | False    |                             |
-| working_directory              | Directory with airflow-variables GitHub repo                  | False    |                             |
-| access_token                   | An access token with push and create pull request permissions | False    |                             |
-| target_repo_name               | Repository to deploy                                          | False    |                             |
-| deploy_environment             | Environment name to deploy                                    | True     | production                  |
-| generate_package_workflow_name | Name of workflow that generates deployment package            | True     | Prepare Helm Chart          |
-| deploy_workflow_name           | Name of workflow to trigger                                   | True     | Deploy Variables to Airflow |
+| Name               | Description                                                   | Optional | Default Value |
+|--------------------|:--------------------------------------------------------------|----------|---------------|
+| access_token       | An access token with push and create pull request permissions | False    |               |
+| repo_name          | Repository to deploy                                          | False    |               |
+| deploy_environment | Environment name to deploy                                    | True     | production    |
 
 ### Outputs
 No outputs defined
@@ -719,8 +714,43 @@ jobs:
       - name: Deploy variables
         uses: SneaksAndData/github-actions/activate_workflow@v0.0.17
         with:
-          project_name: dbt-project
-          working_directory: github-repository
-          project_version: 0.0.1
           access_token: ${{ secrets.ACCESS_TOKEN }}
+          repo_name: github-repo
+          workflow_name: Deploy Variables to airflow
+```
+
+## wait_for_workflow
+
+Create pull request in repository
+
+### Inputs
+| Name          | Description                                                   | Optional | Default Value |
+|---------------|:--------------------------------------------------------------|----------|---------------|
+| access_token  | An access token with push and create pull request permissions | False    |               |
+| run_title     | Repository to deploy                                          | False    |               |
+| repo_name     | Repository name                                               | False    |               |
+| workflow_name | Name of the workflow                                          | False    |               |
+| branch_name   | Name of the branch                                            | True     | main          |
+
+### Outputs
+No outputs defined
+
+### Usage
+```yaml
+name: Deploy latest tag
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy variables
+        uses: SneaksAndData/github-actions/activate_workflow@v0.0.17
+        with:
+          access_token: ${{ secrets.ACCESS_TOKEN }}
+          run_title: "Updating Project github-repo to version 1.1.1"
+          repo_name: github-repo
+          workflow_name: Prepare Helm chart
 ```

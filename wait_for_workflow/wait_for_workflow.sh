@@ -16,9 +16,13 @@
 
 set -Eeuo pipefail
 
-new_release=$(gh release list --repo "$REPO_NAME" --limit 1 | tail -n 1 | cut -d$'\t' -f1)
+is_completed=''
 
-echo "Submitting a deployment for a new configuration release $new_release"
+while [ "$is_completed" == '' ]
+do
 
-gh workflow run "$WORKFLOW_NAME" --repo "$REPO_NAME" --field environment="$DEPLOY_ENVIRONMENT" --ref "refs/tags/$new_release"
+  echo "Waiting for the workflow $WORKFLOW_NAME with run title $RUN_TITLE in the repository $REPO_NAME to be completed"
+  sleep 5
+  is_completed=$(gh workflow view "$WORKFLOW_NAME" --repo "$REPO_NAME" | grep "$RUN_TITLE" | grep "$BRANCH_NAME" | grep completed || true)
 
+done
