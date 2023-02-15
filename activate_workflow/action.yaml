@@ -19,7 +19,7 @@ inputs:
     required: true
 
   deploy_environment:
-    description: Repository name
+    description: Deploy environment for workflow run
     required: false
     default: production
 
