@@ -19,7 +19,6 @@ Available actions are:
 14. [update_airflow_variables](#update_airflow_variables)
 15. [contribute_changes](#contribute_changes)
 16. [activate_workflow](#activate_workflow)
-17. [export_dbt_sql](#export_dbt_sql)
 
 ## semver_release
 
@@ -725,37 +724,3 @@ jobs:
           project_version: 0.0.1
           access_token: ${{ secrets.ACCESS_TOKEN }}
 ```
-
-## export_dbt_sql
-
-Export airflow dag and sql files for use in [update_airflow_variables](#update_airflow_variables) step. 
-
-### Inputs
-| Name               | Description                                                   | Optional | Default Value |
-|--------------------|:--------------------------------------------------------------|----------|---------------|
-| deploy_environment | Environment name to deploy                                    | True     | production    |
-| project_name       | Name of the project                                           | False    |               |
-
-### Outputs
-| Name        | Description                    |
-|-------------|--------------------------------|
-| airflow_dag | AirFlow dag serialized as JSON |
-
-### Usage
-````yaml
-name: Generate Airflow DAG
-
-on:
-  workflow_dispatch:
-
-jobs:
-  create_release:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Export airflow dag and sql files
-        uses: SneaksAndData/github-actions/export_dbt_sql@v0.0.17
-        with:
-          deploy_environment: test
-          project_name: dbt_project
-        id: airflow_dag
-````
