@@ -688,7 +688,7 @@ jobs:
 
 ## activate_workflow
 
-Create pull request in repository
+Triggers a specified GitHub Workflow file with parameters.
 
 ### Inputs
 | Name                           | Description                                                   | Optional | Default Value               |
