@@ -1,5 +1,5 @@
 name: Contribute Changes
-description: Upgrade airflow variables
+description: Contributes any changes made on a checked out repository.
 
 branding:
   icon: 'bar-chart'
