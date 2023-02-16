@@ -1,0 +1,45 @@
+name: Setup git to use GitHub App
+description: Generate GitHub access token for the GitHub App.
+
+branding:
+  icon: 'bar-chart'
+  color: 'green'
+
+inputs:
+  app_private_key:
+    description: Private key for app authentication
+    required: true
+
+  app_installation_id:
+    description: Application installation id
+    required: true
+
+  app_id:
+    description: Application id
+    required: true
+
+  git_user_email:
+    description: Email for git client
+    required: true
+
+  git_user_name:
+    description: User name for git client
+    required: true
+
+outputs:
+  access_token:
+    description: "Access token"
+    value: ${{ steps.reconfigure_git.outputs.access_token }}
+
+runs:
+  using: "composite"
+  steps:
+    - run: $GITHUB_ACTION_PATH/setup_gh_app.sh
+      id: reconfigure_git
+      env:
+        APP_PRIVATE_KEY: ${{ inputs.app_private_key }}
+        APP_ID: ${{ inputs.app_id }}
+        APP_INSTALLATION_ID: ${{ inputs.app_installation_id }}
+        GIT_USER_EMAIL: ${{ inputs.git_user_email }}
+        GIT_USER_NAME: ${{ inputs.git_user_name }}
+      shell: bash

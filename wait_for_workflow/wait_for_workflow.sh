@@ -16,8 +16,13 @@
 
 set -Eeuo pipefail
 
-SOURCE_DIRECTORY="./$DEPLOYMENT_ROOT/$PROJECT_NAME/$PROJECT_VERSION/"
-mkdir -p "$SOURCE_DIRECTORY"
-mv -v ./target/run/* "$SOURCE_DIRECTORY"
+is_completed=''
 
-./azcopy copy "./$SOURCE_DIRECTORY/*" "$DESTINATION" --recursive --overwrite true --put-md5
+while [ "$is_completed" == '' ]
+do
+
+  echo "Waiting for the workflow $WORKFLOW_NAME with run title $RUN_TITLE in the repository $REPO_NAME to be completed"
+  sleep 5
+  is_completed=$(gh workflow view "$WORKFLOW_NAME" --repo "$REPO_NAME" | grep "$RUN_TITLE" | grep "$BRANCH_NAME" | grep completed || true)
+
+done

@@ -16,8 +16,12 @@
 
 set -Eeuo pipefail
 
-SOURCE_DIRECTORY="./$DEPLOYMENT_ROOT/$PROJECT_NAME/$PROJECT_VERSION/"
-mkdir -p "$SOURCE_DIRECTORY"
-mv -v ./target/run/* "$SOURCE_DIRECTORY"
+OUTPUT=$(cat "$VARIABLES_SUB_PATH/${PROJECT_NAME//-/_}.json")
 
-./azcopy copy "./$SOURCE_DIRECTORY/*" "$DESTINATION" --recursive --overwrite true --put-md5
+# Multiline string handling, per Github Community recommendation:
+# https://github.community/t/set-output-truncates-multiline-strings/16852/3
+OUTPUT="${OUTPUT//'%'/'%25'}"
+OUTPUT="${OUTPUT//$'\n'/'%0A'}"
+OUTPUT="${OUTPUT//$'\r'/'%0D'}"
+
+echo "airflow_variable=$OUTPUT" >> "$GITHUB_OUTPUT"

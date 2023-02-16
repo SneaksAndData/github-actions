@@ -15,6 +15,10 @@ Available actions are:
 10. [deploy_data_schemas_to_azfs](#deploy_data_schemas_to_azfs)
 11. [run_azcopy](#run_azcopy)
 12. [get_azure_share_sas](#get_azure_share_sas)
+13. [setup_gh_app](#setup_gh_app)
+14. [update_airflow_variables](#update_airflow_variables)
+15. [contribute_changes](#contribute_changes)
+16. [activate_workflow](#activate_workflow)
 
 ## semver_release
 
@@ -47,7 +51,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Create Release
-        uses: SneaksAndData/github-actions/semver_release@v0.0.12
+        uses: SneaksAndData/github-actions/semver_release@v0.0.17
         with:
           major_v: 0
           minor_v: 0
@@ -97,7 +101,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install Poetry and dependencies
-        uses: SneaksAndData/github-actions/install_poetry@v0.0.12
+        uses: SneaksAndData/github-actions/install_poetry@v0.0.17
         with:
            pypi_repo_url: ${{ secrets.AZOPS_PYPI_REPO_URL }}
            pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
@@ -144,7 +148,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Build and Push Chart (DEV)
-        uses: SneaksAndData/github-actions/build_helm_chart@v0.0.12
+        uses: SneaksAndData/github-actions/build_helm_chart@v0.0.17
         with:
           application: beast
           container_registry_user: ${{secrets.AZCR_DEV_USER}}
@@ -199,14 +203,14 @@ jobs:
           ref: refs/pull/${{github.event.issue.number}}/merge
           fetch-depth: 0
       - name: Install Poetry and dependencies
-        uses: SneaksAndData/github-actions/install_poetry@v0.0.12
+        uses: SneaksAndData/github-actions/install_poetry@v0.0.17
         with:
           pypi_repo_url: ${{ secrets.AZOPS_PYPI_REPO_URL }}
           pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
           pypi_token: ${{ secrets.AZOPS_PAT }}
           skip_dependencies: true
       - name: Create package
-        uses: SneaksAndData/github-actions/create_package@v0.0.12
+        uses: SneaksAndData/github-actions/create_package@v0.0.17
         with:
           pypi_repo_url: ${{ secrets.AZOPS_PYPI_UPLOAD }}
           pypi_token_username: ${{ secrets.AZOPS_PAT_USER }}
@@ -250,7 +254,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get project version
-        uses: SneaksAndData/github-actions/generate_version@v0.0.12
+        uses: SneaksAndData/github-actions/generate_version@v0.0.17
         id: version
       - run: echo "$version"
         env:
@@ -280,7 +284,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install azcopy v10
-        uses: SneaksAndData/github-actions/install_azcopy@v0.0.12
+        uses: SneaksAndData/github-actions/install_azcopy@v0.0.17
 ```
 
 ## login_to_aks
@@ -312,7 +316,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get cluster credentials
-        uses: SneaksAndData/github-actions/login_to_aks@v0.0.12
+        uses: SneaksAndData/github-actions/login_to_aks@v0.0.17
         with:
           cluster_sp_client_id: $AZURE_CLIENT_ID
           cluster_sp_client_password: $AZURE_CLIENT_SECRET
@@ -357,17 +361,17 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get project version
-        uses: SneaksAndData/github-actions/generate_version@v0.0.12
+        uses: SneaksAndData/github-actions/generate_version@v0.0.17
         id: version
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.12
+        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.17
         with:
           directory_name: share-name/path/within/share
           account_key: ${{ secrets.ACCOUNT_KEY }}
           account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Prepare site-packages for deployment
-        uses: SneaksAndData/github-actions/deploy_poetry_project_to_azfs@v0.0.12
+        uses: SneaksAndData/github-actions/deploy_poetry_project_to_azfs@v0.0.17
         with:
           deployment_root: /python
           project_version: ${{ steps.version.outputs.version }}
@@ -405,17 +409,17 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get project version
-        uses: SneaksAndData/github-actions/generate_version@v0.0.12
+        uses: SneaksAndData/github-actions/generate_version@v0.0.17
         id: version
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.12
+        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.17
         with:
           directory_name: share-name/path/within/share
           account_key: ${{ secrets.ACCOUNT_KEY }}
           account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Prepare dbt for deployment
-        uses: SneaksAndData/github-actions/deploy_dbt_project_to_azfs@v0.0.12
+        uses: SneaksAndData/github-actions/deploy_dbt_project_to_azfs@v0.0.17
         with:
           deployment_root: /dbt
           project_version: ${{ steps.version.outputs.version }}
@@ -452,17 +456,17 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get project version
-        uses: SneaksAndData/github-actions/generate_version@v0.0.12
+        uses: SneaksAndData/github-actions/generate_version@v0.0.17
         id: version
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.12
+        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.17
         with:
           directory_name: share-name/path/within/share
           account_key: ${{ secrets.ACCOUNT_KEY }}
           account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Prepare dbt for deployment
-        uses: SneaksAndData/github-actions/deploy_data_schemas_to_azfs@v0.0.12
+        uses: SneaksAndData/github-actions/deploy_data_schemas_to_azfs@v0.0.17
         with:
           deployment_root: /dbt
           project_version: ${{ steps.version.outputs.version }}
@@ -498,14 +502,14 @@ jobs:
     name: Copy files
     steps:
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.12
+        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.17
         with:
           directory_name: share-name/path/within/share
           account_key: ${{ secrets.ACCOUNT_KEY }}
           account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Copy data
-        uses: SneaksAndData/github-actions/run_azcopy@v0.0.12
+        uses: SneaksAndData/github-actions/run_azcopy@v0.0.17
         with:
           source: source/directory/on/build/agent
           target: ${{ steps.sas.outputs.authorized_destination }}
@@ -547,15 +551,245 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.12
+        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.17
         with:
           directory_name: share-name/path/within/share
           account_key: ${{ secrets.ACCOUNT_KEY }}
           account_name: ${{ secrets.ACCOUNT_NAME }}
         id: sas
       - name: Copy data
-        uses: SneaksAndData/github-actions/run_azcopy@v0.0.12
+        uses: SneaksAndData/github-actions/run_azcopy@v0.0.17
         with:
           source_directory: source/directory/on/build/agent
           target: ${{ steps.sas.outputs.authorized_destination }}
+```
+
+## setup_gh_app
+
+### Description
+
+Configure git client in the workflow job to authenticate to GitHub using a GitHub App instead of builtin repo-scoped GITHUB_TOKEN.
+next workflow steps.
+
+### Inputs
+| Name                | Description                 | Optional | Default Value |
+|---------------------|:----------------------------|----------|---------------|
+| app_private_key     | Private key of application  | False    |               |
+| app_installation_id | Application installation Id | False    |               |
+| git_user_email      | User email for git client   | False    |               |
+| git_user_name       | User name for git client    | False    |               |
+
+### Outputs
+| Name         | Description                          |
+|--------------|--------------------------------------|
+| access_token | Access token generated by GitHub API |
+
+### Usage
+```yaml
+name: Checkout repo using github app
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Reconfigure Git to use App
+        id: setup_gh_app
+        uses: SneaksAndData/github-actions/setup_gh_app@v0.0.17
+        with:
+          app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
+          app_installation_id: 1234567
+          app_id: 89123
+          git_user_name: "Github App"
+          git_user_email: "user@example.com"
+
+      - name: Checkout Airflow Variables
+        uses: actions/checkout@v3
+        with:
+          repository: SneaksAndData/airflow-variables
+          token: ${{ steps.setup_gh_app.outputs.access_token }}
+          path: airflow-variables
+          fetch-depth: 0
+```
+
+## update_airflow_variables
+
+Update airflow configuration of a specified dbt project to the current version (git tag) and provided execution graph
+
+### Inputs
+| Name              | Description                         | Optional | Default Value |
+|-------------------|:------------------------------------|----------|---------------|
+| project_name      | Name of the project                 | False    |               |
+| project_version   | Version of the project              | False    |               |
+| project_graph     | Graph generated by metadata-manager | False    |               |
+| working_directory | User name for git client            | False    |               |
+| airflow_variable  | JSON-encoded airflow variable       | False    |               |
+
+### Outputs
+| Name             | Description                    | Optional | Default Value |
+|------------------|:-------------------------------|----------|---------------|
+| airflow_variable | JSON-encoded airflow variable  | False    |               |
+
+### Usage
+```yaml
+name: Update airflow-variables
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update Project Version
+        uses: SneaksAndData/github-actions/update_airflow_variables@v0.0.17
+        id: update_variables
+        with:
+          project_name: dbt-project
+          working_directory: github-repository
+          project_version: 0.0.1
+          project_graph: "{}"
+```
+
+## contribute_changes
+
+Create pull request in repository
+
+### Inputs
+| Name              | Description                                                                                 | Optional | Default Value |
+|-------------------|:--------------------------------------------------------------------------------------------|----------|---------------|
+| project_name      | Name of the project                                                                         | False    |               |
+| project_version   | Version of the project                                                                      | False    |               |
+| working_directory | Directory with airflow-variables GitHub repo                                                | False    |               |
+| access_token      | An access token with push and create pull request permissions                               | False    |               |
+| merge             | True if action should merge changes. Otherwise just create a branch and open a Pull Request | False    |               |
+
+### Outputs
+No outputs defined
+
+### Usage
+```yaml
+name: Create pull request
+
+on:
+  workflow_dispatch:
+
+jobs:
+  contribute_changes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Contribute Variable Changes
+        uses: SneaksAndData/github-actions/contribute_changes@v0.0.17
+        with:
+          project_name: dbt-project
+          working_directory: github-repository
+          project_version: 0.0.1
+          access_token: ${{ secrets.ACCESS_TOKEN }}
+          merge: false
+```
+
+## activate_workflow
+
+Triggers a specified GitHub Workflow file with parameters.
+
+### Inputs
+| Name               | Description                                                   | Optional | Default Value |
+|--------------------|:--------------------------------------------------------------|----------|---------------|
+| access_token       | An access token with push and create pull request permissions | False    |               |
+| repo_name          | Repository to deploy                                          | False    |               |
+| workflow_name      | Name of the workflow to activate                              | False    |               |
+| deploy_environment | Environment name to deploy                                    | True     | production    |
+
+### Outputs
+No outputs defined
+
+### Usage
+```yaml
+name: Deploy latest tag
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy variables
+        uses: SneaksAndData/github-actions/activate_workflow@v0.0.17
+        with:
+          access_token: ${{ secrets.ACCESS_TOKEN }}
+          repo_name: github-repo
+          workflow_name: Deploy Variables to airflow
+```
+
+## wait_for_workflow
+
+Create pull request in repository
+
+### Inputs
+| Name          | Description                                                   | Optional | Default Value |
+|---------------|:--------------------------------------------------------------|----------|---------------|
+| access_token  | An access token with push and create pull request permissions | False    |               |
+| run_title     | Repository to deploy                                          | False    |               |
+| repo_name     | Repository name                                               | False    |               |
+| workflow_name | Name of the workflow                                          | False    |               |
+| branch_name   | Name of the branch                                            | True     | main          |
+
+### Outputs
+No outputs defined
+
+### Usage
+```yaml
+name: Deploy latest tag
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy variables
+        uses: SneaksAndData/github-actions/activate_workflow@v0.0.17
+        with:
+          access_token: ${{ secrets.ACCESS_TOKEN }}
+          run_title: "Updating Project github-repo to version 1.1.1"
+          repo_name: github-repo
+          workflow_name: Prepare Helm chart
+```
+
+## read_airflow_variable
+
+Read airflow variable, escape newlines for using content in other steps.
+
+### Inputs
+| Name               | Description                                       | Optional | Default Value |
+|--------------------|:--------------------------------------------------|----------|---------------|
+| project_name       | Project name                                      | False    |               |
+| root_directory     | Root directory with variables repository          | False    |               |
+| variables_sub_path | Subdirectory with JSON-encoded file with variable | False    |               |
+
+### Outputs
+| Name             | Description                   |
+|------------------|:------------------------------|
+| airflow_variable | JSON-encoded airflow variable |
+
+### Usage
+```yaml
+name: Deploy latest tag
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read airflow variable
+        uses: SneaksAndData/github-actions/read_airflow_variable@v0.0.17
+        with:
+          project_name: ${{ env.PROJECT_NAME }}
+        id: read
 ```

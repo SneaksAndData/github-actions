@@ -1,0 +1,40 @@
+name: Contribute Changes
+description: Contributes any changes made on a checked out repository.
+
+branding:
+  icon: 'bar-chart'
+  color: 'green'
+
+inputs:
+  project_name:
+    description: Name of name of the project (repository)
+    required: true
+
+  project_version:
+    description: Changeset version number (semver or any string).
+    required: true
+
+  working_directory:
+    description: Directory where repository was checked out
+    required: true
+
+  access_token:
+    description: Github access token for the target repository
+    required: true
+
+  merge:
+    description: Set true if need to immediately merge changes into main via a PR. Creates a squash commit.
+    required: false
+    default: 'false'
+
+runs:
+  using: "composite"
+  steps:
+    - run: $GITHUB_ACTION_PATH/contribute_changes.sh
+      working-directory: ${{ inputs.working_directory }}
+      env:
+        PROJECT_NAME: ${{ inputs.project_name }}
+        PROJECT_VERSION: ${{ inputs.project_version }}
+        GH_TOKEN: ${{ inputs.access_token }}
+        MERGE: ${{ inputs.merge }}
+      shell: bash
