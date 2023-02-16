@@ -787,11 +787,9 @@ jobs:
   create_release:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy variables
-        uses: SneaksAndData/github-actions/activate_workflow@v0.0.17
+      - name: Read airflow variable
+        uses: SneaksAndData/github-actions/read_airflow_variable@dbt_actions
         with:
-          access_token: ${{ secrets.ACCESS_TOKEN }}
-          run_title: "Updating Project github-repo to version 1.1.1"
-          repo_name: github-repo
-          workflow_name: Prepare Helm chart
+          project_name: ${{ env.PROJECT_NAME }}
+        id: read
 ```

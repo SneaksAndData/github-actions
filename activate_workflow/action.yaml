@@ -18,6 +18,10 @@ inputs:
     description: Name of the workflow to activate
     required: true
 
+  ref:
+    description: The branch or tag name which contains the version of the workflow file you'd like to run
+    required: true
+
   deploy_environment:
     description: Deploy environment for workflow run
     required: false
@@ -32,4 +36,5 @@ runs:
         DEPLOY_ENVIRONMENT: ${{ inputs.deploy_environment }}
         REPO_NAME: ${{ inputs.repo_name }}
         WORKFLOW_NAME: ${{ inputs.workflow_name }}
+        WORKFLOW_REF: ${{ inputs.workflow_ref }}
       shell: bash
