@@ -16,7 +16,7 @@
 
 set -Eeuo pipefail
 
-OUTPUT=$(cat "$VARIABLES_SUB_PATH}/${PROJECT_NAME//-/_}.json")
+OUTPUT=$(cat "$VARIABLES_SUB_PATH/${PROJECT_NAME//-/_}.json")
 
 # Multiline string handling, per Github Community recommendation:
 # https://github.community/t/set-output-truncates-multiline-strings/16852/3
