@@ -18,7 +18,7 @@ set -Eeuo pipefail
 
 new_release=$(gh release list --repo "$REPO_NAME" --limit 1 | tail -n 1 | cut -d$'\t' -f1)
 
-echo "Submitting a deployment for a new configuration release $new_release"
+echo "Activating a workflow with arguments: ..."
 
 gh workflow run "$WORKFLOW_NAME" --repo "$REPO_NAME" --field environment="$DEPLOY_ENVIRONMENT" --ref "refs/tags/$new_release"
 
