@@ -15,7 +15,7 @@ inputs:
     required: true
 
   working_directory:
-    description: Directory with airflow-variables repository
+    description: Directory where repository was checked out
     required: true
 
   access_token:
