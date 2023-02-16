@@ -1,5 +1,5 @@
-name: Update airflow variables
-description: Update airflow variable that stores DBT project graph and deployment locations.
+name: Update airflow variable
+description: Update an airflow variable that stores DBT project graph and deployment locations.
 
 branding:
   icon: 'bar-chart'

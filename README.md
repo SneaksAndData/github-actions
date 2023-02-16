@@ -788,7 +788,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Read airflow variable
-        uses: SneaksAndData/github-actions/read_airflow_variable@dbt_actions
+        uses: SneaksAndData/github-actions/read_airflow_variable@v0.0.17
         with:
           project_name: ${{ env.PROJECT_NAME }}
         id: read
