@@ -19,7 +19,7 @@ inputs:
     required: true
 
   access_token:
-    description: Github access token
+    description: Github access token for the target repository
     required: true
 
   merge:
