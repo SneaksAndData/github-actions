@@ -28,7 +28,7 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - run: cat "$VARIABLES_SUB_PATH}/${PROJECT_NAME//-/_}.json" >> "$GITHUB_OUTPUT"
+    - run: cat "$VARIABLES_SUB_PATH/${PROJECT_NAME//-/_}.json" >> "$GITHUB_OUTPUT"
       # $GITHUB_ACTION_PATH/read_airflow_variable.sh
       working-directory: ${{ inputs.root_directory }}
       env:
