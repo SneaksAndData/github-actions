@@ -23,7 +23,7 @@ inputs:
     required: true
 
   merge:
-    description: Set true if need to immediately merge changes
+    description: Set true if need to immediately merge changes into main via a PR. Creates a squash commit.
     required: false
     default: 'false'
 
