@@ -1,5 +1,5 @@
-name: Setup git to use app
-description:
+name: Setup git to use GitHub App
+description: Generate GitHub access token for the GitHub App.
 
 branding:
   icon: 'bar-chart'

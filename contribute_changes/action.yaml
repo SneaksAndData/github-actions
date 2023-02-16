@@ -1,5 +1,5 @@
-name: Upgrade airflow variables
-description: Upgrade airflow variables
+name: Contribute Changes
+description: Contributes any changes made on a checked out repository.
 
 branding:
   icon: 'bar-chart'
@@ -7,23 +7,23 @@ branding:
 
 inputs:
   project_name:
-    description: Name of name of the project (file with airflow variables)
+    description: Name of name of the project (repository)
     required: true
 
   project_version:
-    description: New version of project to set
+    description: Changeset version number (semver or any string).
     required: true
 
   working_directory:
-    description: Directory with airflow-variables repository
+    description: Directory where repository was checked out
     required: true
 
   access_token:
-    description: Github access token
+    description: Github access token for the target repository
     required: true
 
   merge:
-    description: Set true if need to immediately merge changes
+    description: Set true if need to immediately merge changes into main via a PR. Creates a squash commit.
     required: false
     default: 'false'
 
