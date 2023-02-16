@@ -7,7 +7,7 @@ branding:
 
 inputs:
   project_name:
-    description: Name of name of the project (file with airflow variables)
+    description: Name of name of the project (repository)
     required: true
 
   project_version:
