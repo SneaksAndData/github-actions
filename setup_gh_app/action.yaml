@@ -1,4 +1,4 @@
-name: Setup git to use app
+name: Setup git to use GitHub App
 description: Generate GitHub access token for the GitHub App.
 
 branding:
