@@ -11,7 +11,7 @@ inputs:
     required: true
 
   project_version:
-    description: New version of project to set
+    description: Changeset version number (semver or any string).
     required: true
 
   working_directory:
