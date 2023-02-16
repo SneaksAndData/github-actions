@@ -759,3 +759,39 @@ jobs:
           repo_name: github-repo
           workflow_name: Prepare Helm chart
 ```
+
+## read_airflow_variable
+
+Read airflow variable, escape newlines for using content in other steps.
+
+### Inputs
+| Name               | Description                                       | Optional | Default Value |
+|--------------------|:--------------------------------------------------|----------|---------------|
+| project_name       | Project name                                      | False    |               |
+| root_directory     | Root directory with variables repository          | False    |               |
+| variables_sub_path | Subdirectory with JSON-encoded file with variable | False    |               |
+
+### Outputs
+| Name             | Description                   |
+|------------------|:------------------------------|
+| airflow_variable | JSON-encoded airflow variable |
+
+### Usage
+```yaml
+name: Deploy latest tag
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy variables
+        uses: SneaksAndData/github-actions/activate_workflow@v0.0.17
+        with:
+          access_token: ${{ secrets.ACCESS_TOKEN }}
+          run_title: "Updating Project github-repo to version 1.1.1"
+          repo_name: github-repo
+          workflow_name: Prepare Helm chart
+```
