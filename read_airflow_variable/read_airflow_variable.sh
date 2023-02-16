@@ -16,18 +16,7 @@
 
 set -Eeuo pipefail
 
-cat <<EOF > /tmp/command.jq
-. + {
-      "models_path": "/ecco/dist/$PROJECT_NAME/$PROJECT_VERSION/${PROJECT_NAME//-/_}/models/**",
-      "schemas_path": "/ecco/dist/${PROJECT_NAME}-schemas/$PROJECT_VERSION",
-      "graph": $PROJECT_GRAPH
-    }
-EOF
-echo "jq command begin <============================>"
-cat /tmp/command.jq
-echo "jq command end   <============================>"
-echo "$AIRFLOW_VARIABLE" | jq --monochrome-output --from-file /tmp/command.jq > /tmp/updated.json
-OUTPUT=$(cat /tmp/updated.json)
+OUTPUT=$(cat "$VARIABLES_SUB_PATH}/${PROJECT_NAME//-/_}.json")
 
 # Multiline string handling, per Github Community recommendation:
 # https://github.community/t/set-output-truncates-multiline-strings/16852/3

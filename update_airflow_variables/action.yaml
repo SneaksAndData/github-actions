@@ -7,7 +7,7 @@ branding:
 
 inputs:
   project_name:
-    description: Repository name
+    description: Project name
     required: true
 
   project_version:
@@ -22,6 +22,15 @@ inputs:
     description: Working directory
     required: true
 
+  airflow_variable:
+    description: JSON-encoded airflow variable
+    required: true
+
+outputs:
+  airflow_variable:
+    description: JSON-encoded airflow variable
+    value: ${{ steps.update_variables.outputs.airflow_variable }}
+
 runs:
   using: "composite"
   steps:
@@ -30,5 +39,7 @@ runs:
       env:
         PROJECT_NAME: ${{ inputs.project_name }}
         PROJECT_VERSION: ${{ inputs.project_version }}
+        AIRFLOW_VARIABLE: ${{ inputs.airflow_variable }}
         PROJECT_GRAPH: ${{ inputs.project_graph }}
+      id: update_variables
       shell: bash
