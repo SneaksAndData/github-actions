@@ -22,6 +22,11 @@ inputs:
     description: Name of package to create. This should match name of root project directory
     required: true
 
+  version:
+    description: Version of package (if not provided, a new development version will be generated)
+    required: false
+    default: ''
+
 outputs:
   version:
     description: "Version"
@@ -40,9 +45,11 @@ runs:
         POETRY_HTTP_BASIC_CUSTOM_REPO_USERNAME: ${{ inputs.pypi_token_username }}
         POETRY_HTTP_BASIC_CUSTOM_REPO_PASSWORD: ${{ inputs.pypi_token }}
         PACKAGE_NAME: ${{ inputs.package_name }}
+        VERSION: ${{ inputs.version }}
       id: package-generator
     - name: Create comment
       uses: peter-evans/create-or-update-comment@v2
+      if: github.event.issue.number
       with:
         issue-number: ${{ github.event.issue.number }}
         body:  Created package with number `${{ steps.package-generator.outputs.version }}`

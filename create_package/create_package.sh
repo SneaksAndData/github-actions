@@ -16,8 +16,12 @@
 
 set -Eeuo pipefail
 
-next_version=$(git describe --tags --abbrev=0 | awk -F. '/[0-9]+\./{$NF++;print}' OFS=.)
-version=${next_version}a${PULL_REQUEST_NUMBER}.dev${COMMENTS_COUNT}
+if [[ -z "$VERSION" ]]; then
+  next_version=$(git describe --tags --abbrev=0 | awk -F. '/[0-9]+\./{$NF++;print}' OFS=.)
+  version=${next_version}a${PULL_REQUEST_NUMBER}.dev${COMMENTS_COUNT}
+else
+  version="$VERSION"
+fi;
 sed -i "s/version = \"0.0.0\"/version = \"$version\"/" pyproject.toml
 echo "__version__ = '$version'" > "./$PACKAGE_NAME/_version.py"
 echo "REPOSITORY TO PUBLISH IS $REPO_URL"
