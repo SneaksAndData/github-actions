@@ -1,0 +1,42 @@
+name: Wait for Workflow
+description: Deploy project using GitHub Workflow
+
+branding:
+  icon: 'bar-chart'
+  color: 'green'
+
+inputs:
+
+  access_token:
+    description: Github access token
+    required: true
+
+  run_title:
+    description: Expected workflow run title
+    required: true
+
+  repo_name:
+    description: Repository name
+    required: true
+
+  workflow_name:
+    description: Name of the workflow
+    required: true
+
+  branch_name:
+    description: Name of the branch used by workflow_run
+    required: false
+    default: main
+
+runs:
+  using: "composite"
+  steps:
+    - run: $GITHUB_ACTION_PATH/wait_for_workflow.sh
+      working-directory: ${{ inputs.working_directory }}
+      env:
+        GH_TOKEN: ${{ inputs.access_token }}
+        WORKFLOW_NAME: ${{ inputs.workflow_name }}
+        RUN_TITLE: ${{ inputs.run_title }}
+        BRANCH_NAME: ${{ inputs.branch_name }}
+        REPO_NAME: ${{ inputs.repo_name }}
+      shell: bash

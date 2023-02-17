@@ -16,8 +16,5 @@
 
 set -Eeuo pipefail
 
-SOURCE_DIRECTORY="./$DEPLOYMENT_ROOT/$PROJECT_NAME/$PROJECT_VERSION/"
-mkdir -p "$SOURCE_DIRECTORY"
-mv -v ./target/run/* "$SOURCE_DIRECTORY"
+gh workflow run "$WORKFLOW_NAME" --repo "$REPO_NAME" --field environment="$DEPLOY_ENVIRONMENT" --ref "$WORKFLOW_REF"
 
-./azcopy copy "./$SOURCE_DIRECTORY/*" "$DESTINATION" --recursive --overwrite true --put-md5

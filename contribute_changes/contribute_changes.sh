@@ -16,8 +16,12 @@
 
 set -Eeuo pipefail
 
-SOURCE_DIRECTORY="./$DEPLOYMENT_ROOT/$PROJECT_NAME/$PROJECT_VERSION/"
-mkdir -p "$SOURCE_DIRECTORY"
-mv -v ./target/run/* "$SOURCE_DIRECTORY"
+git add .
+git commit -m "Updating $PROJECT_NAME to $PROJECT_VERSION"
+git push --set-upstream origin "update-$PROJECT_NAME-$PROJECT_VERSION"
+sleep 1
+gh pr create --base main --fill
 
-./azcopy copy "./$SOURCE_DIRECTORY/*" "$DESTINATION" --recursive --overwrite true --put-md5
+if [[ "$MERGE" == "true" ]]; then
+  gh pr merge --auto --delete-branch --squash
+fi

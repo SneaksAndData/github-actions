@@ -1,0 +1,45 @@
+name: Update airflow variable
+description: Update an airflow variable that stores DBT project graph and deployment locations.
+
+branding:
+  icon: 'bar-chart'
+  color: 'green'
+
+inputs:
+  project_name:
+    description: Project name
+    required: true
+
+  project_version:
+    description: New project version
+    required: true
+
+  project_graph:
+    description: Project graph
+    required: true
+
+  working_directory:
+    description: Working directory
+    required: true
+
+  airflow_variable:
+    description: JSON-encoded airflow variable
+    required: true
+
+outputs:
+  airflow_variable:
+    description: JSON-encoded airflow variable
+    value: ${{ steps.update_variables.outputs.airflow_variable }}
+
+runs:
+  using: "composite"
+  steps:
+    - run: $GITHUB_ACTION_PATH/update_variables.sh
+      working-directory: ${{ inputs.working_directory }}
+      env:
+        PROJECT_NAME: ${{ inputs.project_name }}
+        PROJECT_VERSION: ${{ inputs.project_version }}
+        AIRFLOW_VARIABLE: ${{ inputs.airflow_variable }}
+        PROJECT_GRAPH: ${{ inputs.project_graph }}
+      id: update_variables
+      shell: bash

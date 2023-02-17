@@ -1,0 +1,40 @@
+name: Deploy with github workflow
+description: Deploy project using GitHub Workflow
+
+branding:
+  icon: 'bar-chart'
+  color: 'green'
+
+inputs:
+  access_token:
+    description: Github access token
+    required: true
+
+  repo_name:
+    description: Repository name
+    required: true
+
+  workflow_name:
+    description: Name of the workflow to activate
+    required: true
+
+  ref:
+    description: The branch or tag name which contains the version of the workflow file you'd like to run
+    required: true
+
+  deploy_environment:
+    description: Deploy environment for workflow run
+    required: false
+    default: production
+
+runs:
+  using: "composite"
+  steps:
+    - run: $GITHUB_ACTION_PATH/activate_workflow.sh
+      env:
+        GH_TOKEN: ${{ inputs.access_token }}
+        DEPLOY_ENVIRONMENT: ${{ inputs.deploy_environment }}
+        REPO_NAME: ${{ inputs.repo_name }}
+        WORKFLOW_NAME: ${{ inputs.workflow_name }}
+        WORKFLOW_REF: ${{ inputs.workflow_ref }}
+      shell: bash
