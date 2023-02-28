@@ -20,8 +20,9 @@ OUTPUT=$(cat "$VARIABLES_SUB_PATH/${PROJECT_NAME//-/_}.json")
 
 # Multiline string handling, per Github Community recommendation:
 # https://github.community/t/set-output-truncates-multiline-strings/16852/3
-OUTPUT="${OUTPUT//'%'/'%25'}"
-OUTPUT="${OUTPUT//$'\n'/'%0A'}"
-OUTPUT="${OUTPUT//$'\r'/'%0D'}"
+# We remove here line endings instead of replacing because we do not need
+# pretty JSON in action outputs
+OUTPUT="${OUTPUT//$'\n'/''}"
+OUTPUT="${OUTPUT//$'\r'/''}"
 
 echo "airflow_variable=$OUTPUT" >> "$GITHUB_OUTPUT"
