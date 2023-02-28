@@ -29,4 +29,10 @@ echo "jq command end   <============================>"
 echo "$AIRFLOW_VARIABLE" | jq --monochrome-output --from-file /tmp/command.jq > /tmp/updated.json
 OUTPUT=$(cat /tmp/updated.json)
 
+# Multiline string handling, per Github Community recommendation:
+# https://github.community/t/set-output-truncates-multiline-strings/16852/3
+OUTPUT="${OUTPUT//'%'/'%25'}"
+OUTPUT="${OUTPUT//$'\n'/'%0A'}"
+OUTPUT="${OUTPUT//$'\r'/'%0D'}"
+
 echo "airflow_variable=$OUTPUT" >> "$GITHUB_OUTPUT"
