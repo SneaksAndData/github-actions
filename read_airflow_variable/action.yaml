@@ -18,7 +18,7 @@ inputs:
   variables_sub_path:
     description: Subdirectory with JSON-encoded file with variable
     required: false
-    default: .helm/variables/
+    default: variables/
 
 outputs:
   airflow_variable:
