@@ -49,6 +49,7 @@ on:
 jobs:
   create_release:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
         with:
