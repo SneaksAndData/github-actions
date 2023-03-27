@@ -36,5 +36,5 @@ runs:
         DEPLOY_ENVIRONMENT: ${{ inputs.deploy_environment }}
         REPO_NAME: ${{ inputs.repo_name }}
         WORKFLOW_NAME: ${{ inputs.workflow_name }}
-        WORKFLOW_REF: ${{ inputs.workflow_ref }}
+        WORKFLOW_REF: ${{ inputs.ref }}
       shell: bash
