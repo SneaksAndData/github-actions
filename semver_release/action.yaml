@@ -14,11 +14,6 @@ inputs:
     description: minor version of current release
     required: true
 
-  branch:
-    description: Target branch name
-    required: false
-    default: 'main'
-
 outputs:
   version:
     description: "Version"
@@ -33,5 +28,5 @@ runs:
         MAJOR_V: ${{ inputs.major_v }}
         MINOR_V: ${{ inputs.minor_v }}
         GITHUB_TOKEN: ${{ github.token }}
-        TARGET_BRANCH_MAME: ${{ inputs.branch }}
+        TARGET_BRANCH_MAME: ${{ github.ref }}
       shell: bash
