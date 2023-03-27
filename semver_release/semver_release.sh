@@ -30,5 +30,5 @@ else
   nextRevision='0'
 fi
 nextVersion="v$providedMajor.$providedMinor.$nextRevision"
-gh release create "$nextVersion" --generate-notes
+gh release create "$nextVersion" --generate-notes --target "$TARGET_BRANCH_MAME"
 echo "version=$nextVersion" >> "$GITHUB_OUTPUT"

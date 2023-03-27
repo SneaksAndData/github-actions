@@ -7,11 +7,11 @@ branding:
 
 inputs:
   major_v:
-    description: 'major_version'
+    description: major version of current release
     required: true
 
   minor_v:
-    description: 'minor_version'
+    description: minor version of current release
     required: true
 
 outputs:
@@ -28,4 +28,5 @@ runs:
         MAJOR_V: ${{ inputs.major_v }}
         MINOR_V: ${{ inputs.minor_v }}
         GITHUB_TOKEN: ${{ github.token }}
+        TARGET_BRANCH_MAME: ${{ github.ref }}
       shell: bash

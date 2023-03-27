@@ -25,6 +25,9 @@ Available actions are:
 ### Description
 Creates a new GitHub release based on git tags and [semantic versioning](https://semver.org/)
 
+**NOTE**: This action uses [`github.ref`](https://docs.github.com/en/actions/learn-github-actions/contexts#github-context)
+variable for target branch name (see: https://cli.github.com/manual/gh_release_create).
+
 ### Inputs
 | Name    | Description                      | Optional |
 |---------|:---------------------------------|----------|
@@ -46,6 +49,7 @@ on:
 jobs:
   create_release:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
         with:
