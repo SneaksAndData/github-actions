@@ -26,10 +26,11 @@ Available actions are:
 Creates a new GitHub release based on git tags and [semantic versioning](https://semver.org/)
 
 ### Inputs
-| Name    | Description                      | Optional |
-|---------|:---------------------------------|----------|
-| major_v | major version of current release | False    |
-| minor_v | minor version of current release | False    |
+| Name    | Description                      | Optional | Default |
+|---------|:---------------------------------|----------|---------|
+| major_v | major version of current release | False    |         |
+| minor_v | minor version of current release | False    |         |
+| branch  | Target branch name               | True     | main    |
 
 ### Outputs
 | Name    | Description                          |
