@@ -18,11 +18,12 @@ set -Eeuo pipefail
 
 echo "Preparing to deploy $PROJECT_NAME $PROJECT_VERSION"
 set -Eeuo pipefail
-env_path=$(poetry env info | grep Path | head -n 1 | cut -d':' -f2 | xargs)
 
 if [ -z "$PROJECT_DIRECTORY" ]; then
       PROJECT_DIRECTORY="${PROJECT_NAME/-/_}"
 fi;
+
+env_path=$(poetry env info --directory "$PROJECT_DIRECTORY" | grep Path | head -n 1 | cut -d':' -f2 | xargs)
 
 SOURCE_DIRECTORY="./$DEPLOYMENT_ROOT/$PROJECT_NAME/$PROJECT_VERSION/"
 
