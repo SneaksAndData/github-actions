@@ -22,6 +22,10 @@ inputs:
     description: Name of directory within the project to deploy
     required: false
 
+  target_project_subdirectory:
+    description: Name of target directory inside site packages
+    required: false
+
   python_version:
     description: Python version
     required: false
@@ -42,5 +46,6 @@ runs:
         PROJECT_VERSION: ${{ inputs.project_version }}
         PROJECT_NAME: ${{ inputs.project_name }}
         PROJECT_DIRECTORY : ${{ inputs.project_directory }}
+        TARGET_PROJECT_SUBDIRECTORY : ${{ inputs.target_project_subdirectory }}
         PYTHON_VERSION: ${{ inputs.python_version }}
         DESTINATION: ${{ inputs.destination }}

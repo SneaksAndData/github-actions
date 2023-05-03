@@ -23,12 +23,16 @@ if [ -z "$PROJECT_DIRECTORY" ]; then
       PROJECT_DIRECTORY="${PROJECT_NAME/-/_}"
 fi;
 
+if [ -z "$TARGET_PROJECT_SUBDIRECTORY" ]; then
+      TARGET_PROJECT_SUBDIRECTORY="$PROJECT_DIRECTORY"
+fi;
+
 env_path=$(poetry env info --directory "$PWD/$PROJECT_DIRECTORY" | grep Path | head -n 1 | cut -d':' -f2 | xargs)
 
 SOURCE_DIRECTORY="./$DEPLOYMENT_ROOT/$PROJECT_NAME/$PROJECT_VERSION/"
 
 mkdir -p "$SOURCE_DIRECTORY/$PROJECT_DIRECTORY"
 mv -v "$env_path"/lib/python"$PYTHON_VERSION"/site-packages/* "$SOURCE_DIRECTORY"
-mv -v ./"$PROJECT_DIRECTORY"/* "$SOURCE_DIRECTORY/$PROJECT_DIRECTORY"
+mv -v ./"$PROJECT_DIRECTORY"/* "$SOURCE_DIRECTORY/$TARGET_PROJECT_SUBDIRECTORY"
 
 ./azcopy copy "./$SOURCE_DIRECTORY/*" "$DESTINATION" --recursive --overwrite true
