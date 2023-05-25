@@ -65,7 +65,7 @@ fi;
 
 if [[ "$(echo "$EXPORT_REQUIREMENTS" | tr '[:upper:]' '[:lower:]')" == "true" ]]; then
   REQUIREMENTS_ABSOLUTE_PATH="$PWD/$REQUIREMENTS_PATH"
-  # poetry self add poetry-plugin-export
+  poetry self add poetry-plugin-export
   # shellcheck disable=SC2086
   poetry export -f requirements.txt --output "$REQUIREMENTS_ABSOLUTE_PATH" --without-hashes $EXPORT_ADDITIONAL_OPTIONS
   echo "requirements exported to $REQUIREMENTS_ABSOLUTE_PATH"
