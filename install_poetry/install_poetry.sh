@@ -26,7 +26,6 @@ fi
 
 curl -sSL https://install.python-poetry.org | python3 -
 export PATH=/github/home/.local/bin:$PATH
-poetry self add poetry-plugin-export
 poetry config repositories.custom_repo "$REPO_URL"
 echo "custom_repo_name=custom_repo" >> "$GITHUB_OUTPUT"
 
@@ -66,6 +65,7 @@ fi;
 
 if [[ "$(echo "$EXPORT_REQUIREMENTS" | tr '[:upper:]' '[:lower:]')" == "true" ]]; then
   REQUIREMENTS_ABSOLUTE_PATH="$PWD/$REQUIREMENTS_PATH"
+  # poetry self add poetry-plugin-export
   # shellcheck disable=SC2086
   poetry export -f requirements.txt --output "$REQUIREMENTS_ABSOLUTE_PATH" --without-hashes $EXPORT_ADDITIONAL_OPTIONS
   echo "requirements exported to $REQUIREMENTS_ABSOLUTE_PATH"
