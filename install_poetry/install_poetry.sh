@@ -26,6 +26,7 @@ fi
 
 curl -sSL https://install.python-poetry.org | python3 -
 export PATH=/github/home/.local/bin:$PATH
+poetry self add poetry-plugin-export
 poetry config repositories.custom_repo "$REPO_URL"
 echo "custom_repo_name=custom_repo" >> "$GITHUB_OUTPUT"
 
