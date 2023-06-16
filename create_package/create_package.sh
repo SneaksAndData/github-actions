@@ -24,7 +24,21 @@ else
 fi;
 sed -i "s/version = \"0.0.0\"/version = \"$version\"/" pyproject.toml
 echo "__version__ = '$version'" > "./$PACKAGE_NAME/_version.py"
-echo "REPOSITORY TO PUBLISH IS $REPO_URL"
-poetry config repositories.custom_repo "$REPO_URL"
-poetry build && poetry publish -r custom_repo
+if [[ -n "$REPO_URL" ]]; then
+  echo "REPOSITORY TO PUBLISH IS $REPO_URL"
+  poetry config repositories.custom_repo "$REPO_URL"
+  poetry build && poetry publish -r custom_repo
+else
+   # Turn of the built-in check of unbound variables to display
+   # a more informative error message if a token was not provided
+  set +u
+  if [[ -z "$POETRY_PYPI_TOKEN_PYPI" ]]; then
+    >&2 echo "the \`public_package_index_token\` should be provided"
+    exit 1
+  fi;
+  set -u
+  echo "PUBLISHING PACKAGE TO PyPI"
+  poetry build && poetry publish
+fi;
+
 echo "version=$version" >> "$GITHUB_OUTPUT"

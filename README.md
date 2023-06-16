@@ -176,15 +176,18 @@ COMMENT_NUMBER is number of comment which triggered a build.
 This action relies on git tags to be present in order to generate an artifact tag.
 2) This action should be placed in separate job with issue_comment pull request trigger. (see Usage below)
 3) This action requires to [poetry](https://python-poetry.org/docs/master/) ~1.2 being installed in build environment (for example, by [install_poetry action](#install_poetry))
+4) ⚠️ If the input `repo_url` is not provided, this action will push the package to a **public repository** (https://pypi.org).
+In this case, the input `public_package_index_token` should be provided.
 
 ### Inputs
-| Name                | Description                                                                          | Optional | Default value  |
-|---------------------|:-------------------------------------------------------------------------------------|----------|:---------------|
-| pypi_repo_url       | Package index URL                                                                    | False    |                |
-| pypi_token_username | Package index authentication username                                                | False    |                |
-| pypi_token          | Package index authentication token or password.                                      | False    |                |
-| package_name        | Name of package to create. This should match name of root project directory          | False    |                |               
-| version             | Version of package. If not provided, a new **development** version will be generated |          | Empty          |               
+| Name                       | Description                                                                          | Optional | Default value |
+|----------------------------|:-------------------------------------------------------------------------------------|----------|:--------------|
+| repo_url                   | Package index URL                                                                    | True     | Empty         |
+| repo_token_username        | Package index authentication username                                                | True     | Empty         |
+| repo_token                 | Package index authentication token or password.                                      | True     | Empty         |
+| package_name               | Name of package to create. This should match name of root project directory          | False    |               |               
+| version                    | Version of package. If not provided, a new **development** version will be generated |          | Empty         |               
+| public_package_index_token | Access token for publishing to a public repository (https://pypi.org)                | True     | Empty         |
 
 ### Outputs
 No outputs defined
