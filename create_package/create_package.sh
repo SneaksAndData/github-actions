@@ -29,10 +29,14 @@ if [[ -n "$REPO_URL" ]]; then
   poetry config repositories.custom_repo "$REPO_URL"
   poetry build && poetry publish -r custom_repo
 else
+   # Turn of built-in check of unbound variables to set
+   # better error message if token is not set
+  set +u
   if [[ -z "$POETRY_PYPI_TOKEN_PYPI" ]]; then
     >&2 echo "the \`public_package_index_token\` should be provided"
     exit 1
   fi;
+  set -u
   echo "PUBLISHING PACKAGE TO PyPI"
   poetry build && poetry publish
 fi;
