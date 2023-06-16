@@ -15,7 +15,7 @@ jobs:
         uses: ./semver_release/
         with:
           major_v: 0
-          minor_v: 0
+          minor_v: 1
       - name: Print version
         run:  "echo \"New version is: ${{ steps.create-release.outputs.version }}\""
         shell: bash
