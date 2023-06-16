@@ -24,7 +24,7 @@ else
 fi;
 sed -i "s/version = \"0.0.0\"/version = \"$version\"/" pyproject.toml
 echo "__version__ = '$version'" > "./$PACKAGE_NAME/_version.py"
-if [[ -z "$REPO_URL" ]]; then
+if [[ -n "$REPO_URL" ]]; then
   echo "REPOSITORY TO PUBLISH IS $REPO_URL"
   poetry config repositories.custom_repo "$REPO_URL"
   poetry build && poetry publish -r custom_repo
