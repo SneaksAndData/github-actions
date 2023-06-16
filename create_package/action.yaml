@@ -50,6 +50,7 @@ runs:
         POETRY_HTTP_BASIC_CUSTOM_REPO_PASSWORD: ${{ inputs.repo_token }}
         PACKAGE_NAME: ${{ inputs.package_name }}
         VERSION: ${{ inputs.version }}
+        POETRY_PYPI_TOKEN_PYPI: ${{ inputs.public_package_index_token }}
       id: package-generator
     - name: Create comment
       uses: peter-evans/create-or-update-comment@v2
