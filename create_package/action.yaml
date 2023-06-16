@@ -6,15 +6,19 @@ branding:
   color: 'green'
 
 inputs:
-  pypi_repo_url:
+  repo_url:
     description: Package index URL.
     required: true
 
-  pypi_token_username:
+  repo_token_username:
     description: Package index authentication username.
     required: true
 
-  pypi_token:
+  repo_token:
+    description: Package index authentication token or password.
+    required: true
+
+  public_package_index_token:
     description: Package index authentication token or password.
     required: true
 
@@ -39,11 +43,11 @@ runs:
       shell: bash
       run: $GITHUB_ACTION_PATH/create_package.sh
       env:
-        REPO_URL: ${{ inputs.pypi_repo_url }}
+        REPO_URL: ${{ inputs.repo_url }}
         PULL_REQUEST_NUMBER: ${{ github.event.issue.number }}
         COMMENTS_COUNT: ${{ github.event.issue.comments }}
-        POETRY_HTTP_BASIC_CUSTOM_REPO_USERNAME: ${{ inputs.pypi_token_username }}
-        POETRY_HTTP_BASIC_CUSTOM_REPO_PASSWORD: ${{ inputs.pypi_token }}
+        POETRY_HTTP_BASIC_CUSTOM_REPO_USERNAME: ${{ inputs.repo_token_username }}
+        POETRY_HTTP_BASIC_CUSTOM_REPO_PASSWORD: ${{ inputs.repo_token }}
         PACKAGE_NAME: ${{ inputs.package_name }}
         VERSION: ${{ inputs.version }}
       id: package-generator
