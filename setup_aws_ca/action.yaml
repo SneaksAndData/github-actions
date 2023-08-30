@@ -1,0 +1,58 @@
+name: Setup AWS CA
+description: Setup AWS Code Artifacts credentials
+
+branding:
+  icon: 'tag'
+  color: 'green'
+
+inputs:
+  aws_access_key:
+    description: AWS access key
+    required: true
+
+  aws_access_key_id:
+    description: AWS access key id
+    required: true
+
+  mode:
+    description: Setup for read or publish
+    required: true
+
+  aws_ca_domain:
+    description: AWS CodeArtifact domain
+    required: true
+
+  aws_ca_domain_owner:
+    description: AWS CodeArtifact domain owner name
+    required: true
+
+  aws_region:
+    description: AWS region where the artifact storage is located
+    required: false
+    default: eu-central-1
+
+
+outputs:
+  url:
+    description: AWS CodeArtifact URl
+    value: ${{ steps.aws_ca.outputs.url }}
+  user:
+    description: AWS CodeArtifact username
+    value: ${{ steps.aws_ca.outputs.user }}
+  token:
+    description: AWS CodeArtifact access token
+    value: ${{ steps.aws_ca.outputs.token }}
+
+runs:
+  using: "composite"
+  steps:
+    - run: $GITHUB_ACTION_PATH/setup_aws_ca.sh
+      id: aws_ca
+      env:
+        AWS_ACCESS_KEY: ${{ inputs.aws_access_key
+        AWS_ACCESS_KEY_ID: ${{ inputs.aws_access_key_id
+        MODE: ${{ inputs.mode
+        AWS_CA_DOMAIN: ${{ inputs.aws_ca_domain
+        AWS_CA_DOMAIN_OWNER: ${{ inputs.aws_ca_domain_owner
+        AWS_REGION: ${{ inputs.aws_region
+      shell: bash

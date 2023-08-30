@@ -19,6 +19,7 @@ Available actions are:
 14. [update_airflow_variables](#update_airflow_variables)
 15. [contribute_changes](#contribute_changes)
 16. [activate_workflow](#activate_workflow)
+16. [setup_aws_ca](#setup_aws_ca)
 
 ## semver_release
 
@@ -800,4 +801,53 @@ jobs:
         with:
           project_name: ${{ env.PROJECT_NAME }}
         id: read
+```
+
+## setup_aws_ca 
+
+Setup AWS CodeArtifact credentials
+
+### Inputs
+| Name                | Description                                      | Optional | Default Value |
+|---------------------|:-------------------------------------------------|----------|---------------|
+| aws_access_key      | AWS access key                                   | False    |               |
+| aws_access_key_id   | AWS access key ID                                | False    |               |
+| mode                | Setup for read or publish                        | False    |               |
+| aws_ca_domain       | AWS CodeArtifact domain                          | False    |               |
+| aws_ca_domain_owner | AWS CodeArtifact domain owner name               | False    |               |
+| aws_region          | AWS region where the artifact storage is located | True     | eu-central-1  |
+
+### Outputs
+| Name  | Description                 |
+|-------|:----------------------------|
+| url   | Python artifact storage URL |
+| user  | User Name                   |
+| token | Access token                |
+
+### Usage
+```yaml
+name: Deploy latest tag
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup AWS CA
+        uses: SneaksAndData/github-actions/setup_aws_ca@v0.1.1
+        with:
+          aws-access-key: ${{ env.AWS_ACCESS_KEY }}
+          aws-access-key-id: ${{ env.AWS_ACCESS_KEY }}
+          mode: read
+          aws_ca_domain: some-domain
+          aws_ca_domain_owner: some-domain-owner
+        id: aws_ca
+      - name: Install Poetry and dependencies
+        uses: SneaksAndData/github-actions/install_poetry@v0.1.0
+        with:
+          pypi_repo_url: ${{ aws_ca.output.url }}
+          pypi_token_username: ${{ aws_ca.output.user }}
+          pypi_token: ${{ aws_ca.output.token }}
 ```
