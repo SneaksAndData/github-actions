@@ -25,7 +25,7 @@ then
   url="$(aws codeartifact get-repository-endpoint --domain "$AWS_CA_DOMAIN" --domain-owner "$AWS_CA_DOMAIN_OWNER" --repository esd-artifacts --region "$AWS_REGION" --format pypi --query repositoryEndpoint --output text)/simple/"
 elif [[ "$MODE" == "publish" ]]
 then
-  url="$(aws codeartifact get-repository-endpoint --domain "$AWS_CA_DOMAIN" --domain-owner "$AWS_CA_DOMAIN_OWNER" --repository esd-artifacts --region eu-central-1 --format pypi --query repositoryEndpoint --output text)"
+  url="$(aws codeartifact get-repository-endpoint --domain "$AWS_CA_DOMAIN" --domain-owner "$AWS_CA_DOMAIN_OWNER" --repository esd-artifacts --region "$AWS_REGION" --format pypi --query repositoryEndpoint --output text)"
 else
   >&2 echo "Unknown mode: $MODE"
   exit 1
