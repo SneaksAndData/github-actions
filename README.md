@@ -838,8 +838,8 @@ jobs:
       - name: Setup AWS CA
         uses: SneaksAndData/github-actions/setup_aws_ca@v0.1.1
         with:
-          aws-access-key: ${{ env.AWS_ACCESS_KEY }}
-          aws-access-key-id: ${{ env.AWS_ACCESS_KEY }}
+          aws_access_key: ${{ env.AWS_ACCESS_KEY }}
+          aws_access_key_id: ${{ env.AWS_ACCESS_KEY_ID }}
           mode: read
           aws_ca_domain: some-domain
           aws_ca_domain_owner: some-domain-owner
@@ -847,7 +847,7 @@ jobs:
       - name: Install Poetry and dependencies
         uses: SneaksAndData/github-actions/install_poetry@v0.1.0
         with:
-          pypi_repo_url: ${{ aws_ca.output.url }}
-          pypi_token_username: ${{ aws_ca.output.user }}
-          pypi_token: ${{ aws_ca.output.token }}
+          pypi_repo_url: ${{ steps.aws_ca.output.url }}
+          pypi_token_username: ${{ steps.aws_ca.output.user }}
+          pypi_token: ${{ steps.aws_ca.output.token }}
 ```
