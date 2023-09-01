@@ -847,7 +847,7 @@ jobs:
       - name: Install Poetry and dependencies
         uses: SneaksAndData/github-actions/install_poetry@v0.1.0
         with:
-          pypi_repo_url: ${{ steps.aws_ca.output.url }}
-          pypi_token_username: ${{ steps.aws_ca.output.user }}
-          pypi_token: ${{ steps.aws_ca.output.token }}
+          pypi_repo_url: ${{ steps.aws_ca.outputs.url }}
+          pypi_token_username: ${{ steps.aws_ca.outputs.user }}
+          pypi_token: ${{ steps.aws_ca.outputs.token }}
 ```
