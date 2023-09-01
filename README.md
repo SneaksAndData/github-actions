@@ -838,8 +838,8 @@ jobs:
       - name: Setup AWS CA
         uses: SneaksAndData/github-actions/setup_aws_ca@v0.1.1
         with:
-          aws-access-key: ${{ env.AWS_ACCESS_KEY }}
-          aws-access-key-id: ${{ env.AWS_ACCESS_KEY }}
+          aws_access_key: ${{ env.AWS_ACCESS_KEY }}
+          aws_access_key_id: ${{ env.AWS_ACCESS_KEY_ID }}
           mode: read
           aws_ca_domain: some-domain
           aws_ca_domain_owner: some-domain-owner
