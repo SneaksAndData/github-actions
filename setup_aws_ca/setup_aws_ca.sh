@@ -18,7 +18,7 @@ set -Eeuo pipefail
 
 token="$(aws codeartifact get-authorization-token --domain "$AWS_CA_DOMAIN" --domain-owner "$AWS_CA_DOMAIN_OWNER" --region "$AWS_REGION" --query authorizationToken --output text)"
 echo "::add-mask::$token"
-echo "token=$token" >> "${GITHUB_OUTPUT}"
+echo "token=$token" >> "$GITHUB_OUTPUT"
 
 if [[ "$MODE" == "read" ]]
 then
@@ -32,6 +32,6 @@ else
 fi;
 
 echo "::add-mask::$url"
-echo "url=$url" >> "${GITHUB_OUTPUT}"
+echo "url=$url" >> "$GITHUB_OUTPUT"
 
-echo "user=aws" >> "${GITHUB_OUTPUT}"
+echo "user=aws" >> "$GITHUB_OUTPUT"
