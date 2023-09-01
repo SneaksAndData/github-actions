@@ -46,6 +46,12 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v3
+      with:
+        aws-secret-access-key:  ${{ inputs.aws_access_key }}
+        aws-access-key-id:  ${{ inputs.aws_access_key_id }}
+        aws-region: ${{ inputs.aws_region }}
     - run: $GITHUB_ACTION_PATH/setup_aws_ca.sh
       id: aws_ca
       env:
