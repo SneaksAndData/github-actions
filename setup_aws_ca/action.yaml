@@ -55,8 +55,6 @@ runs:
     - run: $GITHUB_ACTION_PATH/setup_aws_ca.sh
       id: aws_ca
       env:
-        AWS_ACCESS_KEY: ${{ inputs.aws_access_key }}
-        AWS_ACCESS_KEY_ID: ${{ inputs.aws_access_key_id }}
         MODE: ${{ inputs.mode }}
         AWS_CA_DOMAIN: ${{ inputs.aws_ca_domain }}
         AWS_CA_DOMAIN_OWNER: ${{ inputs.aws_ca_domain_owner }}
