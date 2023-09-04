@@ -815,14 +815,15 @@ Setup AWS CodeArtifact credentials
 | mode                | Setup for read or publish                        | False    |               |
 | aws_ca_domain       | AWS CodeArtifact domain                          | False    |               |
 | aws_ca_domain_owner | AWS CodeArtifact domain owner name               | False    |               |
+| aws_ca_repository   | AWS CodeArtifact repository name                 | False    |               |
 | aws_region          | AWS region where the artifact storage is located | True     | eu-central-1  |
 
 ### Outputs
-| Name  | Description                 |
-|-------|:----------------------------|
-| url   | Python artifact storage URL |
-| user  | User Name                   |
-| token | Access token                |
+| Name  | Description                                           |
+|-------|:------------------------------------------------------|
+| url   | Python artifact storage URL (pip or twine-compatible) |
+| user  | User Name                                             |
+| token | Access token                                          |
 
 ### Usage
 ```yaml
@@ -843,6 +844,7 @@ jobs:
           mode: read
           aws_ca_domain: some-domain
           aws_ca_domain_owner: some-domain-owner
+          aws_ca_repository: some-repository
         id: aws_ca
       - name: Install Poetry and dependencies
         uses: SneaksAndData/github-actions/install_poetry@v0.1.0
