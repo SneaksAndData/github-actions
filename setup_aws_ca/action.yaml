@@ -63,4 +63,5 @@ runs:
         AWS_CA_DOMAIN: ${{ inputs.aws_ca_domain }}
         AWS_CA_DOMAIN_OWNER: ${{ inputs.aws_ca_domain_owner }}
         AWS_REGION: ${{ inputs.aws_region }}
+        AWS_CA_REPOSITORY: ${{ inputs.aws_ca_repository }}
       shell: bash
