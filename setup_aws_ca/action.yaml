@@ -26,6 +26,10 @@ inputs:
     description: AWS CodeArtifact domain owner name
     required: true
 
+  aws_ca_repository:
+    description: AWS CodeArtifact repository name
+    required: true
+
   aws_region:
     description: AWS region where the artifact storage is located
     required: false
