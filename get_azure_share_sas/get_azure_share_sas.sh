@@ -29,6 +29,7 @@ else
 fi;
 
 
+echo "Expiration date \"$EXPIRATION_DATE\""
 if [[ "$OSTYPE" =~ ^darwin ]]; then
   end=$(date -jf "+%Y-%m-%dT%H:%M:%SZ" "$EXPIRATION_DATE" "+%Y-%m-%dT%H:%MZ")
 else
