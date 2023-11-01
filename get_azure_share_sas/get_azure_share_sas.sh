@@ -31,10 +31,11 @@ fi;
 
 echo "Expiration date \"$EXPIRATION_DATE\""
 if [[ "$OSTYPE" =~ ^darwin ]]; then
-  end=$(date -jf "%Y-%m-%dT%H:%M:%SZ" "$EXPIRATION_DATE" "+%Y-%m-%d %H:%M:%S")
+  end=$(date -jf "%Y-%m-%dT%H:%M:%SZ" "$EXPIRATION_DATE" "+%Y-%m-%dT%H:%MZ")
 else
   end=$(date -d "$EXPIRATION_DATE" '+%Y-%m-%dT%H:%MZ')
 fi;
+
 echo "Generating SAS for $destination with expiration date $end"
 sas=$(
   az storage account generate-sas \
