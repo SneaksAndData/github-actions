@@ -32,7 +32,7 @@ fi;
 echo "Expiration date \"$EXPIRATION_DATE\""
 if [[ "$OSTYPE" =~ ^darwin ]]; then
   # end=$(date -jf "%Y-%m-%dT%H:%M:%SZ" "$EXPIRATION_DATE" "+%Y-%m-%dT%H:%MZ")
-  end=$(date -v "$EXPIRATION_DATE" "+%Y-%m-%dT%H:%MZ")
+  end=$(date -v+10M "+%Y-%m-%dT%H:%MZ")
 else
   end=$(date -d "$EXPIRATION_DATE" '+%Y-%m-%dT%H:%MZ')
 fi;
