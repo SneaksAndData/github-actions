@@ -31,8 +31,7 @@ fi;
 
 echo "Expiration date \"$EXPIRATION_DATE\""
 if [[ "$OSTYPE" =~ ^darwin ]]; then
-  value=$(echo $EXPIRATION_DATE | grep -o '[0-9]\+')
-  end=$(date -v+${value}M '+%Y-%m-%dT%H:%M:%SZ')
+  end=$(date -jf "%Y-%m-%dT%H:%M:%SZ" "$EXPIRATION_DATE" "+%Y-%m-%d %H:%M:%S")
 else
   end=$(date -d "$EXPIRATION_DATE" '+%Y-%m-%dT%H:%MZ')
 fi;
