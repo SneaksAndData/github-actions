@@ -30,7 +30,8 @@ fi;
 
 
 if [[ "$OSTYPE" =~ ^darwin ]]; then
-  end=$(date -j -f "%Y-%m-%dT%H:%M:%SZ" "$EXPIRATION_DATE" '+%Y-%m-%dT%H:%MZ')
+  end=$(date -jf "%Y-%m-%d" "$EXPIRATION_DATE" '+%Y-%m-%dT%H:%MZ')
+
 else
   end=$(date -d "$EXPIRATION_DATE" '+%Y-%m-%dT%H:%MZ')
 fi;
