@@ -29,9 +29,8 @@ else
 fi;
 
 
-if [[ "$OSTYPE" =~ ^darwin && $EXPIRATION_DATE == +*minutes ]]; then
-  value=${EXPIRATION_DATE:1:-8} 
-  end=$(date -v+"$value"M "+%Y-%m-%dT%H:%M:%SZ")
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+  end=$(date -jf "%a %b %d %T %Z %Y" "$EXPIRATION_DATE" "+%Y-%m-%dT%H:%M:%SZ")
 else
   end=$(date -d "$EXPIRATION_DATE" '+%Y-%m-%dT%H:%MZ')
 fi;
