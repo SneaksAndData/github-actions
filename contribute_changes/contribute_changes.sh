@@ -17,7 +17,7 @@
 set -Eeuo pipefail
 
 git add .
-git commit -m "Updating $PROJECT_NAME to $PROJECT_VERSION"
+git commit -m "Updating $PROJECT_NAME to $PROJECT_VERSION" --allow-empty
 git push --set-upstream origin "update-$PROJECT_NAME-$PROJECT_VERSION"
 sleep 1
 gh pr create --base main --fill
