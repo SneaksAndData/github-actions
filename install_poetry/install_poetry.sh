@@ -25,7 +25,9 @@ if [[ $INSTALL_PREVIEW == "true" ]]; then
 fi
 
 curl -sSL https://install.python-poetry.org | python3 -
-export PATH=$HOME/.local/bin:$PATH
+echo "User home set to: $HOME"
+echo "Poetry binary should be in $(ls $HOME/.local/bin)"
+export PATH="$HOME/.local/bin:$PATH"
 poetry config repositories.custom_repo "$REPO_URL"
 echo "custom_repo_name=custom_repo" >> "$GITHUB_OUTPUT"
 
