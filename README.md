@@ -71,20 +71,20 @@ Optionally can export dependency tree to requirements.txt file.
 
 
 ### Inputs
-| Name                      | Description                                                                                                                | Optional | Default value               |
-|---------------------------|:---------------------------------------------------------------------------------------------------------------------------|----------|-----------------------------|
-| pypi_repo_url             | URL of python package index (for custom packages)                                                                          | False    |                             |
-| pypi_token_username       | Package index authentication username.                                                                                     | False    |                             |
-| pypi_token                | Package index authentication token or password.                                                                            | False    |                             |
-| export_requirements       | Set to `true` if need to generate requirements.txt. **Optional** defaults to **false**.                                    | False    |                             |
-| export_credentials        | If export_requirements is set to true, it exports requirements.txt with --with-credentials flag. Otherwise, does nothing.  | True     | true                        |
-| requirements_path         | Path to requirements.txt to be generated (relative to sources root).                                                       | True     | .container/requirements.txt | 
-| install_preview           | Install preview version of Poetry. This should be set to **true** in build process until Poetry version 1.2.0 is released. | True     | false                       |
-| version                   | Version to install. If value is 'latest', script will install the latest available version of Poetry.                      | True     | latest                      |
-| install_extras            | List of optional dependencies to install, separated by space. If value is 'all', all extras will be installed              | True     |                             |
-| install_only_dependencies | If set to true, installs only dependencies for project, adds the parameter `--no-root` to `poetry install` command.        | True     | false                       |
-| skip_dependencies         | If set to true, installs only poetry without installing dependencies.                                                      | True     | false                       |
-| export_dev_requirements   | If export_requirements is set to true, it exports dev requirements.txt with --without-dev flag. Otherwise, does nothing.   | True     | true                        |
+| Name                      | Description                                                                                                                | Optional  | Default value               |
+|---------------------------|:---------------------------------------------------------------------------------------------------------------------------|-----------|-----------------------------|
+| pypi_repo_url             | URL of python package index (for custom packages)                                                                          | True      | ""                          |
+| pypi_token_username       | Package index authentication username.                                                                                     | True      | ""                          |
+| pypi_token                | Package index authentication token or password.                                                                            | True      | ""                          |
+| export_requirements       | Set to `true` if need to generate requirements.txt. **Optional** defaults to **false**.                                    | True      | false                       |
+| export_credentials        | If export_requirements is set to true, it exports requirements.txt with --with-credentials flag. Otherwise, does nothing.  | True      | true                        |
+| requirements_path         | Path to requirements.txt to be generated (relative to sources root).                                                       | True      | .container/requirements.txt | 
+| install_preview           | Install preview version of Poetry. This should be set to **true** in build process until Poetry version 1.2.0 is released. | True      | false                       |
+| version                   | Version to install. If value is 'latest', script will install the latest available version of Poetry.                      | True      | latest                      |
+| install_extras            | List of optional dependencies to install, separated by space. If value is 'all', all extras will be installed              | True      |                             |
+| install_only_dependencies | If set to true, installs only dependencies for project, adds the parameter `--no-root` to `poetry install` command.        | True      | false                       |
+| skip_dependencies         | If set to true, installs only poetry without installing dependencies.                                                      | True      | false                       |
+| export_dev_requirements   | If export_requirements is set to true, it exports dev requirements.txt with --without-dev flag. Otherwise, does nothing.   | True      | true                        |
 
 ### Outputs
 | Name             | Description                                                  |
