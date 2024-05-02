@@ -8,15 +8,18 @@ branding:
 inputs:
   pypi_repo_url:
     description: URL of python package index (for custom packages)
-    required: true
+    required: false
+    default: ""
 
   pypi_token_username:
-    description: Package index authentication username.
-    required: true
+    description: Package index authentication username  (for custom packages)
+    required: false
+    default: ""
 
   pypi_token:
-    description: Package index authentication token or password.
-    required: true
+    description: Package index authentication token or password  (for custom packages)
+    required: false
+    default: ""
 
   export_requirements:
     description: Set to true if need to generate requirements.txt
