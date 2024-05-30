@@ -126,14 +126,16 @@ Allows to build helm chart and push it to remote container repository.
 This action relies on git tags to be present in order to generate an artifact tag.
 
 ### Inputs
-| Name                       | Description                                    | Optional | Default value |
-|----------------------------|:-----------------------------------------------|----------|---------------|
-| container_registry_address | Container registry address                     | False    |               |
-| application:               | Application name                               | False    |               |
-| container_registry_user    | Container registry username                    | False    |               |
-| container_registry_token   | Container registry access token                | False    |               |
-| helm_version               | Version of helm to install                     | True     | 3.9.2         |
-| helm_directory             | Location of helm chart related to project root | True     | .helm         |
+| Name                       | Description                                                                        | Optional | Default value |
+|----------------------------|:-----------------------------------------------------------------------------------|----------|---------------|
+| container_registry_address | Container registry address                                                         | False    |               |
+| application:               | Application name                                                                   | False    |               |
+| container_registry_user    | Container registry username                                                        | False    |               |
+| container_registry_token   | Container registry access token                                                    | False    |               |
+| helm_version               | Version of helm to install                                                         | True     | 3.9.2         |
+| helm_directory             | Location of helm chart related to project root                                     | True     | .helm         |
+| app_version                | Application version to use for the chart. If omitted, the latest tag will be used. | True     |               |
+| chart_version              | Chart version to use for the chart. If omitted, the latest tag will be used.       | True     |               |
 
 ### Outputs
 No outputs defined
