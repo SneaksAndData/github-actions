@@ -17,13 +17,13 @@
 set -Eeuo pipefail
 
 
-if [[ -n "$APP_VERSION" ]]; then
+if [[ -z "$APP_VERSION" ]]; then
   appVersion=$(git describe --tags --abbrev=7)
 else
   appVersion="$APP_VERSION"
 fi;
 
-if [[ -n "$CHART_VERSION" ]]; then
+if [[ -z "$CHART_VERSION" ]]; then
   chartVersion=$(git describe --tags --abbrev=7)
 else
   chartVersion="$CHART_VERSION"
