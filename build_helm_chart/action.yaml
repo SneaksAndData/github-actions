@@ -33,7 +33,12 @@ inputs:
     default: '.helm'
 
   app_version:
-    description: 'Location of helm chart related to project root'
+    description: Application version to use for the chart. If omitted, the latest tag will be used.
+    required: false
+    default: ''
+
+  chart_version:
+    description: Chart version to use for the chart. If omitted, the latest tag will be used.
     required: false
     default: ''
 
@@ -51,4 +56,5 @@ runs:
         REPO_TOKEN: ${{ inputs.container_registry_token }}
         APPLICATION: ${{ inputs.application }}
         APP_VERSION: ${{ inputs.app_version }}
+        CHART_VERSION: ${{ inputs.chart_version }}
       shell: bash

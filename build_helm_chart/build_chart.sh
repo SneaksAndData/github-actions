@@ -20,10 +20,17 @@ set -Eeuo pipefail
 if [[ -n "$APP_VERSION" ]]; then
   appVersion=$(git describe --tags --abbrev=7)
 else
-  appVersion=$APP_VERSION
+  appVersion="$APP_VERSION"
 fi;
+
+if [[ -n "$CHART_VERSION" ]]; then
+  chartVersion=$(git describe --tags --abbrev=7)
+else
+  chartVersion="$CHART_VERSION"
+fi;
+
 sed -i "s/appVersion: 0.0.0/appVersion: \"${appVersion:1}\"/" Chart.yaml
-sed -i "s/^version: .*/version: \"$appVersion\"/" Chart.yaml
+sed -i "s/^version: .*/version: \"$chartVersion\"/" Chart.yaml
 
 helm package .
 echo "$REPO_TOKEN" | helm registry login "$REPO_ADDRESS" --username "$REPO_LOGIN" --password-stdin
