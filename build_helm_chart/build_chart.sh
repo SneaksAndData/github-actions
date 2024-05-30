@@ -16,7 +16,12 @@
 
 set -Eeuo pipefail
 
-appVersion=$(git describe --tags --abbrev=7)
+
+if [[ -n "$APP_VERSION" ]]; then
+  appVersion=$(git describe --tags --abbrev=7)
+else
+  appVersion=$APP_VERSION
+fi;
 sed -i "s/appVersion: 0.0.0/appVersion: \"${appVersion:1}\"/" Chart.yaml
 sed -i "s/^version: .*/version: \"$appVersion\"/" Chart.yaml
 
