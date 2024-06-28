@@ -60,7 +60,7 @@ inputs:
     default: "latest"
 
   install_extras:
-    description: | 
+    description: |
       List of optional dependencies to install, separated by space.
       Optional. Default is empty. If value is 'all', all extras will be installed
     required: false
@@ -79,6 +79,12 @@ inputs:
     required: false
     default: "false"
 
+  no_binary_dependencies:
+    description: |
+      Dependencies that must be built from source, comma-separated - equivalent to installer.no-binary setting in Poetry.
+    required: false
+    default: ""
+
 outputs:
   custom_repo_name:
     description: "Name of configured custom repository to poetry push command"
@@ -92,6 +98,7 @@ runs:
       env:
         POETRY_HTTP_BASIC_CUSTOM_REPO_USERNAME: ${{ inputs.pypi_token_username }}
         POETRY_HTTP_BASIC_CUSTOM_REPO_PASSWORD: ${{ inputs.pypi_token }}
+        POETRY_INSTALLER_NO_BINARY: ${{ inputs.no_binary_dependencies }}
         EXPORT_REQUIREMENTS: ${{ inputs.export_requirements }}
         REQUIREMENTS_PATH: ${{ inputs.requirements_path }}
         REPO_URL: ${{ inputs.pypi_repo_url }}
