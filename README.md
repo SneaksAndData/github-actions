@@ -30,10 +30,11 @@ Creates a new GitHub release based on git tags and [semantic versioning](https:/
 variable for target branch name (see: https://cli.github.com/manual/gh_release_create).
 
 ### Inputs
-| Name    | Description                      | Optional |
-|---------|:---------------------------------|----------|
-| major_v | major version of current release | False    |
-| minor_v | minor version of current release | False    |
+| Name        | Description                              | Optional |
+|-------------|:-----------------------------------------|----------|
+| major_v     | major version of current release         | False    |
+| minor_v     | minor version of current release         | False    |
+| assets_path | assets to upload for the current release | True     |
 
 ### Outputs
 | Name    | Description                          |
@@ -56,10 +57,11 @@ jobs:
         with:
           fetch-depth: 0
       - name: Create Release
-        uses: SneaksAndData/github-actions/semver_release@v0.0.17
+        uses: SneaksAndData/github-actions/semver_release@v0.1.10
         with:
           major_v: 0
           minor_v: 0
+          assets_path: ./dist
 ```
 
 ## install_poetry
