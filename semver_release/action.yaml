@@ -33,5 +33,5 @@ runs:
         MINOR_V: ${{ inputs.minor_v }}
         GITHUB_TOKEN: ${{ github.token }}
         TARGET_BRANCH_MAME: ${{ github.ref }}
-        ASSETS_LOCATION: ${{ github.assets_path }}
+        ASSETS_LOCATION: ${{ inputs.assets_path }}
       shell: bash
