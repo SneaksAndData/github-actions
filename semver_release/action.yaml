@@ -14,6 +14,10 @@ inputs:
     description: minor version of current release
     required: true
 
+  assets_path:
+    description: optional release assets. All files under the path prefix will be uploaded as release assets.
+    required: false
+
 outputs:
   version:
     description: "Version"
@@ -29,4 +33,5 @@ runs:
         MINOR_V: ${{ inputs.minor_v }}
         GITHUB_TOKEN: ${{ github.token }}
         TARGET_BRANCH_MAME: ${{ github.ref }}
+        ASSETS_LOCATION: ${{ github.assets_path }}
       shell: bash
