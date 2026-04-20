@@ -14,11 +14,10 @@ Available actions are:
 9. [deploy_dbt_project_to_azfs](#deploy_dbt_project_to_azfs)
 10. [deploy_data_schemas_to_azfs](#deploy_data_schemas_to_azfs)
 11. [run_azcopy](#run_azcopy)
-12. [get_azure_share_sas](#get_azure_share_sas)
-13. [setup_gh_app](#setup_gh_app)
-14. [update_airflow_variables](#update_airflow_variables)
-15. [contribute_changes](#contribute_changes)
-16. [activate_workflow](#activate_workflow)
+12. [setup_gh_app](#setup_gh_app)
+13. [update_airflow_variables](#update_airflow_variables)
+14. [contribute_changes](#contribute_changes)
+15. [activate_workflow](#activate_workflow)
 16. [setup_aws_ca](#setup_aws_ca)
 
 ## semver_release
@@ -377,19 +376,12 @@ jobs:
       - name: Get project version
         uses: SneaksAndData/github-actions/generate_version@v0.0.17
         id: version
-      - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.17
-        with:
-          directory_name: share-name/path/within/share
-          account_key: ${{ secrets.ACCOUNT_KEY }}
-          account_name: ${{ secrets.ACCOUNT_NAME }}
-        id: sas
       - name: Prepare site-packages for deployment
         uses: SneaksAndData/github-actions/deploy_poetry_project_to_azfs@v0.0.17
         with:
           deployment_root: /python
           project_version: ${{ steps.version.outputs.version }}
-          destination: ${{ steps.sas.outputs.authorized_destination }}
+          destination: ${{ secrets.DESTINATION_SAS }}
           project_name: python_project
 ```
 
@@ -425,19 +417,12 @@ jobs:
       - name: Get project version
         uses: SneaksAndData/github-actions/generate_version@v0.0.17
         id: version
-      - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.17
-        with:
-          directory_name: share-name/path/within/share
-          account_key: ${{ secrets.ACCOUNT_KEY }}
-          account_name: ${{ secrets.ACCOUNT_NAME }}
-        id: sas
       - name: Prepare dbt for deployment
         uses: SneaksAndData/github-actions/deploy_dbt_project_to_azfs@v0.0.17
         with:
           deployment_root: /dbt
           project_version: ${{ steps.version.outputs.version }}
-          destination: ${{ steps.sas.outputs.authorized_destination }}
+          destination: ${{ secrets.DESTINATION_SAS }}
           project_name: dbt_project
 ```
 
@@ -472,19 +457,12 @@ jobs:
       - name: Get project version
         uses: SneaksAndData/github-actions/generate_version@v0.0.17
         id: version
-      - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.17
-        with:
-          directory_name: share-name/path/within/share
-          account_key: ${{ secrets.ACCOUNT_KEY }}
-          account_name: ${{ secrets.ACCOUNT_NAME }}
-        id: sas
       - name: Prepare dbt for deployment
         uses: SneaksAndData/github-actions/deploy_data_schemas_to_azfs@v0.0.17
         with:
           deployment_root: /dbt
           project_version: ${{ steps.version.outputs.version }}
-          destination: ${{ steps.sas.outputs.authorized_destination }}
+          destination: ${{ secrets.DESTINATION_SAS }}
           project_name: dbt_project
 ```
 
@@ -515,69 +493,12 @@ jobs:
   copy_files:
     name: Copy files
     steps:
-      - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.17
-        with:
-          directory_name: share-name/path/within/share
-          account_key: ${{ secrets.ACCOUNT_KEY }}
-          account_name: ${{ secrets.ACCOUNT_NAME }}
-        id: sas
       - name: Copy data
         uses: SneaksAndData/github-actions/run_azcopy@v0.0.17
         with:
           source: source/directory/on/build/agent
-          target: ${{ steps.sas.outputs.authorized_destination }}
+          target: ${{ secrets.DESTINATION_SAS }}
 ```
-## get_azure_share_sas
-
-### Description
-Generates new temporary
-[Shared Access Signature](https://learn.microsoft.com/en-us/azure/storage/common/storage-sas-overview)
-for a file share, attached to a storage account.
-
-### Inputs
-| Name            | Description                                                      | Optional | Default Value |
-|-----------------|:-----------------------------------------------------------------|----------|---------------|
-| directory_name  | Path within file share                                           | False    |               |
-| account_key     | Name of the storage account of the share                         | False    |               |
-| account_name    | Key of the storage account of the share                          | False    |               |
-| expiration_date | Expiration date in format that can be used by the `date` command | True     | +10 minutes   |
-| directory_type  | Type of directory (blob or fileshare)                            | True     | fileshare     |
-
-
-**NOTES**:
-1) For the expiration date format see [man 1 date](https://man7.org/linux/man-pages/man1/date.1.html)
-
-### Outputs
-| Name                   | Description                                                 |
-|------------------------|-------------------------------------------------------------|
-| authorized_destination | URL of the file share with attached shared access signature |
-
-### Usage
-```yaml
-name: Release a new version
-
-on:
-  workflow_dispatch:
-
-jobs:
-  create_release:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Generate SAS for upload
-        uses: SneaksAndData/github-actions/get_azure_share_sas@v0.0.17
-        with:
-          directory_name: share-name/path/within/share
-          account_key: ${{ secrets.ACCOUNT_KEY }}
-          account_name: ${{ secrets.ACCOUNT_NAME }}
-        id: sas
-      - name: Copy data
-        uses: SneaksAndData/github-actions/run_azcopy@v0.0.17
-        with:
-          source_directory: source/directory/on/build/agent
-          target: ${{ steps.sas.outputs.authorized_destination }}
-```
-
 ## setup_gh_app
 
 ### Description
