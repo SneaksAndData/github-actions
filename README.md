@@ -10,15 +10,11 @@ Available actions are:
 5. [generate_version](#generate_version)
 6. [install_azcopy](#install_azcopy)
 7. [login_to_aks](#login_to_aks)
-8. [deploy_poetry_project_to_azfs](#deploy_poetry_project_to_azfs)
-9. [deploy_dbt_project_to_azfs](#deploy_dbt_project_to_azfs)
-10. [deploy_data_schemas_to_azfs](#deploy_data_schemas_to_azfs)
-11. [run_azcopy](#run_azcopy)
-12. [setup_gh_app](#setup_gh_app)
-13. [update_airflow_variables](#update_airflow_variables)
-14. [contribute_changes](#contribute_changes)
-15. [activate_workflow](#activate_workflow)
-16. [setup_aws_ca](#setup_aws_ca)
+8. [setup_gh_app](#setup_gh_app)
+9. [update_airflow_variables](#update_airflow_variables)
+10. [contribute_changes](#contribute_changes)
+11. [activate_workflow](#activate_workflow)
+12. [setup_aws_ca](#setup_aws_ca)
 
 ## semver_release
 
@@ -239,10 +235,8 @@ Generates project version based on current git commit and git tags.
 1) To use this action, your repository should contain
 [version tags](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases).
 This action relies on git tags to be present in order to generate a version.
-2) Generated version is will not be compatible with [PEP-440](https://peps.python.org/pep-0440/), so this versions 
-should not be used with python packages. Although, this action can be used with
-[source code deployments](#deploy_poetry_project_to_azfs) of python applications.
-
+2) Generated version will not be compatible with [PEP-440](https://peps.python.org/pep-0440/), so these versions
+should not be used with python packages.
 
 ### Inputs
 No inputs defined
@@ -338,167 +332,6 @@ jobs:
           cluster_name: $AZURE_AKS_NAME
 ```
 
-# deploy_poetry_project_to_azfs
-Copy python site-packages of current virtual environment and installs application into it. 
-
-### Inputs
-| Name              | Description                                                      | Optional | Default value |
-|-------------------|:-----------------------------------------------------------------|----------|---------------|
-| project_version   | Version of the project                                           | False    |               |
-| project_name      | Name of the project                                              | False    |               |
-| project_directory | Directory name inside the project (if differs from project name) | True     | ""            |
-| destination       | Directory or SAS for upload                                      | False    |               |
-| python_version    | Project python version                                           | True     | 3.9           |
-| deployment_root   | Root directory in the file share                                 | False    |               |
-
-**NOTES**:
-1) To use this action, your project should use poetry for virtual environment management. Ensure that you installed
-the latest version of poetry and project dependencies (for instance, by [install_poetry](#install_poetry) action).
-
-### Outputs
-No outputs defined
-
-### Usage
-```yaml
-name: Prepare python deployment
-
-on:
-  workflow_dispatch:
-    
-jobs:
-  prepare_deployment:
-    name: Prepare python code for deployment
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Get project version
-        uses: SneaksAndData/github-actions/generate_version@v0.0.17
-        id: version
-      - name: Prepare site-packages for deployment
-        uses: SneaksAndData/github-actions/deploy_poetry_project_to_azfs@v0.0.17
-        with:
-          deployment_root: /python
-          project_version: ${{ steps.version.outputs.version }}
-          destination: ${{ secrets.DESTINATION_SAS }}
-          project_name: python_project
-```
-
-# deploy_dbt_project_to_azfs
-Prepare DBT models for deployment to an Azure file share.
-
-### Inputs
-| Name             | Description                                   | Optional | Default value |
-|------------------|:----------------------------------------------|----------|---------------|
-| project_version  | Version of the project                        | False    |               |
-| project_name     | Name of the project                           | False    |               |
-| destination      | Directory or SAS for upload                   | False    |               |
-| deployment_root  | Root directory in the file share              | False    |               |
-
-### Outputs
-No outputs defined
-
-### Usage
-```yaml
-name: Prepare deployment
-
-on:
-  workflow_dispatch:
-    
-jobs:
-  prepare_deployment:
-    name: Prepare dbt output for deployment
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Get project version
-        uses: SneaksAndData/github-actions/generate_version@v0.0.17
-        id: version
-      - name: Prepare dbt for deployment
-        uses: SneaksAndData/github-actions/deploy_dbt_project_to_azfs@v0.0.17
-        with:
-          deployment_root: /dbt
-          project_version: ${{ steps.version.outputs.version }}
-          destination: ${{ secrets.DESTINATION_SAS }}
-          project_name: dbt_project
-```
-
-# deploy_data_schemas_to_azfs
-Prepare DBT schemas for deployment to an Azure file share.
-
-### Inputs
-| Name             | Description                                   | Optional | Default value |
-|------------------|:----------------------------------------------|----------|---------------|
-| project_version  | Version of the project                        | False    |               |
-| project_name     | Name of the project                           | False    |               |
-| destination      | Directory or SAS for upload                   | False    |               |
-| deployment_root  | Root directory in the file share              | False    |               |
-
-### Outputs
-No outputs defined
-
-### Usage
-```yaml
-name: Prepare deployment
-
-on:
-  workflow_dispatch:
-jobs:
-  validate_commit:
-    name: Prepare schemas output for deployment
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Get project version
-        uses: SneaksAndData/github-actions/generate_version@v0.0.17
-        id: version
-      - name: Prepare dbt for deployment
-        uses: SneaksAndData/github-actions/deploy_data_schemas_to_azfs@v0.0.17
-        with:
-          deployment_root: /dbt
-          project_version: ${{ steps.version.outputs.version }}
-          destination: ${{ secrets.DESTINATION_SAS }}
-          project_name: dbt_project
-```
-
-# run_azcopy
-Invoke [azcopy copy](https://learn.microsoft.com/en-us/azure/storage/common/storage-ref-azcopy-copy?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json)
-command in pipeline.
-
-### Inputs
-| Name               | Description                                    | Optional | Default value |
-|--------------------|:-----------------------------------------------|----------|---------------|
-| source             | Source directory or SAS url to copy            | False    |               |
-| target             | Target directory or SAS url                    | False    |               |
-| mode               | azcopy action mode (copy or sync)              | True     | copy          |
-| put_md5            | If `true` sets `--put-md5` parameter to azcopy | True     | True          |
-| delete_destination | azcopy --delete-destination flag               | True     | False         |
-
-### Outputs
-No outputs defined
-
-### Usage
-```yaml
-name: Copy files
-
-on:
-  workflow_dispatch:
-    
-jobs:
-  copy_files:
-    name: Copy files
-    steps:
-      - name: Copy data
-        uses: SneaksAndData/github-actions/run_azcopy@v0.0.17
-        with:
-          source: source/directory/on/build/agent
-          target: ${{ secrets.DESTINATION_SAS }}
-```
 ## setup_gh_app
 
 ### Description
