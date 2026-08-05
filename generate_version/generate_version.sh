@@ -19,3 +19,7 @@ set -Eeuo pipefail
 version=$(git describe --tags --abbrev=7)
 
 echo "version=$version" >> "$GITHUB_OUTPUT"
+
+if [[ -n "${GITHUB_STEP_SUMMARY:-}" ]]; then
+  echo "### Version: \`$version\`" >> "$GITHUB_STEP_SUMMARY"
+fi
