@@ -237,6 +237,7 @@ Generates project version based on current git commit and git tags.
 This action relies on git tags to be present in order to generate a version.
 2) Generated version will not be compatible with [PEP-440](https://peps.python.org/pep-0440/), so these versions
 should not be used with python packages.
+3) The generated version is also written to the [job summary](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#adding-a-job-summary).
 
 ### Inputs
 No inputs defined
