@@ -41,3 +41,7 @@ else
 fi
 
 echo "version=$nextVersion" >> "$GITHUB_OUTPUT"
+
+if [[ -n "${GITHUB_STEP_SUMMARY:-}" ]]; then
+  echo "### Released version: \`$nextVersion\`" >> "$GITHUB_STEP_SUMMARY"
+fi
