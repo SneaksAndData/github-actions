@@ -41,9 +41,9 @@ else
 fi
 
 if [[ -z "${assets}" ]]; then
-  gh release create "$nextVersion" --generate-notes $draftFlag --target "$TARGET_BRANCH_NAME" 
+  gh release create "$nextVersion" --generate-notes "$draftFlag" --target "$TARGET_BRANCH_NAME" 
 else
-  gh release create "$nextVersion" --generate-notes $draftFlag --target "$TARGET_BRANCH_NAME" "$assets/*.*" 
+  gh release create "$nextVersion" --generate-notes "$draftFlag" --target "$TARGET_BRANCH_NAME" "$assets/*.*" 
 fi
 
 echo "version=$nextVersion" >> "$GITHUB_OUTPUT"
