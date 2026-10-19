@@ -18,6 +18,11 @@ inputs:
     description: optional release assets. All files under the path prefix will be uploaded as release assets.
     required: false
 
+  create_as_draft:
+    description: create the release as a draft
+    required: false
+    default: true
+
 outputs:
   version:
     description: "Version"
@@ -34,4 +39,5 @@ runs:
         GITHUB_TOKEN: ${{ github.token }}
         TARGET_BRANCH_MAME: ${{ github.ref }}
         ASSETS_LOCATION: ${{ inputs.assets_path }}
+        IS_DRAFT: $ {{ inputs.create_as_draft }}
       shell: bash
