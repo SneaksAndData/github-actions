@@ -21,7 +21,7 @@ inputs:
   create_as_draft:
     description: create the release as a draft
     required: false
-    default: true
+    default: false
 
 outputs:
   version:
