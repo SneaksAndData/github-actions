@@ -40,11 +40,14 @@ else
     draftFlag=""
 fi
 
+# enable exact command output for debugging
+set -x
 if [[ -z "${assets}" ]]; then
   gh release create "$nextVersion" --generate-notes "$draftFlag" --target "$TARGET_BRANCH_NAME" 
 else
   gh release create "$nextVersion" --generate-notes "$draftFlag" --target "$TARGET_BRANCH_NAME" "$assets/*.*" 
 fi
+set +x
 
 echo "version=$nextVersion" >> "$GITHUB_OUTPUT"
 
