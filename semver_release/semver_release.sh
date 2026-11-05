@@ -34,17 +34,21 @@ nextVersion="v$providedMajor.$providedMinor.$nextRevision"
 assets=$ASSETS_LOCATION
 
 
+releaseArgs=("$nextVersion" --generate-notes --target "$TARGET_BRANCH_NAME")
+
 if [ "$IS_DRAFT" == "true" ]; then
-    draftFlag="--draft"
-else
-    draftFlag=""
+    releaseArgs+=(--draft)
 fi
 
-if [[ -z "${assets}" ]]; then
-  gh release create "$nextVersion" --generate-notes "$draftFlag" --target "$TARGET_BRANCH_NAME" 
-else
-  gh release create "$nextVersion" --generate-notes "$draftFlag" --target "$TARGET_BRANCH_NAME" "$assets/*.*" 
+if [[ -n "${assets}" ]]; then
+  releaseArgs+=("$assets"/*.*)
 fi
+
+# enable exact command output for debugging
+set -x
+gh release create "${releaseArgs[@]}"
+set +x
+set +x
 
 echo "version=$nextVersion" >> "$GITHUB_OUTPUT"
 
